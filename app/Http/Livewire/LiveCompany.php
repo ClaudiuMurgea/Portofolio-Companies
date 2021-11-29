@@ -18,6 +18,9 @@ class LiveCompany extends Component
 {   
     use WithFileUploads;
 
+    protected $listeners = ['test' => 'edit'];
+
+
     protected $rules = [
         'edit_state' => '',
     ];

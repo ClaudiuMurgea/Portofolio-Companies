@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Livewire\LiveUser;
 use App\Http\Livewire\LiveCompany;
+use App\Http\Livewire\Company\CompanyIndex;
+use App\Http\Livewire\Company\CompanyComponent;
 use App\Http\Livewire\LiveFacility;
 use App\Http\Livewire\LiveRegion;
 use App\Http\Livewire\LiveDisplay;
@@ -24,6 +26,7 @@ Route::get('/home', [HomeController::class, 'index'])  ->name('home');
     #Livewire Route
     Route::get('/user',                 LiveUser::class)          ->name('livewire.user')       ->middleware ('role:Platform Admin|Regional Admin|Corporate Admin|Facility Admin');
     Route::get('/',                     LiveCompany::class)       ->name('livewire.company')    ->middleware ('auth');
+    Route::get('/companies',            CompanyComponent::class)  ->name('companies');
     Route::get('/facilities/{company}', LiveFacility::class)      ->name('livewire.facility')   ->middleware ('auth');
     Route::get('/regions',              LiveRegion::class)        ->name('livewire.region')     ->middleware ('auth');
     Route::get('/displays',             LiveDisplay::class)       ->name('livewire.display')    ->middleware ('auth');
