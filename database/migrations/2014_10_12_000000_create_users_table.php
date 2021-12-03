@@ -9,7 +9,6 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 
-
 class CreateUsersTable extends Migration
 {
     /**
@@ -42,7 +41,6 @@ class CreateUsersTable extends Migration
     {
         Schema::dropIfExists('users');
     }
-
     
     private function userAdmin() 
     {

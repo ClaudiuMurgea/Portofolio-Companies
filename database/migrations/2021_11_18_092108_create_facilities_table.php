@@ -18,16 +18,10 @@ class CreateFacilitiesTable extends Migration
             $table->string('name');
             $table->unsignedInteger('company_id')  ->nullable();
             $table->unsignedBigInteger('region_id')->nullable();
-            $table->unsignedBigInteger('admin_id') ->nullable();
-            $table->unsignedBigInteger('editor_id')->nullable();
             $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies')  ->onDelete('cascade');
-            $table->foreign('region_id') ->references('id')->on('permissions')->onDelete('cascade');
-            $table->foreign('admin_id')  ->references('id')->on('users')      ->onDelete('cascade');
-            $table->foreign('editor_id') ->references('id')->on('users')      ->onDelete('cascade');
-
-            
+            $table->foreign('region_id') ->references('id')->on('permissions')->onDelete('cascade');       
         });
     }
 

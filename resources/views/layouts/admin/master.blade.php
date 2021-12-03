@@ -8,7 +8,7 @@
     <meta name="description" content="viho admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities. laravel/framework: ^8.40">
     <meta name="keywords" content="admin template, viho admin template, dashboard template, flat admin template, responsive admin template, web app"> 
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
+    <link rel="icon" href="{{asset('assets/images/favicon.ico')}}" type="image/x-icon">
     <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
     <title>@yield('title')</title>
     <!-- Google font-->
@@ -47,7 +47,7 @@
 
           <!-- Container-fluid starts-->
           @if(session()->has('message'))
-          <div class="offset-4 alert alert-success col-4 text-center" role="alert">
+          <div class="offset-4 alert alert-success pt-0 mb-0 col-4 text-center" role="alert">
             <strong>Success!</strong> {{ session()->get('message') }}
           </div>
           @endif

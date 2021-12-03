@@ -149,8 +149,8 @@ class CreatePermissionTables extends Migration
     {
         $role = array(
             [ 'id' => 1, 'name' =>'Platform Admin',     'guard_name' =>'web'],
-            [ 'id' => 2, 'name' =>'Corporate Admin',    'guard_name' =>'web'],
-            [ 'id' => 3, 'name' =>'Regional Admin',     'guard_name' =>'web'],
+            [ 'id' => 2, 'name' =>'Regional Admin',     'guard_name' =>'web'],
+            [ 'id' => 3, 'name' =>'Corporate Admin',    'guard_name' =>'web'],
             [ 'id' => 4, 'name' =>'Facility Admin',     'guard_name' =>'web'],
             [ 'id' => 5, 'name' =>'Facility Editor',    'guard_name' =>'web'],
 

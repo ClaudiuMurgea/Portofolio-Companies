@@ -15,8 +15,21 @@ class CompanyCreate extends Component
 {
     use WithFileUploads;
 
-    public $states;
+    protected $listeners = ['create'];
 
+    protected $rules = [
+        'name'    => 'required|unique:companies,name|max:100',
+        'address' => 'required|max:100',
+        'city'    => 'required|max:100',
+        'zip'     => 'required|numeric',
+        'state'   => 'required',
+        'phone'   => 'required|numeric',
+        'color'   => 'required|max:20',
+        'logo'    => 'nullable|mimes:jpg,jpeg,png|max:20480' 
+    ];
+
+
+    public $states;
     public $name;
     public $company_id;
     public $address; 
@@ -27,28 +40,29 @@ class CompanyCreate extends Component
     public $color;
     public $logo;
 
+
     public function mount ()
-    {
+    {   
         $this->states = State::all();
+        $this->name     = "";
+        $this->address  = "";
+        $this->city     = "";
+        $this->zip      = "";
+        $this->state    = "";
+        $this->phone    = "";
+        $this->color    = "";
+        $this->logo     = "";
     }
 
     public function render ()
     {   
-        return view('livewire.company.company-create');
+        return view('livewire.company.company-create')->layout('layouts.admin.master');
     }
+
 
     public function create ()
     {
-        $validatedData = $this->validate([
-            'name'          => 'required|unique:companies,name|max:100',
-            'address'       => 'required|max:100',
-            'city'          => 'required|max:100',
-            'zip'           => 'required|numeric',
-            'state'         => 'required',
-            'phone'         => 'required|numeric',
-            'color'         => 'required|max:20',
-            'logo'          => 'required|mimes:jpg,jpeg,png|max:20480'
-        ]);
+        $validatedData = $this->validate();
 
         $company = new Company();
             $company->name = $validatedData['name'];
@@ -61,7 +75,7 @@ class CompanyCreate extends Component
             $companyAdmin->save();
 
         $media = new Media();
-            $filename = $this->logo->store('photoss');
+            $filename = $this->logo->store('photos', 'public');
             $media->url = $filename;
             $media->save();
 
@@ -76,7 +90,6 @@ class CompanyCreate extends Component
             $companyProfile->logo       = $media->id;
             $companyProfile->save();
 
-        // $this->emit('saved');
-        return redirect('/companies');
+        return redirect('/');
     }
 }

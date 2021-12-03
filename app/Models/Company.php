@@ -15,4 +15,5 @@ class Company extends Model
     {
         return $this->hasOne(CompanyAdmin::class, 'company_id', 'id');
     }
+
 }
