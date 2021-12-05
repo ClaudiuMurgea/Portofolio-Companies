@@ -103,8 +103,7 @@
                             </div>
                         </div>
 
-                        @if($Regional_Admin == true)
-                        {{-- || auth()->user()->hasRole('Platform Admin') --}}
+                        @if($Regional_Admin == true || auth()->user()->hasRole('Platform Admin'))
                             <div class="row">
                                 <div class="d-flex justify-content-center">
                                     <div class="form-group col-md-4 mt-2">

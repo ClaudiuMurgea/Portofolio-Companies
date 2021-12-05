@@ -105,14 +105,18 @@ class UserCreate extends Component
             $user->password = Hash::make($validatedData['password']);
             $user->save();
 
-        if( $validatedData['region'] )
+        if( $validatedData['region'] )      //if user is platform admin
         {
             foreach($validatedData['region'] as $regionID)
             {
                 $region = Region::find($regionID);
                 $user->givePermissionTo($region->name);
             }
-        } 
+        }   
+        else                           //if user is not platform admin
+        {
+            $user->givePermissionTo( auth()->user()->permissions->first()->name );
+        }
 
         if( $validatedData['company'] )
         {
