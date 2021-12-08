@@ -10,4 +10,10 @@ class FacilityAdmin extends Model
     {
         return $this->belongsTo(Facility::class, 'facility_id', 'id');
     }
+
+    public function Users ()
+    {
+        return $this->hasMany(User::class, 'id', 'user_id');
+    }
+
 }

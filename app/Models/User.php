@@ -26,17 +26,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function Company()
+    public function CompanyAdmin ()
     {
-        return $this->hasOne(Company::class, 'admin_id', 'id');
+        return $this->hasMany(CompanyAdmin::class, 'user_id', 'id');
     }
-    public function FacilityAdmin()
+
+    public function FacilityAdmins ()
     {
-        return $this->hasMany(Facility::class, 'admin_id', 'id');
+        return $this->hasOne(FacilityAdmin::class, 'user_id', 'id');
     }
-    public function FacilityEditor()
+
+    public function FacilityEditors ()
     {
-        return $this->hasOne(Facility::class, 'editor_id', 'id');
+        return $this->hasMany(FacilityEditor::class, 'user_id', 'id');
+    }
+
+    public function FacilityUsers ()
+    {
+        return $this->hasMany(FacilityUser::class, 'user_id', 'id');
     }
 
     public function userActive ()
@@ -44,13 +51,14 @@ class User extends Authenticatable
         return $this->active == 0;
     }
 
-    public function CompanyOwned ()
+    // public function CompanyOwned ()
+    // {
+    //     return $this->hasOne(CompanyAdmin::class, 'user_id', 'id');
+    // }
+
+    public function Regions ()
     {
-        return $this->hasOne(CompanyAdmin::class, 'user_id', 'id');
+        return $this->hasMany(Region::class, 'id', 'id');
     }
 
-    public function Region ()
-    {
-        return $this->hasOne(Region::class, 'id', 'id');
-    }
 }

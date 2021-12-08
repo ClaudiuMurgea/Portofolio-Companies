@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Permission;
 
 
 class Facility extends Model
@@ -18,6 +19,11 @@ class Facility extends Model
     public function Company ()
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
+
+    public function Permissions ()
+    {
+        return $this->belongsTo(Permission::class, 'region_id', 'id');
     }
 
     public function Media ()
@@ -63,4 +69,28 @@ class Facility extends Model
     {
         return $this->hasMany(Banner::class, 'facility_id', 'id');
     }
+
+    public function FacilityAdmins ()
+    {
+        return $this->hasMany(FacilityAdmin::class, 'facility_id', 'id');
+    }
+
+    public function FacilityEditors ()
+    {
+        return $this->hasMany(FacilityEditor::class, 'facility_id', 'id');
+    }
+
+    public function FacilityUsers ()
+    {
+        return $this->hasMany(FacilityUser::class, 'facility_id', 'id');
+    }
+
+
+    public function Users ()
+    {
+        return $this->hasManyThrough( User::class, FacilityAdmin::class,
+                                     'facility_id', 'id',
+                                     'id', 'user_id'                    );
+    }
+
 }

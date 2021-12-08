@@ -59,6 +59,6 @@ class CompanyComponent extends Component
         $company = Company::findOrFail($id);
             $company->delete();
             
-        return redirect('/companies');
+        return redirect('/');
     }
 }

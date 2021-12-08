@@ -9,13 +9,7 @@
 @endpush
 
 @section('content')
-  @component('components.breadcrumb')
-    @slot('breadcrumb_title')
-      <h3>Companies</h3>
-    @endslot
-    <li class="breadcrumb-item">All Companies</li>
-  @endcomponent
-  
+
   <div class="container-fluid">
     <div class="row starter-main">
 

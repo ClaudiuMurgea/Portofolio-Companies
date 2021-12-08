@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-content d-flex align-items-center justify-content-center">
 
-    <div class="row w-100 mx-0 auth-page">
+    <div class="row w-100 mx-0 auth-page mt-5">
         <div class="col-md-8 col-xl-6 mx-auto">
             <div class="card">
                 <div class="row">
@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-md-8 pl-md-0">
                         <div class="auth-form-wrapper px-4 py-5">
-                            <a href="#" class="noble-ui-logo d-block mb-2">HC<span>Dash</span></a>
+                            <a href="" class="noble-ui-logo d-block mb-2 text-success">HC<span>Dash</span></a>
                             <h5 class="text-muted font-weight-normal mb-4">Welcome back! Log in to your account.</h5>
                             <form class="forms-sample"  method="POST" action="{{ route('login') }}">
                                 @csrf
@@ -42,14 +42,14 @@
                                 </span>
                                     @enderror
                                 </div>
-                                <div class="form-check form-check-flat form-check-primary">
+                                {{-- <div class="form-check form-check-flat form-check-primary">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                         Remember me
                                     </label>
-                                </div>
-                                <div class="mt-3">
-                                    <button type="submit" class="btn btn-primary">
+                                </div> --}}
+                                <div class="mt-5 d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-success  col-12">
                                         {{ __('Login') }}
                                     </button>
 

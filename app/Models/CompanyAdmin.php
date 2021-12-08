@@ -15,4 +15,9 @@ class CompanyAdmin extends Model
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
     }
+
+    public function Users ()
+    {
+        return $this->hasMany(User::class, 'id', 'user_id');
+    }
 }

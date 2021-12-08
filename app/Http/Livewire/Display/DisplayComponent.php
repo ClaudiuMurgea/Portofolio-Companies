@@ -29,11 +29,11 @@ class DisplayComponent extends Component
         return view('livewire.display.display-component')->layout('layouts.admin.master');
     }
     
-    public function destroy($ids)
+    public function destroy($id)
     {
-        $displayType = DisplayType::findOrFail($ids);
-        $displayType->delete();
+        $displayType = DisplayType::findOrFail($id);
+            $displayType->delete();
         
-        return redirect('/displays/all');
+        return redirect('/displays');
     }
 }

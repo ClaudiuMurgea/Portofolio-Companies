@@ -21,8 +21,8 @@ class DisplayCreate extends Component
         $validatedData = $this->validate();
         
         $displayType = new DisplayType();
-        $displayType->name = $validatedData['name'];
-        $displayType->save();
+            $displayType->name = $validatedData['name'];
+            $displayType->save();
 
         return redirect('/displays');
     }

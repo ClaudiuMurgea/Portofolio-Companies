@@ -10,6 +10,9 @@ use App\Models\Company;
 use App\Models\CompanyProfile;
 use App\Models\CompanyAdmin;
 use Livewire\WithFileUploads;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Image;
+
 
 class CompanyCreate extends Component
 {
@@ -27,7 +30,6 @@ class CompanyCreate extends Component
         'color'   => 'required|max:20',
         'logo'    => 'nullable|mimes:jpg,jpeg,png|max:20480' 
     ];
-
 
     public $states;
     public $name;
@@ -52,13 +54,13 @@ class CompanyCreate extends Component
         $this->phone    = "";
         $this->color    = "";
         $this->logo     = "";
+ 
     }
 
     public function render ()
-    {   
+    {     
         return view('livewire.company.company-create')->layout('layouts.admin.master');
     }
-
 
     public function create ()
     {
@@ -78,6 +80,9 @@ class CompanyCreate extends Component
             $filename = $this->logo->store('photos', 'public');
             $media->url = $filename;
             $media->save();
+                $manager = new ImageManager();
+                $image = $manager->make('storage/'.$filename)->resize(100, 100);
+                $image->save('storage/'.$filename);
 
         $companyProfile = new CompanyProfile();
             $companyProfile->company_id = $company->id;
@@ -92,4 +97,5 @@ class CompanyCreate extends Component
 
         return redirect('/');
     }
+    
 }

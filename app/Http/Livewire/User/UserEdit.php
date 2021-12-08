@@ -8,6 +8,7 @@ use App\Models\Region;
 use App\Models\Company;
 use App\Models\CompanyAdmin;
 use App\Models\Facility;
+use App\Models\FacilityUser;
 use App\Models\FacilityAdmin;
 use App\Models\FacilityEditor;
 use Spatie\Permission\Models\Role;
@@ -30,6 +31,7 @@ class UserEdit extends Component
     public $corporateCanMakeRoles;
     public $facilityCanMakeRoles;
 
+    public $Platform_Admin  = false;
     public $Regional_Admin  = false;
     public $Corporate_Admin = false;
     public $Facility_Admin  = false;
@@ -40,8 +42,11 @@ class UserEdit extends Component
     public $facility;
     public $facilities;
 
+    public $companyID;
+
     public function Only ($type)
     {
+        $this->Platform_Admin  = false;
         $this->Regional_Admin  = false;
         $this->Corporate_Admin = false;
         $this->Facility_Admin  = false;
@@ -52,8 +57,11 @@ class UserEdit extends Component
 
     public function mount($userID)
     {
-        $this->regions = Region::all();
-        $this->roles = Role::all();
+        $this->roles      = Role::all();
+        $this->regions    = Region::all();
+        $this->companies  = Company::all();
+        $this->facilities = Facility::all();
+
         $user = User::findOrFail($userID);
             $this->edit_name  = $user->name;
             $this->edit_email = $user->email;
@@ -61,11 +69,36 @@ class UserEdit extends Component
             $this->user       = $user;
             $this->role       = $user->roles->first()->id;
             
-            if(!$user->Region == null)
-             {
-                $this->region     = $user->Region->id;
-             }     
-                
+            if($user->permissions)
+             {  
+                $i = 0;
+                foreach($user->Permissions as $permission)
+                {   
+                    $this->region[] = $permission->id; 
+                    $i++;
+                }
+             }
+             
+            if($user->FacilityUsers)
+            {
+                $i = 0;
+                foreach($user->FacilityUsers as $facility)
+                {   
+                    $this->facility[] = $facility->facility_id; 
+                    $i++;
+                }
+            }
+
+            if($user->CompanyAdmin)
+            {
+                $i = 0;
+                foreach($user->CompanyAdmin as $company)
+                {   
+                    $this->company[] = $company->company_id; 
+                    $i++;
+                }
+            }
+       
             $this->regionalCanMakeRoles  = Role::where('id', 3)
                                         ->orWhere('id', 4)
                                         ->orWhere('id', 5)
@@ -77,16 +110,17 @@ class UserEdit extends Component
 
             $this->facilityCanMakeRoles  = Role::where('id', 5)
                                         ->get();
-
-            $this->companies  = Company::all();
-            $this->facilities = Facility::all();
+            if(auth()->user()->companyAdmin)
+            {
+                $this->companyID = auth()->user()->companyAdmin->first()->company_id;
+            }   
     }
 
     public function render()
     {   
         $roles = Role::all();
             $selectedRoles = $this->validate([ 'role' => '' ]);
-            
+
         foreach($roles as $role)
         {
             if( $selectedRoles['role'] == $role->id )
@@ -116,32 +150,50 @@ class UserEdit extends Component
         {
             $user->password = Hash::make($validatedData['password']);
         }
-
             $user->name  =$validatedData['edit_name'];
             $user->email =$validatedData['edit_email'];
             $user->save();
     
-        if( $validatedData['region'] )
+        if($this->Platform_Admin == true)
+        {
+            $wasFacilityUser = FacilityUser::where('user_id', $user->id)->delete();
+        }
+
+        if( $validatedData['region'] )                                              //add region to the regional admin
         {
             foreach($validatedData['region'] as $regionID)
             {
                 $region = Region::find($regionID);
                 $user->syncPermissions($region->name);
+                $wasFacilityUser = FacilityUser::where('user_id', $user->id)->delete();
             }
         } 
+        elseif ( ($this->Facility_Admin == true || $this->Facility_Editor == true) && auth()->user()->hasAnyRole('Platform Admin|Corporate Admin') )    //add region to facility users                  
+        {
+            foreach($validatedData['facility'] as $facilityID)
+            {   
+                $facility = Facility::find($facilityID);
+                $user->givePermissionTo( $facility->Permissions->name );
+            }
+        }
+        elseif ( ($this->Facility_Admin == true || $this->Facility_Editor == true) && auth()->user()->hasRole('Regional Admin') ) 
+        {
+            foreach($validatedData['facility'] as $facilityID)
+            {   
+                $user->givePermissionTo( auth()->user()->permissions->first()->name );
+            }
+        }
 
         if( $validatedData['company'] )
         {   
-            $wasFacilityAdmin  = FacilityAdmin::where('user_id', $user->id)->delete();
+            $wasFacilityAdmin  = FacilityAdmin::where('user_id', $user->id) ->delete();
             $wasFacilityEditor = FacilityEditor::where('user_id', $user->id)->delete();
+            $wasFacilityUser   = FacilityUser::where('user_id', $user->id)  ->delete();
 
-            foreach($validatedData['company'] as $company)
-            {   
-                $companyAdmin = new CompanyAdmin ();
+            $companyAdmin = new CompanyAdmin ();
                 $companyAdmin->user_id = $user->id;
-                $companyAdmin->company_id = $company;
+                $companyAdmin->company_id = $validatedData['company'];
                 $companyAdmin->save();
-            }
         }
         
         if ( $validatedData['facility'] && ($this->Facility_Admin == true)) 
@@ -155,6 +207,11 @@ class UserEdit extends Component
                 $facilityAdmin->user_id = $user->id;
                 $facilityAdmin->facility_id = $facility;
                 $facilityAdmin->save();
+
+                $facilityUsers = new FacilityUser ();
+                    $facilityUsers->user_id     = $user->id;
+                    $facilityUsers->facility_id = $facility;
+                    $facilityUsers->save();
             }
         } 
         elseif ( $validatedData['facility'] && ($this->Facility_Editor == true) )
@@ -168,6 +225,11 @@ class UserEdit extends Component
                 $facilityEditor->user_id = $user->id;
                 $facilityEditor->facility_id = $facility;
                 $facilityEditor->save();
+
+                $facilityUsers = new FacilityUser ();
+                    $facilityUsers->user_id     = $user->id;
+                    $facilityUsers->facility_id = $facility;
+                    $facilityUsers->save();
             }
         }
         

@@ -123,7 +123,8 @@
                                                 @endif
                                             @endforeach
                                         </select>
-                                        
+                                        <p class="text-muted pt-1 text-center">Press CTRL to select multiple values. </p>
+
                                     </div>
                                 </div>
                             </div>
@@ -135,15 +136,15 @@
                                     <div class="form-group col-md-4 mt-2">
 
                                         <label for="company">Company</label>
-                                        <select class="form-control" wire:model.defer="company" multiple>
+                                        <select class="form-control" wire:model.defer="company" size=3>
 
                                             @foreach ($companies as $company)
-                                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                                    <option value="{{ $company->id}}" >{{ $company->name }}</option>
                                             @endforeach
 
                                         </select>
-                                        <p class="text-muted pt-1 text-center">Press CTRL to select multiple values</p>
-                                        
+                                        <p class="text-muted pt-1 text-center">Select one company. </p>
+
                                     </div>
                                 </div>
                             </div>
@@ -163,6 +164,7 @@
                                             {{-- @endif --}}
                                         @endforeach
                                     </select>
+                                    <p class="text-muted pt-1 text-center">Press CTRL to select multiple values. </p>
                                     
                                 </div>
                             </div>

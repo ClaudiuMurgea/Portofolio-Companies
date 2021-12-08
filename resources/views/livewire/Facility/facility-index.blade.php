@@ -14,7 +14,11 @@
 
                     <div class="d-flex justify-content-between">
                         <h6 class="card-title mb-5">Facilities</h6>
-                        <button wire:click="show('showCreate', {{ $ids }})" class="btn btn-success btn-sm mb-5"> Add Facility </button> 
+                        @if(!auth()->user()->hasRole('Facility Editor'))
+                            <button wire:click="show('showCreate', {{ $ids }})" class="btn btn-success btn-sm mb-5"> Add Facility </button>
+                        @else
+                            <button wire:click="#" class="btn btn-success btn-sm mb-5" disabled> Add Facility </button>
+                        @endif
                     </div>
 
                     <div class="table table-responsive pt-3">
@@ -34,7 +38,7 @@
                         
                             <tbody>
                                 @foreach ( $facilities as $facility)
-                                    @if ( auth()->user()->hasRole('Platform Admin'))
+                                    @if ( auth()->user()->can($facility->permissions->name) || auth()->user()->hasRole('Platform Admin||Regional Admin||Corporate Admin') )
                                         <tr class="table-success">        
                                             <td class="text-center col-1"> {{ $facility->id }}                            </td>
                                             <td class="text-center col-3 pt-1 pb-0">

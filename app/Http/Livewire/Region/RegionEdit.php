@@ -20,9 +20,9 @@ class RegionEdit extends Component
     public function mount ($regionID)
     {
         $region = Region::with(['Details'])->findOrFail($regionID);
-        $this->ids              = $region->id;
-        $this->edit_name        = $region->name;  
-        $this->edit_description = $region->Details->description;
+            $this->ids              = $region->id;
+            $this->edit_name        = $region->name;  
+            $this->edit_description = $region->Details->description;
     }
 
     public function render()

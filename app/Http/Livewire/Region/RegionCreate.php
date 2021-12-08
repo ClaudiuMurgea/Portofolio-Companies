@@ -26,14 +26,14 @@ class RegionCreate extends Component
         $validatedData = $this->validate();
         
         $region = new Region();
-        $region->guard_name = "web";
-        $region->name = $validatedData['name'];
-        $region->save();
+            $region->guard_name = "web";
+            $region->name = $validatedData['name'];
+            $region->save();
 
         $regionProfile = new RegionProfile();
-        $regionProfile->region_id = $region->id;
-        $regionProfile->description = $validatedData['description'];
-        $regionProfile->save();
+            $regionProfile->region_id = $region->id;
+            $regionProfile->description = $validatedData['description'];
+            $regionProfile->save();
         
         return redirect('/regions');
     }

@@ -20,17 +20,6 @@ class CompanyEdit extends Component
 
     protected $listeners = ['update'];
 
-    // protected $rules = [
-    //     'edit_name'    => 'required|unique:companies,name|max:100,'. $ids,
-    //     'edit_address' => 'required|max:100',
-    //     'edit_city'    => 'required|max:100',
-    //     'edit_zip'     => 'required|numeric',
-    //     'edit_state'   => 'required',
-    //     'edit_logo'    => 'nullable|mimes:jpg,jpeg,png|max:20480',
-    //     'edit_phone'   => 'required|numeric',
-    //     'edit_color'   => 'required|max:20'     
-    // ];
-
     public $ids;
     public $company;
     public $states;
@@ -56,6 +45,7 @@ class CompanyEdit extends Component
             $this->edit_phone   = $company->Profile->phone;
             $this->edit_color   = $company->Profile->color;
             $this->old_logo     = $company->Profile->media->url;
+
         $this->states = State::all();
         $this->company = $company;
     }

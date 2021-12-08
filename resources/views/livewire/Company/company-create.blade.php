@@ -107,7 +107,7 @@
                             <div class="form-group col-md-4">
                                 <label for="logo">Logo</label>
                                 
-                                <input wire:model.defer="logo" class="form-control" type="file" value="{{ old('logo') }}">
+                                <input wire:model="logo" class="form-control" type="file" value="{{ old('logo') }}">
 
                                 @error('logo')
                                     <span class="text-danger">{{ $message }}</span>

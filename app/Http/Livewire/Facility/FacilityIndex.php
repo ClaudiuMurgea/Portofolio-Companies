@@ -13,11 +13,11 @@ class FacilityIndex extends Component
     public function mount ($companyID)
     {   
         $this->ids = $companyID;
-        $this->facilities = Facility::where('company_id', $companyID)->where('region_id', 1)->get();
+        $this->facilities = Facility::where('company_id', $companyID)->get();
     }
 
     public function render()
-    {
+    {   
         return view('livewire.facility.facility-index')->layout('layouts.admin.master');
     }
 }

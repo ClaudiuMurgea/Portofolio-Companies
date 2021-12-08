@@ -14,18 +14,6 @@ use Illuminate\Support\Facades\File;
 class FacilityEdit extends Component
 {   
     use WithFileUploads;
-
-    // protected $rules = [
-    //     'edit_name'    => 'required|unique:facilities,name|max:100',
-    //     'edit_address' => 'required|max:100',
-    //     'edit_city'    => 'required|max:100',
-    //     'edit_zip'     => 'required|numeric',
-    //     'edit_state'   => 'required',
-    //     'edit_phone'   => 'required|numeric',
-    //     'edit_color'   => 'required|max:20',
-    //     'edit_logo'    => 'required|mimes:jpg,jpeg,png|max:20480',
-    //     'edit_region'  => 'required',   
-    // ];
     
     public $ids;
     public $facility;

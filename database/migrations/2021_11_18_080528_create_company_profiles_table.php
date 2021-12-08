@@ -23,6 +23,7 @@ class CreateCompanyProfilesTable extends Migration
             $table->string('phone');
             $table->string('color');
             $table->unsignedInteger('logo')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('logo')       ->references('id')->on('media')->onDelete('cascade');

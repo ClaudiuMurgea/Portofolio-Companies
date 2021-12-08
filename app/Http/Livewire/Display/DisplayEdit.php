@@ -20,17 +20,17 @@ class DisplayEdit extends Component
     public function mount ($displayTypeID)
     {
         $displayType = DisplayType::findOrFail($displayTypeID);
-        $this->edit_name = $displayType->name;
-        $this->ids = $displayTypeID;
+            $this->edit_name = $displayType->name;
+            $this->ids = $displayTypeID;
     }
 
-    public function update ($ids)
+    public function update ($id)
     {
         $validatedData = $this->validate();
 
-        $displayType = DisplayType::findOrFail($ids);
-        $displayType->name = $validatedData['edit_name'];
-        $displayType->save();
+        $displayType = DisplayType::findOrFail($id);
+            $displayType->name = $validatedData['edit_name'];
+            $displayType->save();
 
         return redirect('/displays');
     }

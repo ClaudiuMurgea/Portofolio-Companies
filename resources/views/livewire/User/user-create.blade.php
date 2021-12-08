@@ -65,7 +65,7 @@
                                 <div class="form-group col-md-4 mt-2">
 
                                     <label for="role">Role</label>
-                                    <select class="form-control" wire:model="role" required>
+                                    <select class="form-control text-center text-success" wire:model="role" required>
 
                                         <option value="">Select Role</option>
                                         
@@ -103,20 +103,19 @@
                             </div>
                         </div>
 
-                        @if($Regional_Admin == true || auth()->user()->hasRole('Platform Admin'))
+                        @if( $Regional_Admin == true)
                             <div class="row">
                                 <div class="d-flex justify-content-center">
                                     <div class="form-group col-md-4 mt-2">
 
                                         <label for="role">Region</label>
-                                        <select class="form-control" wire:model.defer="region" multiple>
+                                        <select class="form-control text-center text-success" wire:model.defer="region" multiple>
 
                                             @foreach ($regions as $region)
-                                                @if(auth()->user()->hasPermissionTo($region->name) || auth()->user()->hasRole('Platform Admin'))
-                                                    <option value="{{ $region->id }}">{{ $region->name }}</option>
-                                                @endif
+                                                <option value="{{ $region->id }}">{{ $region->name }}</option>
                                             @endforeach
                                         </select>
+                                        <p class="text-muted pt-1 text-center">Press CTRL to select multiple values. </p>
                                         
                                     </div>
                                 </div>
@@ -129,34 +128,37 @@
                                     <div class="form-group col-md-4 mt-2">
 
                                         <label for="company">Company</label>
-                                        <select class="form-control" wire:model.defer="company" multiple>
+                                        <select class="form-control text-center text-success font-weight-bold" wire:model.defer="company" required size=3>
 
                                             @foreach ($companies as $company)
                                                     <option value="{{ $company->id }}">{{ $company->name }}</option>
                                             @endforeach
 
                                         </select>
-                                        <p class="text-muted pt-1 text-center">Press CTRL to select multiple values</p>
+                                        <p class="text-muted pt-1 text-center">Select one company. </p>
                                         
                                     </div>
                                 </div>
                             </div>
                         @endif
 
-                        @if($Facility_Admin == true || $Facility_Editor == true)
+                        @if( $Facility_Admin == true || $Facility_Editor == true)
                         <div class="row">
                             <div class="d-flex justify-content-center">
                                 <div class="form-group col-md-4 mt-2">
 
                                     <label for="facility">Facility</label>
-                                    <select class="form-control" wire:model.defer="facility" multiple>
+                                    <select class="form-control text-center text-success" wire:model.defer="facility" multiple>
 
                                         @foreach ($facilities as $facility)
-                                            {{-- @if(auth()->user()->hasPermissionTo($region->name) || auth()->user()->hasRole('Platform Admin')) --}}
+                                            @if ( in_array( $facility->id, $facilitiesID)
+                                             ||   auth()->user()->hasRole('Platform Admin')
+                                             || ( auth()->user()->hasRole('Regional Admin') && auth()->user()->can($facility->Permissions->name) ) )
                                                 <option value="{{ $facility->id }}">{{ $facility->name }}</option>
-                                            {{-- @endif --}}
+                                            @endif
                                         @endforeach
                                     </select>
+                                    <p class="text-muted pt-1 text-center">Press CTRL to select multiple values. </p>
                                     
                                 </div>
                             </div>

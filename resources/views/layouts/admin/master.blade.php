@@ -8,6 +8,10 @@
     <meta name="description" content="viho admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities. laravel/framework: ^8.40">
     <meta name="keywords" content="admin template, viho admin template, dashboard template, flat admin template, responsive admin template, web app"> 
     <meta name="author" content="pixelstrap">
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="icon" href="{{asset('assets/images/favicon.ico')}}" type="image/x-icon">
     <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
     <title>@yield('title')</title>
@@ -43,7 +47,7 @@
         @includeIf('layouts.admin.partials.sidebar')
         <!-- Page Sidebar Ends-->
         <div class="page-body">
-          {{ $slot }}
+          @if( isset($slot) ) {{ $slot }} @endif
 
           <!-- Container-fluid starts-->
           @if(session()->has('message'))
@@ -61,11 +65,14 @@
 
         </script>
         <div>
-
+  
       </div>
     </div>
     <!-- latest jquery-->
-    @includeIf('layouts.admin.partials.js')          
+    @includeIf('layouts.admin.partials.js')  
+    <script>
+      feather.replace()
+  </script>        
 
   </body>
 </html>
