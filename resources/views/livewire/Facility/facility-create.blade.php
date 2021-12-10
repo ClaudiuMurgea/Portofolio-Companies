@@ -4,7 +4,7 @@
         <span> <a href="{{ route('livewire.region') }}">&emsp; Facilities</a>                 </span>
         <span> &emsp; / &emsp; Create Facility                                                </span>
         <span class="offset-9 ml-5">&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;
-           <a class="btn btn-sm btn-primary" href="/users">Back</a>                           </span>
+           <a class="btn btn-sm btn-primary" href="/users">Go back</a>                           </span>
     </div>
 
     <div class="row">
@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="d-flex justify-content-around">
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="name">Name</label>
                                 <input class="form-control" type="text" wire:model.defer="name">
                                 
@@ -26,12 +26,11 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group col-md-3">
-                                <label for="logo">Logo</label>
-                                
-                                <input class="form-control" type="file" wire:model.defer="logo">
+                            <div class="form-group col-md-4">
+                                <label for="address">Address</label>
+                                    <input class="form-control" type="text" wire:model.defer="address">
 
-                                @error('logo')
+                                @error('address')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -42,7 +41,7 @@
                     <div class="row">
                         <div class="d-flex justify-content-around">
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="city">City</label>
                                     <input class="form-control" type="text" wire:model.defer="city">
 
@@ -51,7 +50,7 @@
                                 @enderror
                             </div>
   
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="color">Color</label>
                                 <input class="form-control" type="text" wire:model.defer="color">
                                 
@@ -66,7 +65,7 @@
                     <div class="row">
                         <div class="d-flex justify-content-around">
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="state">State</label>
                                 <select class="form-control" id="state" wire:model.defer="state">
                                     
@@ -81,7 +80,7 @@
                                 @enderror
                             </div>
                             
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="region">Region</label>
                                 <select class="form-control" wire:model.defer="region">
                                     
@@ -105,7 +104,7 @@
                     <div class="row">
                         <div class="d-flex justify-content-around">
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="zip">Zip Code</label>
                                 <input class="form-control" type="text" wire:model.defer="zip">
 
@@ -114,7 +113,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="phone">Phone</label>
                                 <input class="form-control" type="text" wire:model.defer="phone">
 
@@ -127,18 +126,31 @@
                     </div>
 
                     <div class="row">
-                        <div class="d-flex justify-content-around">
+                        <div class="d-flex justify-content-center">
+                    
+                            <div class="form-group col-md-4">
+                                <label for="logo">Logo</label>
+                                
+                                <input class="form-control" type="file" wire:model.defer="logo">
 
-                            <div class="form-group col-md-3">
-                                <label for="address">Address</label>
-                                    <input class="form-control" type="text" wire:model.defer="address">
-
-                                @error('address')
+                                @error('logo')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                            
+                        </div>
+                    </div>
 
-                            <div class="col-3">
+
+                    <div class="row">
+                        <div class="d-flex justify-content-center">
+
+                            <div class="position-absolute bottom-50 end-50">
+                                <i wire:loading wire:target='create' class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i>
+                                <i wire:loading wire:target='logo' class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i>
+                            </div>
+                                 
+                            <div class="col-3 mt-5 col-md-4">
                                 <button wire:click="create" class="form-control mt-4 btn btn-success">Create Facility</button>
                             </div>
 

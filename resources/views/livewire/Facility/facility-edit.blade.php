@@ -4,7 +4,7 @@
         <span> <a href="{{ route('livewire.region') }}">&emsp; Facilities</a>                 </span>
         <span> &emsp; / &emsp; Edit Facility                                                </span>
         <span class="offset-9 ml-5">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-           <a class="btn btn-sm btn-primary" href="/users">Back</a>                           </span>
+           <a class="btn btn-sm btn-primary" href="/users">Go back</a>                           </span>
     </div>
 
     <div class="row">
@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="d-flex justify-content-around">
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="edit_name">Name</label>
                                 <input class="form-control" type="text" wire:model.defer="edit_name">
 
@@ -26,12 +26,11 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group col-md-3">
-                                <label for="edit_logo">Logo</label>
-                                
-                                <input class="form-control" type="file" wire:model="edit_logo">
+                            <div class="form-group col-md-4">
+                                <label for="edit_address">Address</label>
+                                <input class="form-control" type="text" wire:model.defer="edit_address">
 
-                                @error('edit_logo')
+                                @error('edit_address')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -42,7 +41,7 @@
                     <div class="row">
                         <div class="d-flex justify-content-around">
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="edit_city">City</label>
                                 <input class="form-control" type="text" wire:model.defer="edit_city">
 
@@ -51,7 +50,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="edit_color">Color</label>
                                 <input class="form-control" wire:model.defer="edit_color">
                                 
@@ -66,7 +65,7 @@
                     <div class="row">
                         <div class="d-flex justify-content-around">
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="edit_state">State</label>
                                 <select class="form-control" wire:model.defer="edit_state">
                                     
@@ -81,7 +80,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="edit_region">Region</label>
                                 <select class="form-control" wire:model.defer="edit_region">
                                     
@@ -104,7 +103,7 @@
                     <div class="row">
                         <div class="d-flex justify-content-around">
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="edit_zip">Zip Code</label>
                                 <input class="form-control" type="text" wire:model.defer="edit_zip">
                                 
@@ -113,7 +112,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="edit_phone">Phone</label>
                                 <input class="form-control" type="text" wire:model.defer="edit_phone">
 
@@ -126,19 +125,31 @@
                     </div>
 
                     <div class="row">
-                        <div class="d-flex justify-content-around">
-                            
-                            <div class="form-group col-md-3">
-                                <label for="edit_address">Address</label>
-                                <input class="form-control" type="text" wire:model.defer="edit_address">
+                        <div class="d-flex justify-content-center">
+                            <div class="form-group col-md-4">
+                                <label for="edit_logo">Logo</label>
+                                
+                                <input class="form-control" type="file" wire:model="edit_logo">
 
-                                @error('edit_address')
+                                @error('edit_logo')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="d-flex justify-content-center">
                             
-                            <div class="col-3">
-                                <button wire:click="update({{ $ids }})" class="form-control mt-4 btn btn-success">Edit Facility</button>
+                            <div class="position-absolute bottom-50 end-50">
+                                <i wire:loading wire:target='update({{ $ids }})' class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i>
+                                <i wire:loading wire:target='edit_logo' class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i>
+                            </div>
+
+                            <div class="col-3 mt-5 col-md-4">
+                                
+                                <button wire:click="update({{ $ids }})" class="form-control mt-4 btn btn-success mb-2 mt-5">Edit Facility</button>
+
                             </div>
 
                         </div>

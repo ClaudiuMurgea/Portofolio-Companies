@@ -12,6 +12,8 @@ use App\Models\CompanyProfile;
 use App\Models\CompanyAdmin;
 use App\Models\Facility;
 use App\Models\FacilityProfile;
+use Intervention\Image\Image;
+use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\File;
 
 class CompanyEdit extends Component
@@ -19,6 +21,16 @@ class CompanyEdit extends Component
     use WithFileUploads;
 
     protected $listeners = ['update'];
+
+    protected $rules = [
+        'edit_address' => 'required|max:100',
+        'edit_city'    => 'required|max:100',
+        'edit_zip'     => 'required|numeric',
+        'edit_state'   => 'required',
+        'edit_logo'    => 'nullable|mimes:jpg,jpeg,png|max:20480',
+        'edit_phone'   => 'required|numeric',
+        'edit_color'   => 'required|max:20'     
+    ];
 
     public $ids;
     public $company;
@@ -57,19 +69,12 @@ class CompanyEdit extends Component
 
     public function update ($id)
     {   
-        $validatedData = $this->validate([
-            'edit_name'    => 'required|unique:companies,name|max:100,'. $id,
-            'edit_address' => 'required|max:100',
-            'edit_city'    => 'required|max:100',
-            'edit_zip'     => 'required|numeric',
-            'edit_state'   => 'required',
-            'edit_logo'    => 'nullable|mimes:jpg,jpeg,png|max:20480',
-            'edit_phone'   => 'required|numeric',
-            'edit_color'   => 'required|max:20'     
+        $this->validate([
+            'edit_name' => 'required|unique:companies,name,'. $id,
         ]);
 
         $company = Company::findOrFail($id);
-            $company->name = $validatedData['edit_name'];
+            $company->name = $this->edit_name;
             $company->save();
 
         if(!$this->edit_logo == null)
@@ -79,6 +84,9 @@ class CompanyEdit extends Component
                 $media->url = $filename;
                 $media->save();
                 $this->edit_logo = $filename;
+                    $manager = new ImageManager();
+                    $image = $manager->make('storage/'.$filename)->resize(523.2, 255.66);
+                    $image->save('storage/'.$filename);
                 
                 if(File::exists("storage/$this->old_logo"))
                 {
@@ -91,24 +99,24 @@ class CompanyEdit extends Component
         }
 
         $companyProfile = CompanyProfile::findOrFail($id);
-            $companyProfile->address    = $validatedData['edit_address'];
-            $companyProfile->city       = $validatedData['edit_city'];
-            $companyProfile->zip        = $validatedData['edit_zip'];
-            $companyProfile->phone      = $validatedData['edit_phone'];
-            $companyProfile->color      = $validatedData['edit_color'];
+            $companyProfile->address    = $this->edit_address;
+            $companyProfile->city       = $this->edit_city;
+            $companyProfile->zip        = $this->edit_zip;
+            $companyProfile->phone      = $this->edit_phone;
+            $companyProfile->color      = $this->edit_color;
 
             if(!$this->edit_logo == null)
             {
                 $companyProfile->logo       = $media->id;
             }
 
-            if($validatedData['edit_state'] == null)
+            if($this->edit_state == null)
             {
                 $companyProfile->state_id   = $this->edit_state;
             }
              else 
             {
-                $companyProfile->state_id   = $validatedData['edit_state'];
+                $companyProfile->state_id   = $this->edit_state;
             }
             
             $companyProfile->save();

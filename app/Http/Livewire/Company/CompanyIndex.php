@@ -3,28 +3,31 @@
 namespace App\Http\Livewire\Company;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\User;
 use App\Models\Company;
 use App\Models\Facility;
 use App\Models\CompanyAdmin;
 use App\Models\CompanyProfile;
 
-
 class CompanyIndex extends Component
 {   
-
-    public $companies;
+    use WithPagination;
+    public $searchTerm;
+    public $companyDetails;
     
     public $corporateID;
     public $userCompany;
     public $corporateAdmin;
 
     public $ids;
-    public $showIndex  = true;
-    public $showCreate = false;
-    public $showEdit   = false;
+    public $showIndex   = true;
+    public $showCreate  = false;
+    public $showEdit    = false;
+    public $showDetails = false;
 
-    public function show ($type, $ids = null)
+
+    public function show ( $type, $ids = null )
     {
         $this->showIndex  = false;
         $this->showCreate = false;
@@ -34,10 +37,14 @@ class CompanyIndex extends Component
         $this->ids        = $ids;
     }
 
+    public function details ($ids)
+    {
+        $this->showDetails = true;
+        $this->companyDetails = Company::find($ids);
+    }
+
     public function mount ()
     {   
-        $this->companies = Company::all();
-
         $this->corporateAdmin = CompanyAdmin::where( 'user_id', auth()->user()->id )->first();
 
         if( auth()->user()->hasAnyRole('Corporate Admin|Facility Admin|Facility Editor') )
@@ -53,12 +60,15 @@ class CompanyIndex extends Component
 
             $this->userCompany = Company::find($this->corporateID);            
         }
-
     }
 
     public function render ()
     {   
-        return view('livewire.company.company-index')->layout('layouts.admin.master');
+        return view('livewire.company.company-index', ['companies' => Company::where(function($sub_query)
+        {
+            $sub_query->where('name', 'like', '%' .$this->searchTerm.'%');
+        })->paginate(12)
+        ])->layout('layouts.admin.master');
     }
 
     public function destroy ($id)
@@ -70,7 +80,16 @@ class CompanyIndex extends Component
         $facilities = Facility::where('company_id', $id)->get();
             foreach ($facilities as $facility)
             {   
-                if ($facility->Profile->Media)
+                if (!$facility->FacilityUsers == null )
+                {
+                    foreach($facility->facilityUsers as $user)
+                    {
+                        $user = User::find($user->id);
+                        $user->active = 0;
+                        $user->save();
+                    }
+                }
+                if (!$facility->Profile->Media)
                 {
                     $facility->Profile->Media->delete();
                 }
@@ -85,8 +104,10 @@ class CompanyIndex extends Component
 
         $company = Company::findOrFail($id);
             $company->delete();
+        
+        // $companyAdmin = CompanyAdmin::where('company_id', $id)->get();
+        // $user = User::find()
             
-        return redirect('/companies');
+        return redirect('/');
     }
-
 }

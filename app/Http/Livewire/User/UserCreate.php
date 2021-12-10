@@ -17,6 +17,16 @@ use Hash;
 
 class UserCreate extends Component
 {   
+    protected $rules = [
+        'name'      => 'required',
+        'email'     => 'required|email|unique:users,email',
+        'password'  => 'required',
+        'role'      => 'required',
+        'region'    => '',
+        'company'   => '',
+        'facility'  => ''
+    ];
+
     public $name;
     public $email;
     public $password;
@@ -56,6 +66,8 @@ class UserCreate extends Component
         $this->$type = true;
     }
 
+
+
     public function mount ()
     {  
         $this->roles      = Role::all();
@@ -74,39 +86,16 @@ class UserCreate extends Component
 
         $this->facilityCanMakeRoles  = Role::where('name', 'Facility Editor')
                                          ->get();
-
-        if( auth()->user()->hasRole('Facility Admin') )
-        {
-            $this->facilityAdminFacilities = FacilityAdmin::where('user_id', auth()->user()->id )->get();
-                foreach($this->facilityAdminFacilities as $facility)
-                {
-                    $this->facilitiesID[] = $facility->facility_id;
-                    
-                }
-        } 
-        elseif( auth()->user()->hasRole('Corporate Admin') )
-        {
-            $this->adminFacilities = CompanyAdmin::where('user_id', auth()->user()->id )->first();
-                $this->corporateAdminFacilities = Facility::where('company_id', $this->adminFacilities->company_id)->get();
-                foreach($this->corporateAdminFacilities as $facility)
-                {
-                    $this->facilitiesID[] = $facility->id; 
-                }
-        }
-        else 
-        {
-            $this->facilitiesID[] = 0;
-        }
     }
 
     public function render()
     {   
         $roles = Role::all();
-            $selectedRoles = $this->validate([ 'role' => '' ]);
+            $selectedRoles = $this->role;
 
             foreach($roles as $role)
             {
-                if( $selectedRoles['role'] == $role->id )
+                if( $this->role == $role->id )
                 {   
                     $roleName = str_replace(' ', '_', $role->name);
                     $this->Only ($roleName);
@@ -118,25 +107,17 @@ class UserCreate extends Component
 
     public function create ()
     {  
-        $validatedData = $this->validate([
-            'name'      => 'required',
-            'email'     => 'required|email|unique:users,email',
-            'password'  => 'required',
-            'role'      => 'required',
-            'region'    => '',
-            'company'   => '',
-            'facility'  => ''
-        ]);
+        $this->validate();
 
         $user = new User();
-            $user->name     = $validatedData['name'];
-            $user->email    = $validatedData['email'];
-            $user->password = Hash::make($validatedData['password']);
+            $user->name     = $this->name;
+            $user->email    = $this->email;
+            $user->password = Hash::make($this->password);
             $user->save();
 
-        if( $validatedData['region'] )                                              //add region to the regional admin
+        if( $this->region )                                                         //add region to the regional admin
         {
-            foreach($validatedData['region'] as $regionID)
+            foreach($this->region as $regionID)
             {
                 $region = Region::find($regionID);
                 $user->givePermissionTo($region->name);
@@ -144,14 +125,14 @@ class UserCreate extends Component
         }
         elseif ($this->Facility_Admin == true || $this->Facility_Editor == true)    //add region to facility users                  
         {
-            foreach($validatedData['facility'] as $facilityID)
+            foreach( $this->facility as $facilityID)
             {   
                 $facility = Facility::find($facilityID);
                 $user->givePermissionTo( $facility->Permissions->name );
             }
         }
 
-        if( $validatedData['company'] )
+        if( $this->company )
         {
             $companyAdmin = new CompanyAdmin ();
                 $companyAdmin->user_id = $user->id;
@@ -159,9 +140,9 @@ class UserCreate extends Component
                 $companyAdmin->save();
         }
         
-        if ( $validatedData['facility'] && ($this->Facility_Admin == true)) 
+        if ( $this->facility && ($this->Facility_Admin == true)) 
         {   
-            foreach($validatedData['facility'] as $facility)
+            foreach( $this->facility as $facility )
             {   
                 $companyFacility = Facility::find($facility);
                     $companyID = $companyFacility->company_id;
@@ -178,9 +159,9 @@ class UserCreate extends Component
                     $facilityUsers->save();
             }
         } 
-        elseif ( $validatedData['facility'] && ($this->Facility_Editor == true) )
+        elseif ( $this->facility && ($this->Facility_Editor == true) )
         {
-            foreach($validatedData['facility'] as $facility)
+            foreach( $this->facility as $facility )
             {
                 $companyFacility = Facility::find($facility);
                     $companyID = $companyFacility->company_id;
@@ -199,14 +180,14 @@ class UserCreate extends Component
         }
 
         $roles = Role::all();
-            foreach($roles as $role)
+            foreach( $roles as $role )
             {
-                if($role->id == $validatedData['role'])
+                if( $role->id == $this->role )
                 {
                     $user->assignRole([ $role->name ]);
                 }
             }
+
         return redirect('/users');
     }
-
 }

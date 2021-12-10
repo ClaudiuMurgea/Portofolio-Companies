@@ -26,17 +26,17 @@ class Facility extends Model
         return $this->belongsTo(Permission::class, 'region_id', 'id');
     }
 
-    public function Media ()
-    {
-        return $this->hasOneThrough(
-            Media::class,
-            FacilityProfile::class,
-            'facility_id',
-            'id',
-            'id',
-            'logo'
-        );
-    }
+    // public function Media ()
+    // {
+    //     return $this->hasOneThrough(
+    //         Media::class,
+    //         FacilityProfile::class,
+    //         'facility_id',
+    //         'id',
+    //         'id',
+    //         'logo'
+    //     );
+    // }
 
     public function Menus ($date)
     {

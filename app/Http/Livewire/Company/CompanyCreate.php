@@ -13,7 +13,6 @@ use Livewire\WithFileUploads;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Image;
 
-
 class CompanyCreate extends Component
 {
     use WithFileUploads;
@@ -42,7 +41,6 @@ class CompanyCreate extends Component
     public $color;
     public $logo;
 
-
     public function mount ()
     {   
         $this->states = State::all();
@@ -54,7 +52,6 @@ class CompanyCreate extends Component
         $this->phone    = "";
         $this->color    = "";
         $this->logo     = "";
- 
     }
 
     public function render ()
@@ -64,38 +61,37 @@ class CompanyCreate extends Component
 
     public function create ()
     {
-        $validatedData = $this->validate();
+        $this->validate();
 
         $company = new Company();
-            $company->name = $validatedData['name'];
+            $company->name = $this->name;
             $company->save();
 
-        $companyAdmin = new CompanyAdmin();
-            $user = User::find(auth()->user()->id);
-            $companyAdmin->user_id = $user->id;
-            $companyAdmin->company_id = $company->id;
-            $companyAdmin->save();
+        $user = User::find( auth()->user()->id );
+            $companyAdmin = new CompanyAdmin();
+                $companyAdmin->user_id = $user->id;
+                $companyAdmin->company_id = $company->id;
+                $companyAdmin->save();
 
         $media = new Media();
             $filename = $this->logo->store('photos', 'public');
             $media->url = $filename;
             $media->save();
                 $manager = new ImageManager();
-                $image = $manager->make('storage/'.$filename)->resize(100, 100);
+                $image = $manager->make('storage/'.$filename)->resize(523.2, 255.66);
                 $image->save('storage/'.$filename);
 
         $companyProfile = new CompanyProfile();
             $companyProfile->company_id = $company->id;
-            $companyProfile->address    = $validatedData['address'];
-            $companyProfile->city       = $validatedData['city'];
-            $companyProfile->zip        = $validatedData['zip'];
-            $companyProfile->state_id   = $validatedData['state'];
-            $companyProfile->phone      = $validatedData['phone'];
-            $companyProfile->color      = $validatedData['color'];
+            $companyProfile->address    = $this->address;
+            $companyProfile->city       = $this->city;
+            $companyProfile->zip        = $this->zip;
+            $companyProfile->state_id   = $this->state;
+            $companyProfile->phone      = $this->phone;
+            $companyProfile->color      = $this->color;
             $companyProfile->logo       = $media->id;
             $companyProfile->save();
 
         return redirect('/');
     }
-    
 }

@@ -44,6 +44,14 @@ class UserEdit extends Component
 
     public $companyID;
 
+    protected $rules = [
+        'password'       => '',
+        'role'           => 'required|numeric|exists:roles,id',
+        'region'         => '',
+        'company'        => '',
+        'facility'       => ''
+    ];
+
     public function Only ($type)
     {
         $this->Platform_Admin  = false;
@@ -69,7 +77,7 @@ class UserEdit extends Component
             $this->user       = $user;
             $this->role       = $user->roles->first()->id;
             
-            if($user->permissions)
+            if($user->permissions == true)
              {  
                 $i = 0;
                 foreach($user->Permissions as $permission)
@@ -110,7 +118,7 @@ class UserEdit extends Component
 
             $this->facilityCanMakeRoles  = Role::where('id', 5)
                                         ->get();
-            if(auth()->user()->companyAdmin)
+            if( auth()->user()->hasRole('Corporate Admin') )
             {
                 $this->companyID = auth()->user()->companyAdmin->first()->company_id;
             }   
@@ -119,11 +127,11 @@ class UserEdit extends Component
     public function render()
     {   
         $roles = Role::all();
-            $selectedRoles = $this->validate([ 'role' => '' ]);
+            $selectedRoles = $this->role;
 
         foreach($roles as $role)
         {
-            if( $selectedRoles['role'] == $role->id )
+            if( $this->role == $role->id )
             {   
                 $roleName = str_replace(' ', '_', $role->name);
                 $this->Only ($roleName);
@@ -135,56 +143,53 @@ class UserEdit extends Component
 
     public function update ($id)
     {
-        $validatedData = $this->validate([
-            'edit_name'      => 'required',
-            'edit_email'     => 'required|email|unique:users,email,' . $id,
-            'password'       => '',
-            'role'           => 'required|numeric|exists:roles,id',
-            'region'         => '',
-            'company'        => '',
-            'facility'       => ''
+        $this->validate([
+            'edit_name'      => 'required|unique:users,name,' . $id,
+            'edit_email'     => 'required|unique:users,email,' . $id
         ]);
-
+       
         $user = User::findOrFail($id);
-        if(!$validatedData['password'] == null)
+        if(!$this->password == null)
         {
-            $user->password = Hash::make($validatedData['password']);
+            $user->password = Hash::make($this->password);
         }
-            $user->name  =$validatedData['edit_name'];
-            $user->email =$validatedData['edit_email'];
+            $user->name  = $this->edit_name;
+            $user->email = $this->edit_email;
             $user->save();
     
-        if($this->Platform_Admin == true)
+        // if($this->Platform_Admin == true)
+        // {
+        //     $wasFacilityUser = FacilityUser::where('user_id', $user->id)->delete();
+        // }
+        
+        if( $this->region == true)                                                      //add region to the regional admin
         {
-            $wasFacilityUser = FacilityUser::where('user_id', $user->id)->delete();
-        }
-
-        if( $validatedData['region'] )                                              //add region to the regional admin
-        {
-            foreach($validatedData['region'] as $regionID)
+            foreach($this->region as $regionID)
             {
                 $region = Region::find($regionID);
                 $user->syncPermissions($region->name);
-                $wasFacilityUser = FacilityUser::where('user_id', $user->id)->delete();
+                $wasFacilityUser = FacilityUser::where('user_id', $user->id)->delete(); //if platform admin promotes facility user to regional admin
             }
         } 
+        
         elseif ( ($this->Facility_Admin == true || $this->Facility_Editor == true) && auth()->user()->hasAnyRole('Platform Admin|Corporate Admin') )    //add region to facility users                  
-        {
-            foreach($validatedData['facility'] as $facilityID)
+        {   
+            foreach( $this->facility as $facilityID )
             {   
                 $facility = Facility::find($facilityID);
+                
                 $user->givePermissionTo( $facility->Permissions->name );
             }
         }
         elseif ( ($this->Facility_Admin == true || $this->Facility_Editor == true) && auth()->user()->hasRole('Regional Admin') ) 
         {
-            foreach($validatedData['facility'] as $facilityID)
+            foreach($this->facility as $facilityID)
             {   
                 $user->givePermissionTo( auth()->user()->permissions->first()->name );
             }
         }
 
-        if( $validatedData['company'] )
+        if( $this->company )
         {   
             $wasFacilityAdmin  = FacilityAdmin::where('user_id', $user->id) ->delete();
             $wasFacilityEditor = FacilityEditor::where('user_id', $user->id)->delete();
@@ -192,16 +197,16 @@ class UserEdit extends Component
 
             $companyAdmin = new CompanyAdmin ();
                 $companyAdmin->user_id = $user->id;
-                $companyAdmin->company_id = $validatedData['company'];
+                $companyAdmin->company_id = $this->company;
                 $companyAdmin->save();
         }
         
-        if ( $validatedData['facility'] && ($this->Facility_Admin == true)) 
+        if ( $this->facility && ($this->Facility_Admin == true) ) 
         {  
             $wasCompanyAdmin   = CompanyAdmin::where('user_id', $user->id)->delete();
             $wasFacilityEditor = FacilityEditor::where('user_id', $user->id)->delete();
 
-            foreach($validatedData['facility'] as $facility)
+            foreach($this->facility as $facility)
             {
                 $facilityAdmin = new FacilityAdmin ();
                 $facilityAdmin->user_id = $user->id;
@@ -211,15 +216,17 @@ class UserEdit extends Component
                 $facilityUsers = new FacilityUser ();
                     $facilityUsers->user_id     = $user->id;
                     $facilityUsers->facility_id = $facility;
+                    $companyID = Facility::where('id', $facilityUsers->facility_id)->first();
+                    $facilityUsers->company_id = $companyID->company_id;
                     $facilityUsers->save();
             }
         } 
-        elseif ( $validatedData['facility'] && ($this->Facility_Editor == true) )
+        elseif ( $this->facility && ($this->Facility_Editor == true) )
         {
             $wasCompanyAdmin   = CompanyAdmin::where('user_id', $user->id)->delete();
             $wasFacilityAdmin  = FacilityAdmin::where('user_id', $user->id)->delete();
 
-            foreach($validatedData['facility'] as $facility)
+            foreach( $this->facility as $facility )
             {
                 $facilityEditor = new FacilityEditor ();
                 $facilityEditor->user_id = $user->id;
@@ -229,14 +236,16 @@ class UserEdit extends Component
                 $facilityUsers = new FacilityUser ();
                     $facilityUsers->user_id     = $user->id;
                     $facilityUsers->facility_id = $facility;
+                    $companyID = Facility::where('id', $facilityUsers->facility_id)->first();
+                    $facilityUsers->company_id = $companyID->company_id;
                     $facilityUsers->save();
             }
         }
-        
+       
         $roles = Role::all();
         foreach($roles as $role)
         {
-            if($role->id == $validatedData['role'])
+            if($role->id == $this->role)
             {
                 $user->removeRole($user->roles->first());
                 $user->assignRole([ $role->name ]);

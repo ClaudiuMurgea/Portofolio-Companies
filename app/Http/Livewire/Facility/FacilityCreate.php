@@ -3,13 +3,14 @@
 namespace App\Http\Livewire\Facility;
 
 use Livewire\Component;
+use App\Models\Media;
 use App\Models\State;
 use App\Models\Facility;
 use App\Models\FacilityProfile;
 use App\Models\Region;
 use Livewire\WithFileUploads;
-use App\Models\Media;
-
+use Intervention\Image\ImageManager;
+use Intervention\Image\Image;
 
 class FacilityCreate extends Component
 {   
@@ -56,32 +57,35 @@ class FacilityCreate extends Component
 
     public function create()
     {   
-        $validatedData = $this->validate();
+        $this->validate();
 
         $facility = new Facility();
-            $facility->name = $validatedData['name'];
+            $facility->name = $this->name;
             $facility->company_id = $this->ids;
-            $facility->region_id = $validatedData['region'];
+            $facility->region_id = $this->region;
             $facility->save();
 
         $media = new Media();
-            $filename = $this->logo->store('photos', 'public');
-            $media->url = $filename;
-            $media->save();
+        $filename = $this->logo->store('photos', 'public');
+        $media->url = $filename;
+        $media->save();
+            $manager = new ImageManager();
+            $image = $manager->make('storage/'.$filename)->resize(523.2, 255.66);
+            $image->save('storage/'.$filename);
+ 
 
         $facilityProfile = new FacilityProfile();
             $facilityProfile->facility_id = $facility->id;
-            $facilityProfile->address     = $validatedData['address'];
-            $facilityProfile->city        = $validatedData['city'];
-            $facilityProfile->zip         = $validatedData['zip'];
-            $facilityProfile->state_id    = $validatedData['state'];
-            $facilityProfile->region_id   = $validatedData['region'];
-            $facilityProfile->phone       = $validatedData['phone'];
-            $facilityProfile->color       = $validatedData['color'];
+            $facilityProfile->address     = $this->address;
+            $facilityProfile->city        = $this->city;
+            $facilityProfile->zip         = $this->zip;
+            $facilityProfile->state_id    = $this->state;
+            $facilityProfile->region_id   = $this->region;
+            $facilityProfile->phone       = $this->phone;
+            $facilityProfile->color       = $this->color;
             $facilityProfile->logo        = $media->id;
             $facilityProfile->save();
 
         return redirect()->to('/facilities/' . $this->ids);
     }
-
 }

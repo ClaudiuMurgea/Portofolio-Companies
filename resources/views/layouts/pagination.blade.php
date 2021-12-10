@@ -12,7 +12,7 @@
         @endif
 
         @if(! $paginator->hasMorePages() )
-            <li class="text-center border rounded text-muted btn btn-link" wire:click="nextPage()">
+            <li class="text-center border rounded text-muted btn btn-link">
                 &emsp; Next &raquo; &emsp;
             </li>
         @else 
@@ -24,7 +24,3 @@
     </ul>
 
 @endif
-
-<script>
-    feather.replace()
-</script>

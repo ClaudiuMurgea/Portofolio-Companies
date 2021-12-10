@@ -19,7 +19,7 @@
                         <a class="nav-link menu-title" href="{{route('livewire.user')}}"><span> <i data-feather="users"></i>Users</span></a>
                     </li>
                     <li class="dropdown">
-                        <a class="nav-link menu-title" href="{{ route('livewire.user') }}" target="_blank"><span> <i data-feather="radio"></i>Updates</span></a>
+                        <a class="nav-link menu-title" href="/updates"><span> <i data-feather="radio"></i>Updates</span></a>
                     </li>
 
                 </ul>

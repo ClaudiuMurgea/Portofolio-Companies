@@ -3,14 +3,14 @@
     <div class="d-flex">
         <span> <a href="{{ route('livewire.company') }}">&emsp; Companies</a>                     </span>
         <span> &emsp; / &emsp; Create Company                                                     </span>
-        <span class="offset-9 ml-5">&emsp;&emsp; <a class="btn btn-sm btn-primary" href="/companies">Back</a> </span>
+        <span class="offset-9 ml-5">&emsp;&emsp; <a class="btn btn-sm btn-primary" href="/companies">Go back</a> </span>
     </div>
 
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-
+                    
                     <h6 class="card-title text-center">Company Details</h6>
 
                     <div class="row">
@@ -18,7 +18,7 @@
 
                             <div class="form-group col-md-4">
                                 <label for="name">Name</label>
-                                <input wire:model.defer="name" class="form-control" type="text" placeholder="Name...">
+                                <input wire:model.defer="name" class="form-control" type="text"  placeholder="Name...">
 
                                 @error('name')
                                     <span class="text-danger">{{ $message }}</span>
@@ -116,8 +116,13 @@
 
                         </div>
                     </div>
+                    
+                    <div class="position-absolute bottom-60 end-50">
+                        <i wire:loading wire:target='create' class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i>
+                        <i wire:loading wire:target='logo' class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i> 
+                    </div>
 
-                    <div class="row mb-5">                       
+                    <div class="row mb-5 mt-5">                       
                         <div class="d-flex justify-content-center">
                             <div class="col-4">
                                 <button wire:click="create" class="form-control mt-4 btn btn-success">Create Company</button>

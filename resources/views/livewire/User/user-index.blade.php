@@ -16,7 +16,7 @@
                     <div class="card-body">
 
                         <div class="d-flex justify-content-between">
-                            <h6 class="card-title mb-5">Users Details</h6>
+                            <h6 class="card-title mb-5">Users </h6>
 
                             @if(auth()->user()->hasAnyRole('Platform Admin|Regional Admin|Corporate Admin|Facility Admin'))  
                                 <button wire:click="show('showCreate')" class="btn btn-success btn-sm mb-5" > Add User</button>
@@ -51,19 +51,23 @@
 
                                             <tr class="table-success">
                                                 <td class="text-center col-1">  {{ $user->id }}       </td>
-                                                <td class="text-center col-2">  {{ $user->name }}     </td>
-                                                <td class="text-center col-6">  {{ $user->email }}    </td>
+                                                <td class="text-center col-4">  {{ $user->name }}     </td>
+                                                <td class="text-center col-4">  {{ $user->email }}    </td>
 
-                                                <td class="no-gutters p-0 col-3">
-                                                    <table class="table table-borderless no-gutters">
-                                                        <div class="d-flex justify-content-between">
+                                                <td class="col-3">                       
+                                                    <div class="d-flex justify-content-between">
 
-                                                            <button wire:click="show('showEdit', {{ $user->id }})" class="btn btn-link p-0 mx-5"><i data-feather="edit-3"></i>Edit</button>
-                                                            
-                                                            <button wire:click="destroy({{ $user->id }})" class="btn btn-link p-0 mx-5 text-danger" onclick="return confirm('Are you sure?')"><i data-feather="delete"></i>Delete</button>
-
-                                                        </div>
-                                                    </table>       
+                                                        <button wire:click="show('showEdit', {{ $user->id }})" class="btn btn-link p-0 mx-5">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
+                                                            Edit
+                                                        </button>
+                                                        
+                                                        <button wire:click="destroy({{ $user->id }})" class="btn btn-link p-0 mx-5 text-danger" onclick="return confirm('Are you sure?')">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                                                            Delete
+                                                        </button>
+                                                    
+                                                    </div>     
                                                 </td>
                                             </tr>
 
@@ -78,19 +82,23 @@
 
                                                 <tr class="table-success">
                                                     <td class="text-center col-1">  {{ $user->id }}       </td>
-                                                    <td class="text-center col-2">  {{ $user->name }}     </td>
-                                                    <td class="text-center col-6">  {{ $user->email }}    </td>            
+                                                    <td class="text-center col-4">  {{ $user->name }}     </td>
+                                                    <td class="text-center col-4">  {{ $user->email }}    </td>            
 
-                                                    <td class="no-gutters p-0 col-3">
-                                                        <table class="table table-borderless no-gutters">
-                                                            <div class="d-flex justify-content-between">
+                                                    <td class="col-3">
+                                                        <div class="d-flex justify-content-between">
 
-                                                                <button wire:click="show('showEdit', {{ $user->id }})" class="btn btn-link p-0 mx-5"><i data-feather="edit-3"></i>Edit</button>
-                                                                        
-                                                                <button wire:click="destroy({{ $user->id }})" class="btn btn-link p-0 mx-5 text-danger" onclick="return confirm('Are you sure?')"><i data-feather="delete"></i>Delete</button>
+                                                            <button wire:click="show('showEdit', {{ $user->id }})" class="btn btn-link p-0 mx-5">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
+                                                                Edit
+                                                            </button>
+                                                            
+                                                            <button wire:click="destroy({{ $user->id }})" class="btn btn-link p-0 mx-5 text-danger" onclick="return confirm('Are you sure?')">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                                                                Delete
+                                                            </button>
 
-                                                            </div>
-                                                        </table>       
+                                                        </div>   
                                                     </td>
                                                 </tr>
 
@@ -106,19 +114,23 @@
                                                                                                 
                                                     <tr class="table-success">
                                                         <td class="text-center col-1">  {{ $user->id }}       </td>
-                                                        <td class="text-center col-2">  {{ $user->name }}     </td>
-                                                        <td class="text-center col-6">  {{ $user->email }}    </td>            
+                                                        <td class="text-center col-4">  {{ $user->name }}     </td>
+                                                        <td class="text-center col-4">  {{ $user->email }}    </td>            
 
-                                                        <td class="no-gutters p-0 col-3">
-                                                            <table class="table table-borderless no-gutters">
-                                                                <div class="d-flex justify-content-between">
+                                                        <td class="col-3">
+                                                            <div class="d-flex justify-content-between">
 
-                                                                    <button wire:click="show('showEdit', {{ $user->id }})" class="btn btn-link p-0 mx-5"><i data-feather="edit-3"></i>Edit</button>
-                                                                    
-                                                                    <button wire:click="destroy({{ $user->id }})" class="btn btn-link p-0 mx-5 text-danger" onclick="return confirm('Are you sure?')"><i data-feather="delete"></i>Delete</button>
+                                                                <button wire:click="show('showEdit', {{ $user->id }})" class="btn btn-link p-0 mx-5">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
+                                                                    Edit
+                                                                </button>
+                                                                
+                                                                <button wire:click="destroy({{ $user->id }})" class="btn btn-link p-0 mx-5 text-danger" onclick="return confirm('Are you sure?')">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                                                                    Delete
+                                                                </button>
 
-                                                                </div>
-                                                            </table>       
+                                                            </div>
                                                         </td>
                                                     </tr>
 
@@ -143,9 +155,15 @@
                                                     <table class="table table-borderless no-gutters">
                                                         <div class="d-flex justify-content-between">
 
-                                                            <button wire:click="edit({{ $user->id }})" class="btn btn-link p-0 mx-5"><i data-feather="edit-3"></i>Edit</button>
+                                                            <button wire:click="show('showEdit', {{ $user->id }})" class="btn btn-link p-0 mx-5">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
+                                                                Edit
+                                                            </button>
                                                             
-                                                            <button wire:click="destroy({{ $user->id }})" class="btn btn-link p-0 mx-5 text-danger" onclick="return confirm('Are you sure?')"><i data-feather="delete"></i>Delete</button>
+                                                            <button wire:click="destroy({{ $user->id }})" class="btn btn-link p-0 mx-5 text-danger" onclick="return confirm('Are you sure?')">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                                                                Delete
+                                                            </button>
 
                                                         </div>
                                                     </table>       
@@ -171,10 +189,6 @@
         </div>
         
     </div>
-
-    <script>
-        feather.replace()
-    </script>
 @endif
 
 @if($showCreate == true)

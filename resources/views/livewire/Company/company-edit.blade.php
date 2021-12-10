@@ -3,7 +3,7 @@
     <div class="d-flex">
         <span> <a href="{{ route('livewire.company') }}">&emsp; Companies</a>                     </span>
         <span> &emsp; / &emsp; Edit Company                                                       </span>
-        <span class="offset-9 ml-5">&emsp;&emsp;&emsp;&nbsp;  <a class="btn btn-sm btn-primary" href="/companies">Back</a> </span>
+        <span class="offset-9 ml-5">&emsp;&emsp;&emsp;&nbsp;  <a class="btn btn-sm btn-primary" href="/companies">Go back</a> </span>
     </div>
 
     <div class="row">
@@ -117,10 +117,16 @@
                         </div>
                     </div>
 
-                    <div class="row">                       
+                    <div class="position-absolute bottom-60 end-50">
+                        <i wire:loading wire:target='edit_logo' class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i> 
+                        <i wire:loading wire:target='update({{ $ids }})' class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i> 
+                    </div>
+
+                    <div class="row mt-5">                       
                         <div class="d-flex justify-content-center">
                             <div class="col-4">
-                                <button wire:click="$emitSelf('update', {{ $ids }})" class="form-control mt-4 btn btn-success">Edit Company</button>
+
+                                <button wire:click="update({{ $ids }})" class="form-control mt-4 btn btn-success">Edit Company</button>
                             </div>
                         </div>
                     </div>

@@ -7,7 +7,9 @@ use App\Models\DisplayType;
 
 class DisplayCreate extends Component
 {
-    protected $rules = [ 'name' => 'required|unique:display_types,name' ];
+    protected $rules = [ 
+        'name' => 'required|unique:display_types,name'
+     ];
 
     public $name;
  
@@ -18,10 +20,10 @@ class DisplayCreate extends Component
 
     public function create ()
     {
-        $validatedData = $this->validate();
+        $this->validate();
         
         $displayType = new DisplayType();
-            $displayType->name = $validatedData['name'];
+            $displayType->name = $this->name;
             $displayType->save();
 
         return redirect('/displays');

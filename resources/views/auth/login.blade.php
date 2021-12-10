@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-md-8 pl-md-0">
                         <div class="auth-form-wrapper px-4 py-5">
-                            <a href="" class="noble-ui-logo d-block mb-2 text-success">HC<span>Dash</span></a>
+                            <a href="" class="noble-ui-logo d-block mb-2 text-primary">HC<span>Dash</span></a>
                             <h5 class="text-muted font-weight-normal mb-4">Welcome back! Log in to your account.</h5>
                             <form class="forms-sample"  method="POST" action="{{ route('login') }}">
                                 @csrf
@@ -49,7 +49,7 @@
                                     </label>
                                 </div> --}}
                                 <div class="mt-5 d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-success  col-12">
+                                    <button type="submit" class="btn btn-primary  col-12">
                                         {{ __('Login') }}
                                     </button>
 

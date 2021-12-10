@@ -4,7 +4,7 @@
         <div class="d-flex">
             <span> <a href="{{ route('livewire.display') }}">&emsp; Display Types &nbsp;</a>               </span>
             <span> &emsp; / &emsp; Edit Display Type                                                       </span>
-            <span class="offset-9 ml-5">&emsp; <a class="btn btn-sm btn-primary" href="/displays">Back</a> </span>
+            <span class="offset-9 ml-5">&emsp; <a class="btn btn-sm btn-primary" href="/displays">Go back</a> </span>
         </div>
     
         <div class="row">
@@ -28,12 +28,16 @@
                             </div>
                         </div>
     
-                        <div class="row">                       
+                        <div class="row mb-3">                       
                             <div class="d-flex justify-content-center">
                                 <div class="col-2">
                                     <button wire:click="update({{ $ids }})" class="form-control mt-4 btn btn-success">Edit Display Type</button>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="position-absolute bottom-40 end-50">
+                            <i wire:loading wire:target="update({{ $ids }})" class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i>
                         </div>
 
                     </div>

@@ -1,11 +1,11 @@
 <div class="position-absolute start-0 w-100">
 
-    <div class="d-flex">
-        <span> <a href="{{ route('livewire.region') }}">&emsp; Regions &nbsp;</a> </span>
-        <span> &emsp; / &emsp; Edit Region                                        </span>
-        <span class="offset-9 ml-5">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 
-           <a class="btn btn-sm btn-primary" href="/regions">Back</a>             </span>
-    </div>
+    <nav class="page-breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"> <a href="{{ route('livewire.region') }}">&emsp; Regions &emsp;</a> </li>
+            <li class="breadcrumb-item active" aria-current="page">&emsp; Edit Region </li>
+        </ol>
+    </nav>
 
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
@@ -42,12 +42,16 @@
                         </div>
                     </div>
 
-                    <div class="row">                       
+                    <div class="row mb-3">                       
                         <div class="d-flex justify-content-center">
                             <div class="col-3">
                                 <button wire:click="update({{ $ids }})" class="form-control mt-4 btn btn-success">Edit Display Type</button>
                             </div>
                         </div>
+                    </div>
+                    
+                    <div class="position-absolute bottom-40 end-50">
+                        <i wire:loading wire:target="update({{ $ids }})" class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i>
                     </div>
 
                 </div>

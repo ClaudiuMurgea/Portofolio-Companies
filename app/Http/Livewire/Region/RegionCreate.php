@@ -23,16 +23,16 @@ class RegionCreate extends Component
 
     public function create()
     {
-        $validatedData = $this->validate();
+        $this->validate();
         
         $region = new Region();
             $region->guard_name = "web";
-            $region->name = $validatedData['name'];
+            $region->name = $this->name;
             $region->save();
 
         $regionProfile = new RegionProfile();
             $regionProfile->region_id = $region->id;
-            $regionProfile->description = $validatedData['description'];
+            $regionProfile->description = $this->description;
             $regionProfile->save();
         
         return redirect('/regions');

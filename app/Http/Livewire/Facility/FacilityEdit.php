@@ -9,7 +9,10 @@ use App\Models\FacilityProfile;
 use App\Models\Media;
 use App\Models\State;
 use App\Models\Region;
+use Intervention\Image\Image;
+use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\File;
+
 
 class FacilityEdit extends Component
 {   
@@ -49,8 +52,8 @@ class FacilityEdit extends Component
     
     public function update($facilityID)
     {
-        $validatedData = $this->validate([
-            'edit_name'    => 'required|unique:facilities,name|max:100,' .$facilityID,
+        $this->validate([
+            'edit_name'    => 'required|unique:facilities,name,' .$facilityID,
             'edit_address' => 'required|max:100',
             'edit_city'    => 'required|max:100',
             'edit_zip'     => 'required|numeric',
@@ -62,7 +65,7 @@ class FacilityEdit extends Component
         ]);     
         
         $facility = Facility::findOrFail($facilityID);
-            $facility->name = $validatedData['edit_name'];
+            $facility->name = $this->edit_name;
             $facility->save();
 
         $media = Media::findOrFail($facilityID);
@@ -70,6 +73,9 @@ class FacilityEdit extends Component
             $media->url = $filename;
             $media->save();
             $this->edit_logo = $filename;
+                $manager = new ImageManager();
+                $image = $manager->make('storage/'.$filename)->resize(523.2, 255.66);
+                $image->save('storage/'.$filename);
 
             if(File::exists("storage/$this->old_logo"))
             {
@@ -81,18 +87,17 @@ class FacilityEdit extends Component
             }
 
         $facilityProfile = FacilityProfile::findOrFail($facilityID);
-            $facilityProfile->address    = $validatedData['edit_address'];
-            $facilityProfile->city       = $validatedData['edit_city'];
-            $facilityProfile->zip        = $validatedData['edit_zip'];
-            $facilityProfile->state_id   = $validatedData['edit_state'];
-            $facilityProfile->region_id  = $validatedData['edit_region'];
-            $facilityProfile->phone      = $validatedData['edit_phone'];
-            $facilityProfile->color      = $validatedData['edit_color'];
+            $facilityProfile->address    = $this->edit_address;
+            $facilityProfile->city       = $this->edit_city;
+            $facilityProfile->zip        = $this->edit_zip;
+            $facilityProfile->state_id   = $this->edit_state;
+            $facilityProfile->region_id  = $this->edit_region;
+            $facilityProfile->phone      = $this->edit_phone;
+            $facilityProfile->color      = $this->edit_color;
 
             $facilityProfile->logo       = $media->id;
             $facilityProfile->save();
 
         return redirect()->to('/facilities/' . $this->companyID);
     }
-
 }

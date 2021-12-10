@@ -7,8 +7,6 @@ use App\Models\DisplayType;
 
 class DisplayEdit extends Component
 {
-    protected $rules = [ 'edit_name' => 'required|unique:display_types,name' ];
-
     public $ids;
     public $edit_name;
 
@@ -26,10 +24,12 @@ class DisplayEdit extends Component
 
     public function update ($id)
     {
-        $validatedData = $this->validate();
+        $this->validate([
+            'edit_name' => 'required|unique:display_types,name,' . $id
+        ]);
 
         $displayType = DisplayType::findOrFail($id);
-            $displayType->name = $validatedData['edit_name'];
+            $displayType->name = $this->edit_name;
             $displayType->save();
 
         return redirect('/displays');

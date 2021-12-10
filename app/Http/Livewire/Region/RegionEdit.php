@@ -8,11 +8,6 @@ use App\Models\RegionProfile;
 
 class RegionEdit extends Component
 {
-    protected $rules = [
-        'edit_name'        => 'required|unique:permissions,name',
-        'edit_description' => 'required'
-    ];
-
     public $ids;
     public $edit_name;
     public $edit_description;
@@ -32,17 +27,19 @@ class RegionEdit extends Component
 
     public function update($id)
     {
-        $validatedData = $this->validate();
+        $this->validate([
+            'edit_name' => 'required|unique:permissions,name,' . $id,
+            'edit_description' => 'required'
+        ]);
 
         $region = Region::findOrFail($id);
-            $region->name = $validatedData['edit_name'];
+            $region->name = $this->edit_name;
             $region->save();
 
         $regionProfile = RegionProfile::findOrFail($id);
-            $regionProfile->description = $validatedData['edit_description'];
+            $regionProfile->description = $this->edit_description;
             $regionProfile->save();
         
         return redirect('/regions');
-    }
-    
+    }   
 }
