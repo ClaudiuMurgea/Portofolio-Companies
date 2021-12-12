@@ -27,6 +27,9 @@
     <!-- Font Awesome-->
     <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}">
     <!-- Color picker -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/min/dropzone.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"></script>
+    
     @include('layouts.admin.partials.css')
     @livewireStyles
    
