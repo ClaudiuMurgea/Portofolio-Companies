@@ -1,13 +1,11 @@
-@section('title', 'Users')
 @if($showIndex == true)
 
     <div class="position-absolute start-0 w-100">
 
-        <nav class="page-breadcrumb ml-3 pl-3">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item pl ml-3 pl-3"> <a href="{{ route('livewire.user') }}">&emsp; Users &emsp;</a> </li>
-                <li class="breadcrumb-item active" aria-current="page">&emsp; All Users </li>
-            </ol>
+        <nav class="navbar navbar-light p-0">
+            <div class="container-fluid">
+              <a class="navbar-brand text-success p-0">Users &nbsp; / &nbsp; All Users</a>
+            </div>
         </nav>
 
         <div class="row">
@@ -39,9 +37,9 @@
                                 <thead>
                                     <tr class="table-success">
                                         <td class="text-center col-1">  ID          </td>
-                                        <td class="text-center col-2">  Name        </td>
+                                        <td class="text-center col-4">  Name        </td>
                                         <td class="text-center col-4">  Email       </td>
-                                        <td class="text-center col-2">  Action      </td>
+                                        <td class="text-center col-3">  Action      </td>
                                     </tr>
                                 </thead>        
                         
@@ -180,12 +178,8 @@
                         </div>
                         {{ $users->links('layouts.pagination') }}
                     </div>
-                    
                 </div>
-            
             </div>
-          
-            
         </div>
         
     </div>

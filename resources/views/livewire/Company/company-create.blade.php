@@ -1,24 +1,28 @@
 <div class="position-absolute start-0 w-100">
 
-    <div class="d-flex">
-        <span> <a href="{{ route('livewire.company') }}">&emsp; Companies</a>                     </span>
-        <span> &emsp; / &emsp; Create Company                                                     </span>
-        <span class="offset-9 ml-5">&emsp;&emsp; <a class="btn btn-sm btn-primary" href="/companies">Go back</a> </span>
-    </div>
+    <nav class="navbar navbar-light p-0">
+        <div class="container-fluid">
+            <a class="navbar-brand text-success  p-0">Companies &nbsp; / &nbsp; Create Company</a>
+            <a class="navbar-brand btn btn-success text-white  p-0 col-md-1 d-flex justify-content-center" href="{{ route('livewire.company') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg>
+                &nbsp;Back &nbsp;
+            </a>
+        </div>
+    </nav>
 
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     
-                    <h6 class="card-title text-center">Company Details</h6>
+                    <h6 class="card-title text-center mb-5">Company Details</h6>
 
                     <div class="row">
                         <div class="d-flex justify-content-around">
 
                             <div class="form-group col-md-4">
                                 <label for="name">Name</label>
-                                <input wire:model.defer="name" class="form-control" type="text"  placeholder="Name...">
+                                <input wire:model.defer="name" class="form-control" type="text"  placeholder="Name..." id="name">
 
                                 @error('name')
                                     <span class="text-danger">{{ $message }}</span>
@@ -26,10 +30,10 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="address">Address</label>
-                                <input wire:model.defer="address" class="form-control" type="text" placeholder="Address...">
+                                <label for="zip">Zip Code</label>
+                                <input wire:model.defer="zip" class="form-control" type="text" placeholder="Zip...">
 
-                                @error('address')
+                                @error('zip')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -50,10 +54,10 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="zip">Zip Code</label>
-                                <input wire:model.defer="zip" class="form-control" type="text" placeholder="Zip...">
+                                <label for="phone">Phone</label>
+                                <input wire:model.defer="phone" class="form-control" type="text" name="phone" placeholder="Phone...">
 
-                                @error('zip')
+                                @error('phone')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -81,14 +85,15 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="phone">Phone</label>
-                                <input wire:model.defer="phone" class="form-control" type="text" name="phone" placeholder="Phone...">
+                                <label for="logo">Logo</label>
+                                
+                                <input wire:model="logo" class="form-control" type="file" value="{{ old('logo') }}">
 
-                                @error('phone')
+                                @error('logo')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
+                         
                         </div>
                     </div>
 
@@ -96,20 +101,22 @@
                         <div class="d-flex justify-content-around">
                             
                             <div class="form-group col-md-4">
-                                <label for="name">Color</label>
-                                <input wire:model.defer="color" id="colorPicker" class="form-control" type="text" placeholder="Color...">
+                                <label for="address">Address</label>
+                                <input wire:model.defer="address" class="form-control" type="text" placeholder="Address...">
 
-                                @error('color')
+                                @error('address')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
+                            
                             <div class="form-group col-md-4">
-                                <label for="logo">Logo</label>
-                                
-                                <input wire:model="logo" class="form-control" type="file" value="{{ old('logo') }}">
+                                <label class="mb-2" for="name">Choose Color</label>
+                                <input wire:model="color" class="form-control" type="color">
 
-                                @error('logo')
+                                {{-- <input class="col-3" type="color" id="favcolor" name="favcolor"> --}}
+                                {{-- <button  id="myButton3" type="submit" name="submit" value="Submit">Submit</button> --}}
+
+                                @error('color')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -143,3 +150,34 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Create a new Picker instance and set the parent element.
+    // By default, the color picker is a popup which appears when you click the parent.
+    var parent = document.querySelector('#parent');
+    var picker = new Picker(parent);
+
+    // You can do what you want with the chosen color using two callbacks: onChange and onDone.
+
+    // onDone is similar to onChange, but only called when you click 'Ok'.
+</script>
+
+<script>
+    document.getElementById("myButton3").addEventListener("click", () => {
+
+    
+var x = document.getElementById("myButton3").value;
+
+//Check if register button
+if (x.includes("Submit")) {
+
+  //assign value to favColor    
+  var favColor = document.getElementById("favcolor").value;
+    
+}
+
+var message3 = `the color you selected is: ${favColor}<br>`;
+
+document.getElementById("par3").innerHTML = message3.fontcolor("&(favColor)");  
+});
+</script>

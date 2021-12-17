@@ -35,7 +35,7 @@ class CreateUsersTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
+     * P3Gc*+fgtW+j@C5CJG%7!a@d
      * @return void
      */
     public function down()
@@ -48,7 +48,7 @@ class CreateUsersTable extends Migration
         $user =  User::create([
             'name' => 'SuperAdmin',
             'email' => 'admin@splashcreative.com',
-            'password' => Hash::make('P3Gc*+fgtW+j@C5CJG%7!a@d'),
+            'password' => Hash::make('test'),
         ]);    
      }
 

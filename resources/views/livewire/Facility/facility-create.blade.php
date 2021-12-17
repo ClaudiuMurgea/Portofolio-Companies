@@ -1,18 +1,21 @@
 <div class="position-absolute start-0 w-100">
 
-    <div class="d-flex">
-        <span> <a href="{{ route('livewire.region') }}">&emsp; Facilities</a>                 </span>
-        <span> &emsp; / &emsp; Create Facility                                                </span>
-        <span class="offset-9 ml-5">&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;
-           <a class="btn btn-sm btn-primary" href="/users">Go back</a>                           </span>
-    </div>
+    <nav class="navbar navbar-light p-0">
+        <div class="container-fluid">
+            <a class="navbar-brand text-success p-0">Facilities &nbsp; / &nbsp; Create Facility</a>
+            <a class="navbar-brand btn btn-success text-white p-0 col-md-1 d-flex justify-content-center" href="{{ route('livewire.facility', $ids) }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg>
+                &nbsp;Back &nbsp;
+            </a>
+        </div>
+    </nav>
 
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
 
-                    <h6 class="card-title text-center">Facility Details</h6>
+                    <h6 class="card-title text-center mb-5">Facility Details</h6>
                     
                     <div class="row">
                         <div class="d-flex justify-content-around">
@@ -27,14 +30,14 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="address">Address</label>
-                                    <input class="form-control" type="text" wire:model.defer="address">
+                                <label for="zip">Zip Code</label>
+                                <input class="form-control" type="text" wire:model.defer="zip">
 
-                                @error('address')
+                                @error('zip')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
+         
                         </div>
                     </div>
 
@@ -49,12 +52,12 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-  
+
                             <div class="form-group col-md-4">
-                                <label for="color">Color</label>
-                                <input class="form-control" type="text" wire:model.defer="color">
-                                
-                                @error('color')
+                                <label for="phone">Phone</label>
+                                <input class="form-control" type="text" wire:model.defer="phone">
+
+                                @error('phone')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -82,17 +85,24 @@
                             
                             <div class="form-group col-md-4">
                                 <label for="region">Region</label>
-                                <select class="form-control" wire:model.defer="region">
-                                    
-                                    <option value="">Select region</option>
-                                    @foreach ($regions as $region)
-                                        @if(auth()->user()->hasPermissionTo($region->name) || auth()->user()->hasRole('Platform Admin'))
-                                            <option value="{{ $region->id }}">{{ $region->name }}</option>
-                                        @endif
-                                    @endforeach
+                                <div class="input-group">
+                                    <select class="form-control" wire:model.defer="region">
+                                        
+                                        <option value="">Select region</option>
+                                        @foreach ($regions as $region)
+                                            @if(auth()->user()->hasPermissionTo($region->name) || auth()->user()->hasRole('Platform Admin|Corporate Admin'))
+                                                <option value="{{ $region->id }}">{{ $region->name }}</option>
+                                            @endif
+                                        @endforeach
 
-                                </select>
-
+                                    </select>
+                                    <div class="input-group-append" >
+                                        <div class="input-group-text bg-success" data-toggle="tooltip" data-placement="top" title="Add New Region"><a href="{{ route('livewire.region') }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity text-white m-0"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                                </div>
                                 @error('region')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror     
@@ -105,23 +115,24 @@
                         <div class="d-flex justify-content-around">
 
                             <div class="form-group col-md-4">
-                                <label for="zip">Zip Code</label>
-                                <input class="form-control" type="text" wire:model.defer="zip">
+                                <label for="address">Address</label>
+                                    <input class="form-control" type="text" wire:model.defer="address">
 
-                                @error('zip')
+                                @error('address')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="phone">Phone</label>
-                                <input class="form-control" type="text" wire:model.defer="phone">
+                                <label class="mb-2" for="color">Color</label>
 
-                                @error('phone')
+                                <input wire:model="color" class="form-control" type="color">
+                                
+                                @error('color')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            
+
                         </div>
                     </div>
 
@@ -140,7 +151,6 @@
                             
                         </div>
                     </div>
-
 
                     <div class="row">
                         <div class="d-flex justify-content-center">
@@ -171,3 +181,23 @@
     </div>
 
 </div>
+
+<script>
+    document.getElementById("myButton3").addEventListener("click", () => {
+
+    
+var x = document.getElementById("myButton3").value;
+
+//Check if register button
+if (x.includes("Submit")) {
+
+  //assign value to favColor    
+  var favColor = document.getElementById("favcolor").value;
+    
+}
+
+var message3 = `the color you selected is: ${favColor}<br>`;
+
+document.getElementById("par3").innerHTML = message3.fontcolor("&(favColor)");  
+});
+</script>

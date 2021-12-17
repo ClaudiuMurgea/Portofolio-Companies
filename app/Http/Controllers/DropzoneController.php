@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use App\Models\Banner;
 use App\Models\Media;
 
+
 class DropzoneController extends Controller
 {
     function index ()
@@ -17,8 +18,9 @@ class DropzoneController extends Controller
     {   
         $image = $request->file('file');
 
-        $imageName = time() . '.' . $image->extension();
-        $image->move(public_path('images'), $imageName);
+        $imageName = 'photos/' . time() . '.' . $image->extension();
+        $image->move(public_path('storage/photos'), $imageName);
+        $image->save();
 
         $media = new Media();
         $media->url = $imageName;

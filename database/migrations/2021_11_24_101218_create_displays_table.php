@@ -26,8 +26,8 @@ class CreateDisplaysTable extends Migration
             $table->boolean('status')->default(0);
             $table->timestamps();
 
-            $table->foreign('media_id')     ->references('id')->on('media')->onDelete('cascade');
-            $table->foreign('facility_id')  ->references('id')->on('facilities')->onDelete('cascade');
+            $table->foreign('media_id')     ->references('id')->on('media')        ->onDelete('cascade');
+            $table->foreign('facility_id')  ->references('id')->on('facilities')   ->onDelete('cascade');
             $table->foreign('display_type') ->references('id')->on('display_types')->onDelete('cascade');
         });
     }

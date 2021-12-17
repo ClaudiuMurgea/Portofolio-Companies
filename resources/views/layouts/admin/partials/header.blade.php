@@ -8,6 +8,7 @@
     <div class="nav-right col pull-right right-menu">
       <ul class="nav-menus">   
         <li class="onhover-dropdown p-0">
+
           <img class="img-fluid" src="{{asset('assets/images/userSmall.png')}}" alt="">
           
           <li class="nav-item dropdown bg-transparent">

@@ -18,6 +18,7 @@ class CreateFacilitiesTable extends Migration
             $table->string('name');
             $table->unsignedInteger('company_id')  ->nullable();
             $table->unsignedBigInteger('region_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies')  ->onDelete('cascade');

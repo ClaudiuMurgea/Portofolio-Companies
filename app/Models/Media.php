@@ -10,4 +10,9 @@ class Media extends Model
     use HasFactory;
 
     protected $fillable = ['url'];
+
+    public function Banner ()
+    {
+        return $this->hasOne(Banner::class, 'media_id', 'id');
+    }
 }

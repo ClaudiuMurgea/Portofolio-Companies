@@ -24,6 +24,7 @@ class CreateFacilityProfilesTable extends Migration
             $table->string('phone');
             $table->string('color')->nullable();
             $table->unsignedInteger('logo')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('facility_id')  ->references('id')->on('facilities')->onDelete('cascade');

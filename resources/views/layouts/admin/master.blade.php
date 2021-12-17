@@ -9,7 +9,7 @@
     <meta name="keywords" content="admin template, viho admin template, dashboard template, flat admin template, responsive admin template, web app"> 
     <meta name="author" content="pixelstrap">
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="dropzone.js"></script>"
+    <script src="dropzone.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -25,16 +25,30 @@
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
     <!-- Font Awesome-->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}">
+    <link rel="stylesheet" href="../../plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.css">
     <!-- Color picker -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/min/dropzone.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"></script>
-    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+30JU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+    <script src="{{ asset('assets/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}"></script>
+
+    <script src="https://unpkg.com/vanilla-picker@2"></script>
+    <link rel="stylesheet" href="../css/pikaday.css">
+    <link rel="stylesheet" href="../css/site.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     @include('layouts.admin.partials.css')
     @livewireStyles
    
   </head>
   <body>
+    <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     @livewireScripts
 
     <!-- Loader starts-->
@@ -56,35 +70,27 @@
         <div class="page-body">
           @if( isset($slot) ) {{ $slot }} @endif
 
-          <!-- Container-fluid starts-->
-          @if(session()->has('message'))
-          <div class="offset-4 alert alert-success pt-0 mb-0 col-4 text-center" role="alert">
-            <strong>Success!</strong> {{ session()->get('message') }}
-          </div>
-          @endif
           @yield('content')
-            
-        </div>
-          <!-- Container-fluid Ends-->
-        </div>
-        @stack('all')
-        <script src="{{ asset('assets/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}">
 
-        </script>
+        @stack('plugin-styles')
+        @stack('all')
+
         <div>
   
       </div>
     </div>
+
     <!-- latest jquery-->
     @includeIf('layouts.admin.partials.js')  
 
-    <footer>
+    <!--  footer -->
+    <footer class="p-0">
 
-      <div class="mx-3" style="background-color: rgba(36, 105, 92);">
+      <div class="d-flex justify-content-between align-items-baseline">
 
-        <p class="mx-5 text-white text-center text-md-left">© &nbsp;Copyright &nbsp;2018 - {!! \Carbon\Carbon::now()->format('Y') !!}</p>
+        <p class="mx-5 text-center text-success text-md-left">© &nbsp;Copyright &nbsp;2018 - {!! \Carbon\Carbon::now()->format('Y') !!}</p>
 
-        <p class="mx-5 text-white text-center text-md-left mb-0 d-none d-md-block">Built with &nbsp; <svg class="text-danger" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        <p class="mx-5 text-center text-success text-md-left mb-0 d-none d-md-block">Built with &nbsp; <svg class="text-danger" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
           &nbsp; by &nbsp;<a class="text-danger" href="https://splashcreative.com/" target="_blank">Splash Creative</a>
 
       </div>

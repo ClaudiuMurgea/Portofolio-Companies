@@ -7,6 +7,8 @@
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
 // Simple example, see optional options for more configuration.
+
+window.Pikaday = require("pikaday");
 const pickr = Pickr.create({
   el: '.color-picker',
   theme: 'classic', // or 'monolith', or 'nano'

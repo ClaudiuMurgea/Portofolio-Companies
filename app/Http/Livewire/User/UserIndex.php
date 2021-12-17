@@ -42,15 +42,16 @@ class UserIndex extends Component
         if( auth()->user()->hasRole('Corporate Admin') )
         {
             $this->corporateID = auth()->user()->companyAdmin->first()->company_id;
-                $this->company = Company::find($this->corporateID);
-                    foreach($this->company->facilities as $facility)
+                
+            $this->company = Company::find($this->corporateID);
+                foreach($this->company->facilities as $facility)
+                {
+                    foreach($facility->facilityUsers as $user)
                     {
-                        foreach($facility->facilityUsers as $user)
-                        {
-                            $this->facilityUsers[] = $user->user_id;         
-                        }
+                        $this->facilityUsers[] = $user->user_id;         
                     }
-            }
+                }
+        }
     }
 
     public function render()

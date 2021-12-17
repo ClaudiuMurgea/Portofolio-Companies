@@ -77,13 +77,9 @@ class FacilityEdit extends Component
                 $image = $manager->make('storage/'.$filename)->resize(523.2, 255.66);
                 $image->save('storage/'.$filename);
 
-            if(File::exists("storage/$this->old_logo"))
+            if( File::exists("storage/$this->old_logo") )
             {
                 File::delete("storage/$this->old_logo");
-            }
-            else 
-            {
-                dd('File does not exists.');
             }
 
         $facilityProfile = FacilityProfile::findOrFail($facilityID);

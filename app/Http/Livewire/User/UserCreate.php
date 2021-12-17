@@ -17,16 +17,6 @@ use Hash;
 
 class UserCreate extends Component
 {   
-    protected $rules = [
-        'name'      => 'required',
-        'email'     => 'required|email|unique:users,email',
-        'password'  => 'required',
-        'role'      => 'required',
-        'region'    => '',
-        'company'   => '',
-        'facility'  => ''
-    ];
-
     public $name;
     public $email;
     public $password;
@@ -52,8 +42,12 @@ class UserCreate extends Component
 
     public $facilityAdminFacilities;
     public $corporateAdminFacilities;
+    public $userID;
     public $facilitiesID;
+    public $companyID;
 
+    public $companyFacilities;
+    public $facilityCompany;
 
     public function Only ($type)
     {   
@@ -65,8 +59,6 @@ class UserCreate extends Component
 
         $this->$type = true;
     }
-
-
 
     public function mount ()
     {  
@@ -86,34 +78,68 @@ class UserCreate extends Component
 
         $this->facilityCanMakeRoles  = Role::where('name', 'Facility Editor')
                                          ->get();
+
+        $this->userID = auth()->user()->id;
+
+        if( auth()->user()->hasRole('Corporate Admin') )
+        {
+            $this->corporateAdminFacilities = CompanyAdmin::where( 'user_id', $this->userID )->get();
+
+            foreach($this->corporateAdminFacilities as $companyAdmin)
+            {
+                $this->facilitiesID[] = $companyAdmin->company_id;
+            }
+
+        }
+        elseif( auth()->user()->hasRole('Facility Admin') )
+        {
+            $this->facilityAdminFacilities = auth()->user()->facilityUsers;
+
+            foreach($this->facilityAdminFacilities as $facilityAdmin)
+            {   
+                $this->facilitiesID[] = $facilityAdmin->facility_id;
+            }
+            
+        }
+        else 
+        {
+            $facilitiesID = [];
+        }
     }
 
     public function render()
     {   
-        $roles = Role::all();
-            $selectedRoles = $this->role;
-
-            foreach($roles as $role)
-            {
-                if( $this->role == $role->id )
-                {   
-                    $roleName = str_replace(' ', '_', $role->name);
-                    $this->Only ($roleName);
-                }
+        foreach($this->roles as $DBrole)
+        {
+            if( $this->role == $DBrole->name )
+            {   
+                $roleName = str_replace(' ', '_', $DBrole->name);
+                $this->Only ($roleName);
             }
+        }
 
         return view('livewire.user.user-create')->layout('layouts.admin.master');
     }
 
     public function create ()
     {  
-        $this->validate();
+        $this->validate([
+            'name'      => 'required',
+            'email'     => 'required|email|unique:users,email',
+            'password'  => 'required',
+            'role'      => 'required',
+            'region'    => 'required_if:role,Regional Admin',
+            'company'   => 'required_if:role,Corporate Admin',
+            'facility'  => 'required_if:role,Facility Admin,Facility Editor'
+        ]);
 
         $user = new User();
             $user->name     = $this->name;
             $user->email    = $this->email;
             $user->password = Hash::make($this->password);
             $user->save();
+            $role = Role::where('name', $this->role)->first();
+            $user->assignRole($role->name);
 
         if( $this->region )                                                         //add region to the regional admin
         {
@@ -124,11 +150,14 @@ class UserCreate extends Component
             }
         }
         elseif ($this->Facility_Admin == true || $this->Facility_Editor == true)    //add region to facility users                  
-        {
-            foreach( $this->facility as $facilityID)
-            {   
-                $facility = Facility::find($facilityID);
-                $user->givePermissionTo( $facility->Permissions->name );
+        {   
+            if($this->facility == true) 
+            {
+                foreach( $this->facility as $facilityID)
+                {   
+                    $facility = Facility::find($facilityID);
+                    $user->givePermissionTo( $facility->Permissions->name );
+                }
             }
         }
 
@@ -136,25 +165,25 @@ class UserCreate extends Component
         {
             $companyAdmin = new CompanyAdmin ();
                 $companyAdmin->user_id = $user->id;
-                $companyAdmin->company_id = $validatedData['company'];
+                $companyAdmin->company_id = $this->company;
                 $companyAdmin->save();
         }
         
         if ( $this->facility && ($this->Facility_Admin == true)) 
         {   
-            foreach( $this->facility as $facility )
+            foreach( $this->facility as $oneID)
             {   
-                $companyFacility = Facility::find($facility);
+                $companyFacility = Facility::find($oneID);
                     $companyID = $companyFacility->company_id;
                 
                 $facilityAdmin = new FacilityAdmin ();
                     $facilityAdmin->user_id     = $user->id;
-                    $facilityAdmin->facility_id = $facility;
+                    $facilityAdmin->facility_id = $oneID;
                     $facilityAdmin->save();
 
                 $facilityUsers = new FacilityUser ();
                     $facilityUsers->user_id     = $user->id;
-                    $facilityUsers->facility_id = $facility;
+                    $facilityUsers->facility_id = $oneID;
                     $facilityUsers->company_id  = $companyID;
                     $facilityUsers->save();
             }
@@ -178,15 +207,6 @@ class UserCreate extends Component
                     $facilityUsers->save();
             }
         }
-
-        $roles = Role::all();
-            foreach( $roles as $role )
-            {
-                if( $role->id == $this->role )
-                {
-                    $user->assignRole([ $role->name ]);
-                }
-            }
 
         return redirect('/users');
     }

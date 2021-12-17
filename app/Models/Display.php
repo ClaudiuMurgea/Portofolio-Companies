@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Display extends Model
-{
+{   
     public function Type ()
     {
         return $this->hasOne(DisplayType::class, 'id', 'display_type');

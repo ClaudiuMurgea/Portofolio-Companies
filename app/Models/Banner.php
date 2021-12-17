@@ -8,7 +8,7 @@ class Banner extends Model
 {
     public function Media ()
     {
-        return $his->hasOne(Media::class, 'id', 'media_id');
+        return $this->belongsTo(Media::class, 'media_id', 'id');
     }
 
     public function Company ()

@@ -8,8 +8,6 @@ use App\Models\RegionProfile;
 
 class RegionIndex extends Component
 {   
-    public $regions;
-
     public $ids;
     public $showIndex   = true;
     public $showCreate  = false;
@@ -25,24 +23,18 @@ class RegionIndex extends Component
         $this->ids        = $ids;
     }
 
-    public function mount ()
-    {
-        $this->regions = Region::all();
-    }
-
     public function render()
     {
-        return view('livewire.region.region-index')->layout('layouts.admin.master');
+        $regions = Region::all();
+        return view('livewire.region.region-index', ['regions' => $regions] )->layout('layouts.admin.master');
     }
 
     public function destroy($id)
     {   
-        $regionProfile = RegionProfile::findOrFail($id);
+        $regionProfile = RegionProfile::where('region_id', $id);
             $regionProfile->delete();
             
         $region = Region::findOrFail($id);
             $region->delete();
-
-        return redirect('/regions');
     }
 }

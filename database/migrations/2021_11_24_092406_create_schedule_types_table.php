@@ -37,10 +37,10 @@ class CreateScheduleTypesTable extends Migration
     public function seedDefault()
     {
         $types = array(
-            ['name' => 'weekly',    'description' => 'Schedule reoccurs every week.' ,    'week_no' => 1],
-            ['name' => 'bi-weekly', 'description' => 'Schedule reoccurs every 2 weeks.',  'week_no' => 2],
-            ['name' => 'tri-weekly','description' => 'Schedule reoccurs every 3 weeks.',  'week_no' => 3],
-            ['name' => 'monthly',   'description' => 'Schedule reoccurs every 4 weeks.',  'week_no' => 4]
+            ['name' => 'Weekly',    'description' => 'Schedule reoccurs every week.' ,    'week_no' => 1],
+            ['name' => 'Bi-weekly', 'description' => 'Schedule reoccurs every 2 weeks.',  'week_no' => 2],
+            ['name' => 'Tri-weekly','description' => 'Schedule reoccurs every 3 weeks.',  'week_no' => 3],
+            ['name' => 'Monthly',   'description' => 'Schedule reoccurs every 4 weeks.',  'week_no' => 4]
         );
 
         DB::table('schedule_types')->insert($types);

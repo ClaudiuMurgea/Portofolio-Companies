@@ -6,9 +6,7 @@ use Livewire\Component;
 use App\Models\DisplayType;
 
 class DisplayIndex extends Component
-{   
-    public $displayTypes;
-    
+{       
     public $ids;
     public $showIndex  = true;
     public $showCreate = false;
@@ -24,21 +22,15 @@ class DisplayIndex extends Component
         $this->ids        = $ids;
     }
 
-    public function mount ()
-    {
-        $this->displayTypes = DisplayType::all();
-    }
-
     public function render()
     {
-        return view('livewire.display.display-index')->layout('layouts.admin.master');
+        $displayTypes = DisplayType::all();
+        return view('livewire.display.display-index', ['displayTypes' => $displayTypes])->layout('layouts.admin.master');
     }
 
     public function destroy($id)
     {
         $displayType = DisplayType::findOrFail($id);
-            $displayType->delete();
-        
-        return redirect('/displays');
+        $displayType->delete();
     }
 }

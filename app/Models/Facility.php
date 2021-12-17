@@ -5,10 +5,13 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Facility extends Model
 {
+    use SoftDeletes;
+    
     protected $fillable = ['company_id', 'name', 'region_id' ];
 
     public function Profile ()
@@ -25,18 +28,6 @@ class Facility extends Model
     {
         return $this->belongsTo(Permission::class, 'region_id', 'id');
     }
-
-    // public function Media ()
-    // {
-    //     return $this->hasOneThrough(
-    //         Media::class,
-    //         FacilityProfile::class,
-    //         'facility_id',
-    //         'id',
-    //         'id',
-    //         'logo'
-    //     );
-    // }
 
     public function Menus ($date)
     {
@@ -84,7 +75,6 @@ class Facility extends Model
     {
         return $this->hasMany(FacilityUser::class, 'facility_id', 'id');
     }
-
 
     public function Users ()
     {

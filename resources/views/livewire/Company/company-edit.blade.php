@@ -1,17 +1,21 @@
 <div class="position-absolute start-0 w-100">
     
-    <div class="d-flex">
-        <span> <a href="{{ route('livewire.company') }}">&emsp; Companies</a>                     </span>
-        <span> &emsp; / &emsp; Edit Company                                                       </span>
-        <span class="offset-9 ml-5">&emsp;&emsp;&emsp;&nbsp;  <a class="btn btn-sm btn-primary" href="/companies">Go back</a> </span>
-    </div>
+    <nav class="navbar navbar-light  p-0">
+        <div class="container-fluid">
+            <a class="navbar-brand text-success  p-0">Companies &nbsp; / &nbsp; Edit Company</a>
+            <a class="navbar-brand btn btn-success text-white  p-0 col-md-1 d-flex justify-content-center" href="{{ route('livewire.company') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg>
+                &nbsp;Back &nbsp;
+            </a>
+        </div>
+    </nav>
 
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     
-                    <h6 class="card-title text-center">Company Details</h6>
+                    <h6 class="card-title text-center mb-5">Company Details</h6>
                     
                     <div class="row">
                         <div class="d-flex justify-content-around">
@@ -24,12 +28,12 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
+              
                             <div class="form-group col-md-4">
-                                <label for="edit_address">Address</label>
-                                <input class="form-control" type="text" wire:model.defer="edit_address">
+                                <label for="edit_zip">Zip Code</label>
+                                <input class="form-control" type="text" wire:model.defer="edit_zip">
 
-                                @error('edit_address')
+                                @error('edit_zip')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -50,10 +54,10 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="edit_zip">Zip Code</label>
-                                <input class="form-control" type="text" wire:model.defer="edit_zip">
+                                <label for="edit_phone">Phone</label>
+                                <input class="form-control" type="text" wire:model.defer="edit_phone">
 
-                                @error('edit_zip')
+                                @error('edit_phone')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -78,15 +82,15 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
+                   
                             <div class="form-group col-md-4">
-                                <label for="edit_phone">Phone</label>
-                                <input class="form-control" type="text" wire:model.defer="edit_phone">
+                                <label for="edit_logo">Logo</label>
+                                
+                                <input class="form-control" type="file" wire:model.defer="edit_logo">
 
-                                @error('edit_phone')
+                                @error('edit_logo')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                                
                             </div>
 
                         </div>
@@ -96,20 +100,20 @@
                         <div class="d-flex justify-content-around">
                             
                             <div class="form-group col-md-4">
-                                <label for="edit_color">Color</label>
-                                <input class="form-control" type="text" wire:model.defer="edit_color">
+                                <label for="edit_address">Address</label>
+                                <input class="form-control" type="text" wire:model.defer="edit_address">
 
-                                @error('edit_color')
+                                @error('edit_address')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="edit_logo">Logo</label>
-                                
-                                <input class="form-control" type="file" wire:model.defer="edit_logo">
+                                <label class="mb-2" for="edit_color">Choose Color</label>
+                                    
+                                <input wire:model="edit_color" class="form-control" type="color">
 
-                                @error('edit_logo')
+                                @error('edit_color')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -151,3 +155,23 @@
     </div>
 
 </div>
+
+<script>
+    document.getElementById("myButton3").addEventListener("click", () => {
+
+    
+var x = document.getElementById("myButton3").value;
+
+//Check if register button
+if (x.includes("Submit")) {
+
+  //assign value to favColor    
+  var favColor = document.getElementById("favcolor").value;
+    
+}
+
+var message3 = `the color you selected is: ${favColor}<br>`;
+
+document.getElementById("par3").innerHTML = message3.fontcolor("&(favColor)");  
+});
+</script>

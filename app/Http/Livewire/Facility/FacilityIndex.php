@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Facility;
 
 use Livewire\Component;
+use App\Models\User;
 use App\Models\Facility;
 use App\Models\FacilityProfile;
 use App\Models\Company;
@@ -23,7 +24,7 @@ class FacilityIndex extends Component
     public $showCreate = false;
     public $showEdit   = false;
 
-    public function show ($type, $ids)
+    public function show ($type, $ids = null)
     {
         $this->showIndex  = false;
         $this->showCreate = false;
@@ -46,7 +47,7 @@ class FacilityIndex extends Component
 
     public function render()
     {   
-        return view('livewire.facility.facility-index', ['facilities' => Facility::where(function($sub_query)
+        return view('livewire.facility.facility-index', ['facilities' => Facility::where('company_id', $this->ids)->where(function($sub_query)
         {
             $sub_query->where('name', 'like', '%' .$this->searchTerm.'%');
         })->paginate(12)
@@ -54,30 +55,20 @@ class FacilityIndex extends Component
     }
 
     public function destroy ($id)
-    {
-        $facilityProfile = FacilityProfile::findOrFail($id);
-            $facilityProfile->Media->delete();
-            $facilityProfile->delete();
-        
-        $facilities = Facility::where('company_id', $id)->get();
-            foreach ($facilities as $facility)
-            {   
-                if ($facility->Profile->Media)
-                {
-                    $facility->Profile->Media->delete();
-                }
-                 
-                if ($facility->Profile)
-                {
-                    $facility->Profile->delete();
-                }
+    { 
+        $facility = Facility::findOrFail($id);
+            $facility->Profile->Media->delete();
+            $facility->Profile->delete();
 
-                $facility->delete();
+            if($facility->facilityUsers == true)
+            {
+                foreach($facility->facilityUsers as $facilityUser)
+                {   
+                    $user = User::findOrFail($facilityUser->user_id);
+                        $user->active = 0;
+                        $user->save();
+                }
             }
-
-        $company = Company::findOrFail($id);
-            $company->delete();
-            
-        return redirect('/');
+            $facility->delete();
     }
 }

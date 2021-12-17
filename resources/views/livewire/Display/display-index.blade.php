@@ -1,14 +1,11 @@
-@section('title', 'Display Types')
-
 @if($showIndex == true) 
   <div class="position-absolute start-0 w-100">
 
-    <nav class="page-breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"> <a href="{{ route('livewire.display') }}">&emsp; Display Types &emsp;</a> </li>
-            <li class="breadcrumb-item active" aria-current="page">&emsp; All Display Types </li>
-        </ol>
-    </nav>
+    <nav class="navbar navbar-light p-0">
+      <div class="container-fluid">
+          <a class="navbar-brand text-success  p-0">Display Types &nbsp; / &nbsp; All Display Types</a>
+      </div>
+  </nav>
 
     <div class="row">
       <div class="col-md-12 grid-margin stretch-card">
@@ -31,9 +28,9 @@
               <table class="table table-bordered">
                 <thead>
                   <tr class="table-success">
-                    <td class="text-center col-1"> ID     </td>
-                    <td class="text-center col-8"> Name   </td>
-                    <td class="text-center col-3"> Action </td>
+                    <th class="text-center col-1"> ID     </th>
+                    <th class="text-center col-8"> Name   </th>
+                    <th class="text-center col-3"> Action </th>
                   </tr>
                 </thead>        
           
