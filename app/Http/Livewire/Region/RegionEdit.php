@@ -12,6 +12,15 @@ class RegionEdit extends Component
     public $edit_name;
     public $edit_description;
 
+    public $return = false;
+    public $active = true;
+
+    public function back ()
+    {
+        $this->active = false;
+        $this->return = true;
+    }
+
     public function mount ($regionID)
     {
         $region = Region::with(['Details'])->findOrFail($regionID);
@@ -40,6 +49,6 @@ class RegionEdit extends Component
             $regionProfile->description = $this->edit_description;
             $regionProfile->save();
         
-        return redirect('/regions');
+        $this->back();
     }   
 }

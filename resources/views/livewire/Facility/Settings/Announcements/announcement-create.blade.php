@@ -54,23 +54,35 @@
 
                         <div class="row">
                             <div class="d-flex justify-content-center">
-                                <div wire:ignore>
+                                {{-- <div wire:ignore>
                                     <input wire:model="datepicker1" class="mx-4" type="date" id="datepicker1">
                                 </div>
                                 
                                 <div wire:ignore>
                                     <input wire:model="datepicker2" class="mx-4" type="date"  id="datepicker2">
+                                </div> --}}
+
+                                <div wire:ignore class="mx-2">
+                                    <form wire:submit.prevent="create({{ $facilityID }})">
+                                        <input wire:model.lazy="first_date" class="form-control" type="text" id="first_date">
+                                    </form>
+                                </div>
+
+                                <div wire:ignore class="mx-2">
+                                    <form wire:submit.prevent="create({{ $facilityID }})">
+                                        <input wire:model.lazy="second_date" class="form-control" type="text" id="second_date">
+                                    </form>
                                 </div>
                             </div>
                         </div>
 
                         <div class="d-flex justify-content-center">
-                            @error('datepicker1')
+                            @error('first_date')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="d-flex justify-content-center">
-                            @error('datepicker2')
+                            @error('second_date')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -78,7 +90,7 @@
                         <div class="row mb-3 mt-2">                       
                             <div class="d-flex justify-content-center">
                                 <div class="col-2">
-                                    <button wire:click="create({{ $facilityID }})" class="form-control mt-2 btn btn-success" type="submit">Create Display Type</button>
+                                    <button wire:click="create({{ $facilityID }})" class="form-control mt-2 btn btn-success" type="submit">Create Announcement</button>
                                 </div>
                             </div>
                         </div>
@@ -104,10 +116,10 @@
 <script src="../pikaday.js"></script>
 <script>
     //Calendar input 1
-new Pikaday({ field: document.getElementById('datepicker1') })
+new Pikaday({ field: document.getElementById('first_date') })
 
     picker = new Pikaday({
-    field: document.getElementById('datepicker1'),
+    field: document.getElementById('first_date'),
     firstDay: 0,
     setDefaultDate: true,
     minDate: new Date(2021, 11, 14),
@@ -119,10 +131,10 @@ new Pikaday({ field: document.getElementById('datepicker1') })
     }
 });
    //Calendar input 2
-new Pikaday({ field: document.getElementById('datepicker2') })
+new Pikaday({ field: document.getElementById('second_date') })
     
     picker = new Pikaday({
-    field: document.getElementById('datepicker2'),
+    field: document.getElementById('second_date'),
     firstDay: 0,
     setDefaultDate: true,
     minDate: new Date(2021, 11, 14),

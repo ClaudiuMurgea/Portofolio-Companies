@@ -1,7 +1,7 @@
 <div>
     <div>
-        <figure style="height:100%;">
-            <img class="img-fluid" style="max-width: 100%;max-height: 100%;" src="{{ url('/defaults/default-banner.jpg') }}" class="img-fluid" alt="profile cover">
+        <figure>
+            <img style="height: 360px;width:1860px;" class="img-fluid"  src="{{ url('/defaults/default-banner.jpg') }}" class="img-fluid" alt="profile cover">
         </figure>
     </div>
 

@@ -16,6 +16,7 @@ class DisplaysIndex extends Component
     // public $displays;
 
     public $facilityID;
+    public $displayID;
 
     public function show ( $type, $ids = null )
     {
@@ -27,9 +28,15 @@ class DisplaysIndex extends Component
         $this->ids        = $ids;
     }
 
+    public function edit ($display)
+    {
+        $this->displayID = $display;
+        $this->show('showEdit', $this->displayID);
+    }
+
     public function render()
     {
-        $displays = Display::all();
+        $displays = Display::where('facility_id', $this->facilityID)->get();
         return view('livewire.facility.settings.displays.displays-index', ['displays' => $displays])->layout('layouts.admin.master');
     }
 
@@ -54,9 +61,6 @@ class DisplaysIndex extends Component
 
             $display->media->delete();
         }
-        
         $display->delete();
-
-        $this->render();
     }
 }

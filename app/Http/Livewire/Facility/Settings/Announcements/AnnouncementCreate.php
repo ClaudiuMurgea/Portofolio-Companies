@@ -9,10 +9,10 @@ use App\Models\Announcement;
 class AnnouncementCreate extends Component
 {
     protected $rules = [
-        'title'       => 'required',
-        'text'        => 'required',
-        'datepicker1' => 'required|date',
-        'datepicker2' => 'required|date'
+        'title'             => 'required',
+        'text'              => 'required',
+        'first_date'  => 'required|date',
+        'second_date' => 'required|date'
         ];
 
     public $return = false;
@@ -22,8 +22,14 @@ class AnnouncementCreate extends Component
     
     public $title;
     public $text;
-    public $datepicker1;
-    public $datepicker2;
+    public $first_date;
+    public $second_date;
+    
+    public function back ()
+    {
+        $this->active = false;
+        $this->return = true;
+    }
     
     public function mount($facility)
     {
@@ -35,11 +41,7 @@ class AnnouncementCreate extends Component
         return view('livewire.facility.settings.announcements.announcement-create')->layout('layouts.admin.master');
     }
 
-    public function back ()
-    {
-        $this->active = false;
-        $this->return = true;
-    }
+
 
     public function create ($id)
     {
@@ -51,8 +53,8 @@ class AnnouncementCreate extends Component
             $announcement->facility_id  = $this->facilityID;
             $announcement->title        = $this->title;
             $announcement->announcement = $this->text;
-            $announcement->start_at     = $this->datepicker1;
-            $announcement->end_at       = $this->datepicker2;
+            $announcement->start_at     = $this->first_date;
+            $announcement->end_at       = $this->second_date;
             $announcement->save();
         
         $this->back();

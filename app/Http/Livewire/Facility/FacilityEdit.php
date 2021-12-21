@@ -24,6 +24,15 @@ class FacilityEdit extends Component
     public $old_logo;
     public $edit_logo;
 
+    public $return = false;
+    public $active = true;
+    
+    public function back ()
+    {
+        $this->active = false;
+        $this->return = true;
+    }
+
     public function mount($facilityID)
     {    
         $this->states  = State::all();
@@ -94,6 +103,6 @@ class FacilityEdit extends Component
             $facilityProfile->logo       = $media->id;
             $facilityProfile->save();
 
-        return redirect()->to('/facilities/' . $this->companyID);
+        $this->back();
     }
 }

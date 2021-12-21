@@ -12,7 +12,7 @@ class FacilityIndex extends Component
 {
     protected $listeners = ['show'];
 
-    public Company $company;
+    public $company;
     public $facilityID;
 
     public $searchTerm;
@@ -36,7 +36,7 @@ class FacilityIndex extends Component
 
     public function mount ($company)
     {   
-        $this->ids = $company->id;
+        $this->ids = $company;
     }
 
     public function details ($ids)
@@ -69,6 +69,6 @@ class FacilityIndex extends Component
                         $user->save();
                 }
             }
-            $facility->delete();
+        $facility->delete();
     }
 }

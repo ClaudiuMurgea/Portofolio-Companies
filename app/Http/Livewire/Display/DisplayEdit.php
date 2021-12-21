@@ -9,6 +9,15 @@ class DisplayEdit extends Component
 {
     public $ids;
     public $edit_name;
+    
+    public $return = false;
+    public $active = true;
+
+    public function back ()
+    {
+        $this->active = false;
+        $this->return = true;
+    }
 
     public function render()
     {
@@ -32,6 +41,6 @@ class DisplayEdit extends Component
             $displayType->name = $this->edit_name;
             $displayType->save();
 
-        return redirect('/displays');
+        $this->back();
     }
 }

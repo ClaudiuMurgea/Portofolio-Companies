@@ -17,6 +17,14 @@ use Hash;
 
 class UserEdit extends Component
 {   
+    protected $rules = [
+        'password'       => '',
+        'role'           => 'required|numeric|exists:roles,id',
+        'region'         => '',
+        'company'        => '',
+        'facility'       => ''
+    ];
+
     public $ids;
     public $user;
     public $edit_name;
@@ -44,13 +52,14 @@ class UserEdit extends Component
 
     public $companyID;
 
-    protected $rules = [
-        'password'       => '',
-        'role'           => 'required|numeric|exists:roles,id',
-        'region'         => '',
-        'company'        => '',
-        'facility'       => ''
-    ];
+    public $return = false;
+    public $active = true;
+
+    public function back ()
+    {
+        $this->active = false;
+        $this->return = true;
+    }
 
     public function Only ($type)
     {
@@ -251,6 +260,6 @@ class UserEdit extends Component
                 $user->assignRole([ $role->name ]);
             }
         }
-        return redirect('/users');
+        $this->back();
     }
 }

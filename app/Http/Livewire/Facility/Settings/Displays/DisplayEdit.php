@@ -20,10 +20,10 @@ class DisplayEdit extends Component
     public $showColor  = false;
     public $showImage  = false;
 
-    public $facilityID;
-
     public $displays;
+    public $displayID;
     public $displayTypes;
+    public $facilityID;
 
     public $radio;
     public $edit_name;
@@ -46,13 +46,14 @@ class DisplayEdit extends Component
         $this->$type = true;
     }
 
-    public function mount($facility)
-    {
-        $this->facilityID = $facility;
+    public function mount($display)
+    {   
         $this->displays = Display::all();
         $this->displayTypes = DisplayType::all();
 
-        $display = Display::with('Media')->where('facility_id', $facility)->first();
+        $display = Display::with('Media')->find($display);
+            $this->displayID = $display->id;
+            $this->facilityID = $display->facility_id;
             $this->edit_name        = $display->name;
             $this->edit_type        = $display->display_type;
             $this->edit_orientation = $display->horizontal;

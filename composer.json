@@ -6,11 +6,9 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
-        "brunocfalcao/blade-feather-icons": "^2.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",
-        "itsgoingd/clockwork": "^5.1",
         "itsjavi/bootstrap-colorpicker": "^3.4",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
@@ -18,8 +16,7 @@
         "laravel/ui": "^3.3",
         "laravelcollective/html": "^6.2",
         "livewire/livewire": "^2.7",
-        "spatie/laravel-permission": "^5.4",
-        "werneckbh/laravel-qr-code": "^0.1.3"
+        "spatie/laravel-permission": "^5.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

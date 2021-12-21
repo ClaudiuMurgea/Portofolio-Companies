@@ -41,6 +41,15 @@ class CompanyCreate extends Component
     public $color;
     public $logo;
 
+    public $return = false;
+    public $active = true;
+    
+    public function back ()
+    {
+        $this->active = false;
+        $this->return = true;
+    }
+
     public function mount ()
     {   
         $this->states = State::all();
@@ -92,6 +101,6 @@ class CompanyCreate extends Component
             $companyProfile->logo       = $media->id;
             $companyProfile->save();
 
-        return redirect('/');
+        $this->back();
     }
 }

@@ -44,6 +44,15 @@ class CompanyEdit extends Component
     public $edit_color;
     public $edit_logo;
     public $old_logo;
+    
+    public $return = false;
+    public $active = true;
+    
+    public function back ()
+    {
+        $this->active = false;
+        $this->return = true;
+    }
 
     public function mount ($companyID)
     {
@@ -117,7 +126,7 @@ class CompanyEdit extends Component
             
             $companyProfile->save();
 
-        return redirect('/');
+        $this->back();
     }
 
 }

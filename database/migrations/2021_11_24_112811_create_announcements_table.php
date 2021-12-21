@@ -19,8 +19,8 @@ class CreateAnnouncementsTable extends Migration
             $table->unsignedInteger('facility_id');
             $table->string('title');
             $table->text('announcement');
-            $table->timestamp('start_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('end_at')->nullable();
+            $table->date('start_at');
+            $table->date('end_at')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
 

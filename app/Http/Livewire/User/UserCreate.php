@@ -49,6 +49,15 @@ class UserCreate extends Component
     public $companyFacilities;
     public $facilityCompany;
 
+    public $return = false;
+    public $active = true;
+
+    public function back ()
+    {
+        $this->active = false;
+        $this->return = true;
+    }
+
     public function Only ($type)
     {   
         $this->Platform_Admin  = false;
@@ -208,6 +217,6 @@ class UserCreate extends Component
             }
         }
 
-        return redirect('/users');
+        $this->back();
     }
 }

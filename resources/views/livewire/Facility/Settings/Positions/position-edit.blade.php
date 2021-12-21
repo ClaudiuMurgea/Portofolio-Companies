@@ -7,7 +7,7 @@
                         
                         <nav class="navbar navbar-light p-0">
                             <div class="container-fluid">
-                                <a class="navbar-brand text-success  p-0">Add Position</a>
+                                <a class="navbar-brand text-success  p-0">Edit Position</a>
                                 <a wire:click="back" class="navbar-brand btn btn-success text-white  p-0 col-md-1 d-flex justify-content-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg>
                                     &nbsp;Back &nbsp;
@@ -19,20 +19,20 @@
                             <div class="d-flex justify-content-around">
 
                                 <div class="form-group col-md-4">
-                                    <label for="title">Position title</label>
+                                    <label for="edit_title">Position title</label>
                                     <div wire:ignore>
-                                        <input wire:model.defer="title" class="form-control">
+                                        <input wire:model.defer="edit_title" class="form-control">
                                     </div>
-                                    @error('title')
+                                    @error('edit_title')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label for="url">Aply URL</label>
-                                    <input wire:model.defer="url" class="form-control">
+                                    <label for="edit_url">Aply URL</label>
+                                    <input wire:model.defer="edit_url" class="form-control">
 
-                                    @error('url')
+                                    @error('edit_url')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -46,10 +46,10 @@
                                 <div class="form-group col-md-4">
                                     <label for="description">Description</label>
                                     <div wire:ignore>
-                                        <textarea wire:model.lazy="description" class="form-control"  id="description" cols="40" rows="5"></textarea>
+                                        <textarea wire:model.lazy="edit_description" class="form-control"  id="description" cols="40" rows="5"></textarea>
                                     </div>
                                    
-                                    @error('description')
+                                    @error('edit_description')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -58,12 +58,12 @@
                                     <label for="date">Valid until</label>
 
                                     <div wire:ignore>
-                                        <form wire:submit.prevent="create({{ $facilityID }})">
-                                            <input wire:model.lazy="date" class="form-control" type="text" id="date">
+                                        <form wire:submit.prevent="edit({{ $positionID }})">
+                                            <input wire:model.lazy="edit_date" class="form-control" type="text" id="edit_date">
                                         </form>
                                     </div>
 
-                                    @error('date')
+                                    @error('edit_date')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -109,7 +109,7 @@
 
                                             <li class="slick-slide slick-active mx-3" data-slick-index="5" aria-hidden="false" tabindex="0">
                                                     <img width="180px" src="{{ url('/assets/images/positions/6.jpg') }}" alt="img">
-                                                    <input type="radio" wire:model.lazy="image" value="6.jpeg">
+                                                    <input type="radio" wire:model.lazy="image" value="6.jpg">
                                                     <div class="overlay d-none">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                                     </div>
@@ -118,7 +118,7 @@
                                             
                                             <li class="slick-slide slick-active mx-3" data-slick-index="3" aria-hidden="false" tabindex="0">
                                                     <img width="180px" src="{{ url('/assets/images/positions/4.jpeg') }}" alt="img">
-                                                    <input type="radio" wire:model.lazy="image" value="4.jpg">
+                                                    <input type="radio" wire:model.lazy="image" value="4.jpeg">
                                                     <div class="overlay d-none">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                                     </div>
@@ -146,13 +146,13 @@
                                     @error('image')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                    <button wire:click="create({{ $facilityID }})" class="form-control mt-2 btn btn-success" type="submit">Create Position</button>
+                                    <button wire:click="edit({{ $positionID }})" class="form-control mt-2 btn btn-success" type="submit">Edit Position</button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="position-absolute bottom-40 end-50">
-                            <i wire:loading wire:target='create' class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i>
+                            <i wire:loading wire:target='edit' class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i>
                         </div>
 
                     </div>
@@ -174,10 +174,10 @@
 <script type="text/javascript" src="slick/slick.min.js"></script>
 
 <script>
-    new Pikaday({ field: document.getElementById('date') })
+    new Pikaday({ field: document.getElementById('edit_date') })
     
         picker = new Pikaday({
-        field: document.getElementById('date'),
+        field: document.getElementById('edit_date'),
         firstDay: 0,
         // pickWholeWeek: true,
         setDefaultDate: true,

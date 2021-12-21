@@ -58,4 +58,12 @@ class MenusIndex extends Component
         
         return view('livewire.facility.settings.menus.menus-index')->layout('layouts.admin.master');
     }
+
+    public function create()
+    {
+        $this->validate([
+            '$datepicker'=> ''
+        ]);
+        dd($this->validate);
+    }
 }

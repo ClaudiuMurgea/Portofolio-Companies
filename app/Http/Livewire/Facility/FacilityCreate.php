@@ -43,14 +43,23 @@ class FacilityCreate extends Component
     public $logo;
     public $region;
 
+    public $return = false;
+    public $active = true;
+    
+    public function back ()
+    {
+        $this->active = false;
+        $this->return = true;
+    }
+
     public function render()
     {
         return view('livewire.facility.facility-create')->layout('layouts.admin.master');
     }
 
-    public function mount($companyID)
+    public function mount($company)
     {
-        $this->ids = $companyID;
+        $this->ids = $company;
         $this->states  = State::all();
         $this->regions = Region::all();
     }
@@ -86,6 +95,6 @@ class FacilityCreate extends Component
             $facilityProfile->logo        = $media->id;
             $facilityProfile->save();
 
-        return redirect()->to('/facilities/' . $this->ids);
+        $this->back();
     }
 }

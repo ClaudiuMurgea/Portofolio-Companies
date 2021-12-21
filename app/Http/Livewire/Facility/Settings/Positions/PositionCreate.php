@@ -12,6 +12,7 @@ class PositionCreate extends Component
     public $title;
     public $url;
     public $date;
+    public $image;
 
     public $facilityID;
 
@@ -40,17 +41,20 @@ class PositionCreate extends Component
             'title'       => 'required',
             'description' => 'required',
             'url'         => 'required',
-            'date'        => 'required'
+            'date'        => 'required',
+            'image'       => 'required'
         ]);
-        
+
         $facility = Facility::find($id);
         $position = new Position();
             $position->facility_id = $facility->id;
             $position->company_id = $facility->company_id;
             $position->name = $this->title;
             $position->description = $this->description;
-            $position->pos_image = 1;
+            $position->pos_image = $this->image;
             $position->expire_date = $this->date;
             $position->save();
+        
+        $this->back();
     }
 }

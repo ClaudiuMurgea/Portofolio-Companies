@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Facility\Settings\Positions;
 
 use Livewire\Component;
+use App\Models\Position;
 
 class PositionsIndex extends Component
 {
@@ -14,6 +15,7 @@ class PositionsIndex extends Component
     public $announcements;
 
     public $facilityID;
+    public $positionID;
 
     public function show ( $type, $ids = null )
     {
@@ -25,13 +27,27 @@ class PositionsIndex extends Component
         $this->ids        = $ids;
     }
 
-    public function render()
+    public function edit ($position)
     {
-        return view('livewire.facility.settings.positions.positions-index')->layout('layouts.admin.master');
+        $this->positionID = $position;
+        $this->show('showEdit', $this->positionID);
     }
-
+  
     public function mount ($facility)
     {
         $this->facilityID = $facility;
     }
+
+    public function render()
+    {
+        $positions = Position::where('facility_id', $this->facilityID)->get();
+        return view('livewire.facility.settings.positions.positions-index', ['positions' => $positions])->layout('layouts.admin.master');
+    }
+
+    public function delete ($id)
+    {
+        $position = Position::find($id);
+        $position->delete();
+    }
+
 }

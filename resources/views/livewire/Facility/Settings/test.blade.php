@@ -1,6 +1,6 @@
-
-<input class="form-control" type="text" id="datepicker">
-
+<div wire:ignore>
+    <input wire:model.lazy="datepicker" class="form-control" type="text" id="datepicker">
+</div>
 <script>
 new Pikaday({ field: document.getElementById('datepicker') })
 

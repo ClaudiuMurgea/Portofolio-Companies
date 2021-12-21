@@ -12,9 +12,9 @@ class AnnouncementsIndex extends Component
     public $showCreate  = false;
     public $showEdit    = false;
     public $showDetails = false;
-    public $announcements;
 
     public $facilityID;
+    public $announcementID;
 
     public function show ( $type, $ids = null )
     {
@@ -26,19 +26,27 @@ class AnnouncementsIndex extends Component
         $this->ids        = $ids;
     }
 
+    public function edit ($announcement)
+    {
+        $this->announcementID = $announcement;
+        $this->show('showEdit', $this->announcementID);
+    }
+
     public function render()
     {
-        return view('livewire.facility.settings.announcements.announcements-index')->layout('layouts.admin.master');
+        $announcements = Announcement::all();
+        return view('livewire.facility.settings.announcements.announcements-index', ['announcements' => $announcements])->layout('layouts.admin.master');
     }
 
     public function mount ($facility)
     {
         $this->facilityID = $facility;
-        $this->announcements = Announcement::all();
+
     }
 
     public function delete ($id)
     {
-        $announce
+        $announcement = Announcement::find($id);
+        $announcement->delete();
     }
 }

@@ -122,7 +122,7 @@
                             <div class="row mb-3 mt-2">                       
                                 <div class="d-flex justify-content-center">
                                     <div class="col-2">
-                                        <button wire:click="create({{ $facilityID }})" class="form-control mt-2 btn btn-success" type="submit">Create Display Type</button>
+                                        <button wire:click="create({{ $facilityID }})" class="form-control mt-2 btn btn-success" type="submit">Create Display</button>
                                     </div>
                                 </div>
                             </div>

@@ -15,6 +15,15 @@ class RegionCreate extends Component
 
     public $name;
     public $description;
+    
+    public $return = false;
+    public $active = true;
+
+    public function back ()
+    {
+        $this->active = false;
+        $this->return = true;
+    }
 
     public function render()
     {
@@ -35,6 +44,6 @@ class RegionCreate extends Component
             $regionProfile->description = $this->description;
             $regionProfile->save();
         
-        return redirect('/regions');
+        $this->back();
     }
 }

@@ -111,13 +111,13 @@
                             <div class="row mb-3 mt-2">                       
                                 <div class="d-flex justify-content-center">
                                     <div class="col-2">
-                                        <button wire:click="edit({{ $facilityID }})" class="form-control mt-2 btn btn-success" type="submit">Create Display Type</button>
+                                        <button wire:click="edit({{ $displayID }})" class="form-control mt-2 btn btn-success">Edit Display</button>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="position-absolute bottom-40 end-50">
-                                <i wire:loading wire:target='create' class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i>
+                                <i wire:loading wire:target='edit' class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i>
                             </div>
 
                         </div>

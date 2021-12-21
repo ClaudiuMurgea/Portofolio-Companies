@@ -12,6 +12,15 @@ class DisplayCreate extends Component
      ];
 
     public $name;
+
+    public $return = false;
+    public $active = true;
+
+    public function back ()
+    {
+        $this->active = false;
+        $this->return = true;
+    }
  
     public function render ()
     {
@@ -26,6 +35,6 @@ class DisplayCreate extends Component
             $displayType->name = $this->name;
             $displayType->save();
 
-        return redirect('/displays');
+        $this->back();
     }
 }
