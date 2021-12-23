@@ -13,7 +13,6 @@ use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\File;
 
-
 class FacilityEdit extends Component
 {   
     use WithFileUploads;
@@ -99,7 +98,6 @@ class FacilityEdit extends Component
             $facilityProfile->region_id  = $this->edit_region;
             $facilityProfile->phone      = $this->edit_phone;
             $facilityProfile->color      = $this->edit_color;
-
             $facilityProfile->logo       = $media->id;
             $facilityProfile->save();
 

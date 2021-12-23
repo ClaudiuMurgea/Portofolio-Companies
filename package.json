@@ -25,6 +25,7 @@
         "@simonwep/pickr": "^1.8.2",
         "bootstrap-colorpicker": "^3.4.0",
         "ckeditor4": "^4.17.1",
+        "cropperjs": "^1.5.12",
         "dropzone": "^6.0.0-beta.2",
         "install": "^0.13.0",
         "pikaday": "^1.8.2",

@@ -81,7 +81,6 @@ class FacilityCreate extends Component
             $manager = new ImageManager();
             $image = $manager->make('storage/'.$filename)->resize(523.2, 255.66);
             $image->save('storage/'.$filename);
- 
 
         $facilityProfile = new FacilityProfile();
             $facilityProfile->facility_id = $facility->id;

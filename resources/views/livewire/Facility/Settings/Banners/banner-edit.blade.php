@@ -20,6 +20,10 @@
                             <div class="d-flex justify-content-center">
                                 <div class="form-group col-md-3 mt-3">
                                     <input wire:model.defer="title" class="form-control" placeholder="Title ...">
+
+                                    @error('title')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -28,23 +32,27 @@
                             <div class="d-flex justify-content-center">
                                 <div class="form-group col-md-3 mt-3">
                                     <input type="file" wire:model.defer="banner" class="form-control">
+
+                                    @error('banner')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
 
-                        {{-- <div class="row">
+                        <div class="row">
                             <div class="d-flex justify-content-center">
                                 <div class="mx-5">
                                     <label> Starting</label>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
 
                         <div class="row">
                             <div class="d-flex justify-content-center">
-                                <div wire:ignore class="mx-2 form-group col-md-3 mt-4">
+                                <div wire:ignore class="mx-2 form-group col-md-3">
                                     <form wire:submit.prevent="create({{ $facilityID }})">
-                                        <input wire:model.lazy="start_at" class="form-control" type="text" id="start_at" placeholder="Start date ...">
+                                        <input wire:model.lazy="start_at" class="form-control text-center" type="text" id="start_at">
                                     </form>
                                 </div>
                             </div>
@@ -80,7 +88,7 @@
                             </div>
                         </div>
 
-                        {{-- <div class="row">
+                        <div class="row">
                             <div class="d-flex justify-content-center">
                                 <div class="mt-3 form-group col-md-3">
                                     <select wire:model="options" class="form-control text-center text-success" name="" id="">
@@ -89,23 +97,22 @@
                                     </select>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
 
-                        {{-- @if($expireDate == true) --}}
-
-                            {{-- <div class="row">
+                        @if($expireDate == true)
+                            <div class="row">
                                 <div class="d-flex justify-content-center">
                                     <div class="mx-5">
                                         <label> Ending</label>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
 
                             <div class="row">
                                 <div class="d-flex justify-content-center">
-                                    <div wire:ignore class="mx-2 form-group col-md-3 mt-5">
+                                    <div wire:ignore class="mx-2 form-group col-md-3">
                                         <form wire:submit.prevent="create({{ $facilityID }})">
-                                            <input wire:model.lazy="end_at" class="form-control" type="text" id="end_at" placeholder="End date ...(optional)">
+                                            <input wire:model.lazy="end_at" class="form-control text-center" type="text" id="end_at">
                                         </form>
                                     </div>
                                 </div>
@@ -113,7 +120,7 @@
 
                             <div class="row">
                                 <div class="d-flex justify-content-center">
-                                    <select wire:model.defer="end_hour" class="col-md-1 text-center">
+                                    <select name="" id="" class="col-md-1 text-center">
                                         <option value="01">01</option>
                                         <option value="02">02</option>
                                         <option value="03">03</option>
@@ -128,51 +135,35 @@
                                         <option value="11">11</option>
                                         <option value="12">12</option>
                                     </select>
-                                    <select wire:model.defer="end_minute" class="col-md-1 text-center">
+                                    <select name="" id="" class="col-md-1 text-center">
                                         <option value="00">00</option>
                                         <option value="15">15</option>
                                         <option value="30">30</option>
                                         <option value="45">45</option>
                                     </select>
-                                    <select wire:model.defer="end_meridiem" class="col-md-1 text-center">
+                                    <select name="" id="" class="col-md-1 text-center">
                                         <option value="am">am</option>
                                         <option value="pm">pm</option>
                                     </select>
                                 </div>
                             </div>
-                            {{-- @endif --}}
-
-                        <div class="d-flex justify-content-center">
-                            @error('title')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        @endif
 
                         <div class="d-flex justify-content-center">
                             @error('start_at')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
                         <div class="d-flex justify-content-center">
                             @error('end_at')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
-                        <div class="d-flex justify-content-center">
-                            @error('banner')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        
-                   
     
                         <div class="row mb-3 mt-2">                       
                             <div class="d-flex justify-content-center">
                                 <div class="col-2">
-                                    <button wire:click="create({{ $facilityID }})" class="form-control mt-2 btn btn-success" type="submit">Create Banner</button>
+                                    <button wire:click="create({{ $facilityID }})" class="form-control mt-2 btn btn-success" type="submit">Edit Banner</button>
                                 </div>
                             </div>
                         </div>
@@ -181,13 +172,13 @@
                             <i wire:loading wire:target='create' class="fa fa-spinner fa-spin mr-2 offset-5 text-success" style="font-size:24px"></i>
                         </div>
 
-                        <div class="row">                       
+                        {{-- <div class="row">                       
                             <div class="d-flex justify-content-center">
                                 @if ($banner)
                                     <img style="" src="{{ $banner->temporaryUrl() }}" class="imgs" alt="image">
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </div>
@@ -220,6 +211,7 @@ new Pikaday({ field: document.getElementById('start_at') })
        return false;
     }
 });
+
 </script>
 
 <script>

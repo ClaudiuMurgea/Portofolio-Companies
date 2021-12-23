@@ -31,6 +31,6 @@ class DisplayIndex extends Component
     public function destroy($id)
     {
         $displayType = DisplayType::findOrFail($id);
-        $displayType->delete();
+            $displayType->delete();
     }
 }

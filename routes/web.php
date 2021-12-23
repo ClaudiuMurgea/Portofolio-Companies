@@ -6,12 +6,10 @@ use App\Http\Livewire\User\UserIndex;
 use App\Http\Livewire\Region\RegionIndex;
 use App\Http\Livewire\Display\DisplayIndex;
 use App\Http\Livewire\Company\CompanyIndex;
-use App\Http\Livewire\Banner\BannerComponent;
+use App\Http\Livewire\Company\Settings\Banners\BannerComponent;
+use App\Http\Livewire\Company\Settings\Banners\BannerDropzone;
 use App\Http\Livewire\Facility\FacilityIndex;
 use App\Http\Livewire\Facility\Settings\FacilitySetting;
-use App\Http\Livewire\Banner\BannerDropzone;
-// use App\Http\Controllers\DropzoneController;
-
 
 use App\Http\Controllers\HomeController;
 
@@ -22,7 +20,6 @@ Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/home', [HomeController::class, 'index'])  ->name('home');
 
 Route::post('dropzone/upload/{id}', [BannerDropzone::class, 'upload'])->name('dropzone.upload');
-// Route::post('dropzone/upload/{id}', [DropzoneController::class, 'upload'])->name('dropzone.upload');
 
 Route::view('/updates', 'update.index');
 
@@ -33,8 +30,7 @@ Route::view('/updates', 'update.index');
     Route::get('/displays',             DisplayIndex::class)          ->name('livewire.display')    ->middleware ('auth');
     Route::get('/regions',              RegionIndex::class)           ->name('livewire.region')     ->middleware ('auth');
     Route::get('/users',                UserIndex::class)             ->name('livewire.user')       ->middleware ('role:Platform Admin|Regional Admin|Corporate Admin|Facility Admin');  
-
-    Route::get('/facility/{facility}',  FacilitySetting::class)       ->name('livewire.setting')    ->middleware ('auth');
+    Route::get('/facility/{facility}',  FacilitySetting::class)       ->name('livewire.setting')    ->middleware ('role:Platform Admin|Regional Admin|Corporate Admin|Facility Admin|Facility Editor');
 
 
 

@@ -14,19 +14,17 @@ class BannerCreate extends Component
 {
     use WithFileUploads;
 
-    protected $rulles = [
-        'title' => 'required',
-        'banner' => 'required',
-        'start_at' => 'required',
-        'end_at' => '',
-        'options' => ''
-    ];
-
     public $facilityID;
     public $title;
     public $banner;
     public $start_at;
-    
+    public $end_at;
+    public $hour;
+    public $minute;
+    public $meridiem;
+    public $end_hour;
+    public $end_minute;
+    public $end_meridiem;
 
     public $return = false;
     public $active = true;
@@ -52,21 +50,41 @@ class BannerCreate extends Component
 
     public function render()
     {
-        if($this->options == 1)
-        {
-            $this->expireDate();
-        }
-
         return view('livewire.facility.settings.banners.banner-create')->layout('layouts.admin.master');
     }
 
     public function create ($id)
     {
+        $this->validate([
+            'title'        => 'required',
+            'banner'       => 'required',
+            'start_at'     => 'required',
+            'hour'         => '',
+            'minute'       => '',
+            'meridiem'     => '',
+            'end_at'       => '',
+            'end_hour'     => '',
+            'end_minute'   => '',
+            'end_meridiem' => ''
+        ]);
+
         $banner = new Banner();
             $facility = Facility::find($id);
             $banner->company_id = $facility->company_id;
             $banner->facility_id = $id;
             $banner->name = $this->title;
+
+            if($this->meridiem == 'pm')
+            {
+                $this->hour *= 2;
+            } 
+            $banner->start_at = $this->start_at . ' ' . $this->hour . ':' . $this->minute;
+
+            if($this->end_meridiem = 'pm')
+            {
+                $this->end_hour *= 2;
+            }
+            $banner->end_at = $this->end_at . ' ' . $this->end_hour . ':' . $this->end_minute;
 
             $media = new Media();
             $filename = $this->banner->store('photos', 'public');
@@ -76,7 +94,7 @@ class BannerCreate extends Component
                 $image = $manager->make('storage/'.$filename)->resize(523.2, 255.66);
                 $image->save('storage/'.$filename);
             $banner->media_id = $media->id; 
-            $banner->start_at = $this->start_at;
+
             $banner->save();
 
         $this->back();

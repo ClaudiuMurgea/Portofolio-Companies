@@ -44,6 +44,8 @@ class CompanyEdit extends Component
     public $edit_color;
     public $edit_logo;
     public $old_logo;
+
+    public $scope;
     
     public $return = false;
     public $active = true;
@@ -54,9 +56,10 @@ class CompanyEdit extends Component
         $this->return = true;
     }
 
-    public function mount ($companyID)
-    {
-        $company = Company::with(['Profile.Media'])->findOrFail($companyID);
+    public function mount ($company)
+    {   
+        $company = Company::with(['Profile.Media'])->findOrFail($company);
+            $this->scope = "Edit" . $company->name;
             $this->ids          = $company->id;
             $this->edit_name    = $company->name;
             $this->edit_city    = $company->Profile->city;

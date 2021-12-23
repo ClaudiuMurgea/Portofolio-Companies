@@ -17,6 +17,7 @@ class FacilitySetting extends Component
     public $scheduleType;
     public $scheduleTypes;
     public $facilityID;
+    public $facilityIDS = [];
     public $ids;
 
     public $weekly;
@@ -56,6 +57,15 @@ class FacilitySetting extends Component
     {   
         $this->facilityID = $facility->id;
         $this->scheduleTypes = ScheduleTypes::all();
+        if(auth()->user()->facilityUsers()->exists())
+        {
+            foreach(auth()->user()->facilityUsers as $facilityUser)
+            {
+                $this->facilityIDS[] = $facilityUser->facility_id;
+                
+            }
+            // dd($this->facilityIDS);
+        }
     }
 
     public function render ()

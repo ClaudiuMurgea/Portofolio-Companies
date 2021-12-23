@@ -43,7 +43,7 @@ class DisplayEdit extends Component
     {
         $this->showColor = false;
         $this->showImage = false;
-        $this->$type = true;
+        $this->$type     = true;
     }
 
     public function mount($display)
@@ -52,7 +52,7 @@ class DisplayEdit extends Component
         $this->displayTypes = DisplayType::all();
 
         $display = Display::with('Media')->find($display);
-            $this->displayID = $display->id;
+            $this->displayID  = $display->id;
             $this->facilityID = $display->facility_id;
             $this->edit_name        = $display->name;
             $this->edit_type        = $display->display_type;

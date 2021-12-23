@@ -64,8 +64,6 @@ class DisplayCreate extends Component
             'orientation' => 'required',
             'color'       => 'required_if:image,null',
             'image'       => 'required_if:color,null'
-            // 'region'    => 'required_if:role,Regional Admin',
-            // 'required_if_null:user_id
         ]);
 
         $display = new Display();

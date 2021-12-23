@@ -31,4 +31,8 @@ class Company extends Model
         return $this->hasMany(Facility::class, 'company_id', 'id');
     }
 
+    public function Settings ()
+    {
+        return $this->hasOne(CompanySettings::class, 'company_id', 'id');
+    }
 }

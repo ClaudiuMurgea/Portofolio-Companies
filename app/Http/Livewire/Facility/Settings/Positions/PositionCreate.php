@@ -41,7 +41,7 @@ class PositionCreate extends Component
             'title'       => 'required',
             'description' => 'required',
             'url'         => 'required',
-            'date'        => 'required',
+            'date'        => 'required|date',
             'image'       => 'required'
         ]);
 

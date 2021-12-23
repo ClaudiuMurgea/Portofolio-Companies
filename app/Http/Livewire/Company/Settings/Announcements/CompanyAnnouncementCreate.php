@@ -1,24 +1,21 @@
 <?php
 
-namespace App\Http\Livewire\Facility\Settings\Announcements;
+namespace App\Http\Livewire\Company\Settings\Announcements;
 
 use Livewire\Component;
-use App\Models\Facility;
+use App\Models\Company;
 use App\Models\Announcement;
 
-class AnnouncementCreate extends Component
+class CompanyAnnouncementCreate extends Component
 {
-    protected $rules = [
-        'title'       => 'required',
-        'text'        => 'required',
-        'first_date'  => 'required|date',
-        'second_date' => 'required|date'
-        ];
+    // protected $rules = [
+
+    //     ];
 
     public $return = false;
     public $active = true;
 
-    public $facilityID;
+    public $companyID;
     
     public $title;
     public $text;
@@ -31,23 +28,27 @@ class AnnouncementCreate extends Component
         $this->return = true;
     }
     
-    public function mount($facility)
+    public function mount($company)
     {
-        $this->facilityID = $facility;
+        $this->companyID = $company;
     }
 
     public function render()
     {
-        return view('livewire.facility.settings.announcements.announcement-create')->layout('layouts.admin.master');
+        return view('livewire.company.settings.announcements.company-announcement-create')->layout('layouts.admin.master');
     }
 
     public function create ($id)
     {
-        $this->validate();
+        $this->validate([
+            'title'       => 'required',
+            'text'        => 'required',
+            'first_date'  => 'required|date',
+            'second_date' => 'required|date'
+        ]);
         
         $announcement = new Announcement();
-            $facility = Facility::find($id);
-            $announcement->facility_id  = $this->facilityID;
+            $announcement->company_id   = $this->companyID;
             $announcement->title        = $this->title;
             $announcement->announcement = $this->text;
             $announcement->start_at     = $this->first_date;
@@ -56,5 +57,4 @@ class AnnouncementCreate extends Component
         
         $this->back();
     }
-
 }

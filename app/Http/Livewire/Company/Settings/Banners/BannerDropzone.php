@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Banner;
+namespace App\Http\Livewire\Company\Settings\Banners;
 
 use Livewire\Component;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class BannerDropzone extends Component
 
     public function render()
     {
-        return view('livewire.banner.banner-dropzone');
+        return view('livewire.company.settings.banners.banner-dropzone');
     }
 
     function upload (Request $request, $id)

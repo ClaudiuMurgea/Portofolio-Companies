@@ -13,19 +13,27 @@
                                 &nbsp;Add Display&emsp;
                             </a>
                         </div>
+                        @if($displays->isEmpty())
+                            <tr>
+                                <td colspan="8" class="text-center text-success">
+                                    There are no displays defined!
+                                </td>
+                            </tr>
+                        @endif
                     </div>
 
                     <div class="row offset-1 col-sm-12">
+                       
                         @foreach ($displays as $display)
-                            <div class="card col-md-3 mx-3 border-success">
+                            <div class="card col-lg-2 mx-3 border-success">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor mr-1 icon-md text-success" style="margin-left:10%;width: 80%;height: 200px"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                                 
                                 <div class="card-body displayDetails">
                                     <div class="d-flex justify-content-between">
                                         <h5 class="card-title">  {{ $display->name }}  </h5>
 
-                                        <button wire:click="edit({{ $display->id }})" class="border-white bg-white">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit icon-md text-warning editIcon" data-toggle="modal" data-target="#display-modal" data-displayid="1"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        <button wire:click="edit({{ $display->id }})" class="btn btn-link p-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit icon-md text-warning editIcon" data-toggle="modal" data-target="#display-modal" data-displayid="1"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                         </button>
                                     </div>
 
@@ -58,14 +66,15 @@
                                             <span class="slider round"></span>
                                         </label>
 
-                                        <button wire:click="delete({{ $display->id }})" class="border-white bg-white">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash mr-1 icon-md text-danger remove" onclick="removeMonitor(1,false)"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                        <button wire:click="delete({{ $display->id }})" class="btn btn-link p-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                         </button>
                                     </div>
                                                         
                                 </div>
                             </div>
                         @endforeach
+                        
                     </div>
                 </div>
             </div>

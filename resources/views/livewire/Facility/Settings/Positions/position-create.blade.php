@@ -109,7 +109,7 @@
 
                                             <li class="slick-slide slick-active mx-3" data-slick-index="5" aria-hidden="false" tabindex="0">
                                                     <img width="180px" src="{{ url('/assets/images/positions/6.jpg') }}" alt="img">
-                                                    <input type="radio" wire:model.lazy="image" value="6.jpeg">
+                                                    <input type="radio" wire:model.lazy="image" value="6.jpg">
                                                     <div class="overlay d-none">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                                     </div>
@@ -118,7 +118,7 @@
                                             
                                             <li class="slick-slide slick-active mx-3" data-slick-index="3" aria-hidden="false" tabindex="0">
                                                     <img width="180px" src="{{ url('/assets/images/positions/4.jpeg') }}" alt="img">
-                                                    <input type="radio" wire:model.lazy="image" value="4.jpg">
+                                                    <input type="radio" wire:model.lazy="image" value="4.jpeg">
                                                     <div class="overlay d-none">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                                     </div>
@@ -211,21 +211,4 @@
   });
 });
 </script>
-
-{{-- <script>
-    new Pikaday({ field: document.getElementById('date') })
-    
-        picker = new Pikaday({
-        field: document.getElementById('date'),
-        firstDay: 0,
-        setDefaultDate: true,
-        minDate: new Date(2021, 11, 14),
-        maxDate: new Date(2030, 12, 14),
-        yearRange: [2021,2030],
-    
-        disableDayFn: function(theDate) {
-           return false;
-        }
-    });
-</script> --}}
 

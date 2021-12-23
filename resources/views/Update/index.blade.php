@@ -1,11 +1,9 @@
 @extends('layouts.admin.master')
 
-@section('title')
- {{ $title }}
-@endsection
+@section('title', 'Updates')
 
 @push('css')
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/prism.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/prism.css')}}">
 @endpush
 
 @section('content')
@@ -30,7 +28,7 @@
                     <p>Information </p>
                     <p><span class="f-w-600">Details</span></p>
                     <p>
-                      Extra information / Consequences
+                      Extra information
                     </p>
                     <div class="alert alert-primary inverse" role="alert">
                         <i class="icon-info-alt"></i>
@@ -38,21 +36,24 @@
                         <p>Reminder</p>
                     </div>
 
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header pb-0">
-                    <h5>Updates Title</h5>
-                    <div class="setting-list">
-                        <ul class="list-unstyled setting-option">
-                            <li><i class="icofont icofont-maximize full-card font-primary"></i></li>
-                            <li><i class="icofont icofont-minus minimize-card font-primary"></i></li>
-                        </ul>
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header pb-0">
+                                <h5>Updates Title</h5>
+                                <div class="setting-list">
+                                    <ul class="list-unstyled setting-option">
+                                        <li><i class="icofont icofont-maximize full-card font-primary"></i></li>
+                                        <li><i class="icofont icofont-minus minimize-card font-primary"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p>
+                                    Update body - Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <p>
-                        Update body - Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    </p>
                 </div>
             </div>
         </div>

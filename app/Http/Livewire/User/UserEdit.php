@@ -165,11 +165,6 @@ class UserEdit extends Component
             $user->name  = $this->edit_name;
             $user->email = $this->edit_email;
             $user->save();
-    
-        // if($this->Platform_Admin == true)
-        // {
-        //     $wasFacilityUser = FacilityUser::where('user_id', $user->id)->delete();
-        // }
         
         if( $this->region == true)                                                      //add region to the regional admin
         {

@@ -15,7 +15,6 @@ class CompanyIndex extends Component
 {   
     use WithPagination;
     public $searchTerm;
-    public $companyDetails;
     
     public $corporateID;
     public $userCompany;
@@ -23,28 +22,46 @@ class CompanyIndex extends Component
     public $uniqueID;
 
     public $ids;
-    public $showIndex   = true;
-    public $showCreate  = false;
-    public $showEdit    = false;
-    public $showDetails = false;
+    public $showIndex    = true;
+    public $showCreate   = false;
+    public $showEdit     = false;
+
+    public $showFacilities    = false;
+    public $showBanners       = false;
+    public $showAnnouncements = false;
+
+    public $createSettings   = false;
+
 
     public $trashed;
-
+    public $settings;
+    public $nr = 0;
 
     public function show ( $type, $ids = null )
     {
         $this->showIndex  = false;
         $this->showCreate = false;
-        $this->showEdit   = false;      
+        $this->showEdit   = false;
+
+        $this->showFacilities    = false;
+        $this->showBanners       = false;
+        $this->showAnnouncements = false;  
+        $this->createSettings    = false;  
  
         $this->$type      = true;
         $this->ids        = $ids;
     }
 
-    public function details ($ids)
+    public function settings ()
     {
-        $this->showDetails = true;
-        $this->companyDetails = Company::find($ids);
+        $this->nr++;
+        if($this->nr % 2 == 0 )
+        {
+            $this->settings = false;
+        } else 
+        {
+            $this->settings = true;
+        }
     }
 
     public function mount ()
@@ -54,11 +71,12 @@ class CompanyIndex extends Component
         if( auth()->user()->hasRole('Corporate Admin') )
         {
             $this->corporateID = auth()->user()->companyAdmin->first()->company_id;
-            $this->userCompany = Company::find($this->corporateID); 
+            $this->userCompany[] = Company::findOrFail($this->corporateID);
+            $this->ids = $this->corporateID;
         }
         if( auth()->user()->hasAnyRole('Facility Admin|Facility Editor') )
         {   
-            foreach(auth()->user()->facilityUsers as $facility)
+            foreach( auth()->user()->facilityUsers as $facility )
             {
                 $this->corporateID[] = $facility->company_id;
             }
@@ -66,7 +84,7 @@ class CompanyIndex extends Component
 
             foreach($this->uniqueID as $companyID)
             {
-                $this->userCompany = Company::find($companyID); 
+                $this->userCompany[] = Company::findOrFail($companyID); 
             }
         }
     }
@@ -82,10 +100,10 @@ class CompanyIndex extends Component
 
     public function destroy ($id)
     {
-        $companyProfile = CompanyProfile::where('company_id', $id)->delete();
+        $companyProfile = CompanyProfile::withTrashed()->where('company_id', $id)->delete();
             // $companyProfile->Media->delete();
         
-        $facilities = Facility::where('company_id', $id)->get();
+        $facilities = Facility::withTrashed()->where('company_id', $id)->get();
             foreach ($facilities as $facility)
             {   
                 if ( $facility->FacilityUsers == true )
@@ -102,7 +120,7 @@ class CompanyIndex extends Component
                 $facility->delete();
             }
 
-        $company = Company::findOrFail($id);
+        $company = Company::withTrashed()->findOrFail($id);
             foreach($company->companyAdmins as $admin)
             {
                 $userAdmin = User::find($admin->user_id);
@@ -120,7 +138,7 @@ class CompanyIndex extends Component
 
     public function restore ($id)
     {
-        $companyProfile = CompanyProfile::where('company_id', $id)->restore();
+        $companyProfile = CompanyProfile::withTrashed()->where('company_id', $id)->restore();
         // $companyProfile->Media->delete();
     
     $facilities = Facility::withTrashed()->where('company_id', $id)->get();

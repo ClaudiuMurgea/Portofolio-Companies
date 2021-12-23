@@ -11,7 +11,6 @@ use App\Models\Company;
 class UserIndex extends Component
 {   
     use WithPagination;
-    // public $users;
     public $company;
     public $corporateID;
 
@@ -37,8 +36,6 @@ class UserIndex extends Component
 
     public function mount ()
     {
-        // $this->users = User::all();
-
         if( auth()->user()->hasRole('Corporate Admin') )
         {
             $this->corporateID = auth()->user()->companyAdmin->first()->company_id;
@@ -67,8 +64,6 @@ class UserIndex extends Component
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        $user->delete();
-
-        return redirect('/users');
+            $user->delete();
     }
 }

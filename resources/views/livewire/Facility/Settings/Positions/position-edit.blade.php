@@ -44,9 +44,9 @@
                             <div class="d-flex justify-content-around">
 
                                 <div class="form-group col-md-4">
-                                    <label for="description">Description</label>
+                                    <label for="edit_description">Description</label>
                                     <div wire:ignore>
-                                        <textarea wire:model.lazy="edit_description" class="form-control"  id="description" cols="40" rows="5"></textarea>
+                                        <textarea wire:model.lazy="edit_description" class="form-control"  id="edit_description" cols="40" rows="5"></textarea>
                                     </div>
                                    
                                     @error('edit_description')
@@ -193,10 +193,10 @@
 
 <script>
     ClassicEditor
-      .create(document.querySelector('#description'))
+      .create(document.querySelector('#edit_description'))
       .then(editor => {
           editor.model.document.on('change:data', () => {
-          @this.set('description', editor.getData());
+          @this.set('edit_description', editor.getData());
          })
       })
       .catch(error => {

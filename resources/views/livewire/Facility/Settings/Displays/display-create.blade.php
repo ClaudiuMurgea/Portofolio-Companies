@@ -84,7 +84,7 @@
                                 <div class="row">
                                     <div class="d-flex justify-content-center">
                                         <div class="form-group col-md-2 mt-3">
-                                            <input wire:model="color" class="form-control" type="color">
+                                            <input wire:model.defer="color" class="form-control" type="color">
 
                                             @error('color')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -98,7 +98,7 @@
                                 <div class="row">
                                     <div class="d-flex justify-content-center">
                                         <div class="form-group col-md-2 mt-3">
-                                            <input wire:model="image" class="form-control" type="file">
+                                            <input wire:model.defer="image" class="form-control" type="file">
 
                                             @error('image')
                                                 <span class="text-danger">{{ $message }}</span>

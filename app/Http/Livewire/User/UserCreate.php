@@ -135,7 +135,7 @@ class UserCreate extends Component
         $this->validate([
             'name'      => 'required',
             'email'     => 'required|email|unique:users,email',
-            'password'  => 'required',
+            'password'  => 'required|min:4',
             'role'      => 'required',
             'region'    => 'required_if:role,Regional Admin',
             'company'   => 'required_if:role,Corporate Admin',

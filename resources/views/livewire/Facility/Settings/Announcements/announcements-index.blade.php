@@ -13,43 +13,51 @@
                                 &nbsp;Add Announcement&emsp;
                             </a>
                         </div>
+                        @if($announcements->isEmpty())
+                            <tr>
+                                <td colspan="8" class="text-center text-success">
+                                    There are no announcements!
+                                </td>
+                            </tr>
+                        @else
 
-                        @foreach ($announcements as $announcement)
-                            <div class="container-fluid p-0">
-                                <div class="row starter-main p-0">
-                            
-                                    <div class="col-sm-12 grid-margin stretch-card">
-                                        <div class="card">
+                            @foreach ($announcements as $announcement)
+                                <div class="container-fluid p-0">
+                                    <div class="row starter-main p-0">
+                                
+                                        <div class="col-sm-12 grid-margin stretch-card mt-5">
+                                            <div class="card border-success">
 
-                                            <div class="card-body d-flex justify-content-between p-0">
-                                                <div class="card-header p-0 offset-1">
+                                                <div class="card-body d-flex justify-content-center p-0">
                                                     <h5>{{ ucfirst($announcement->title) }}</h5> 
-                                                    <p class="text-success"> Availability : ({{ $announcement->start_at }} / {{ $announcement->end_at }}) </p>
                                                 </div>
 
-                                                <div>
-                                                    <button wire:click="edit({{ $announcement->id }})" class="btn btn-link p-0 text-warning border-warning bg-white">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
-                                                    </button>
-
-                                                    <button wire:click="delete({{ $announcement->id }})" class="btn btn-link p-0 text-danger mx-5 border-danger bg-white" onclick="return confirm('Are you sure?')">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash mr-1 icon-md text-danger remove" onclick="removeMonitor(1,false)"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                                                    </button>
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <p class="text-success"> ({{ $announcement->start_at }} / {{ $announcement->end_at }}) </p>
+                                                    </div>
+                                                    <div>
+                                                        <button wire:click="edit({{ $announcement->id }})" class="btn btn-link p-0 text-warning mx-5">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit icon-md text-warning editIcon" data-toggle="modal" data-target="#display-modal" data-displayid="1"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                                        </button>
+                                                        <button wire:click="delete({{ $announcement->id }})" class="btn btn-link p-0 text-danger mx-5" onclick="return confirm('Are you sure?')">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                        </button>
+                                                    </div>
                                                 </div>
 
-                                            </div>
-
-                                                <div>
-                                                    <p class="offset-1">
-                                                        &emsp;&emsp;{{ ucfirst($announcement->announcement) }}
+                                                <div class="d-flex justify-content-center">
+                                                    <p>
+                                                    {{ ucfirst($announcement->announcement) }}
                                                     </p>
                                                 </div>
-                                
+                                    
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @endif
 
                     </div>
                 </div>

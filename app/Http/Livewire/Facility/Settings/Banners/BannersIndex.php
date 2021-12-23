@@ -26,6 +26,12 @@ class BannersIndex extends Component
         $this->ids        = $ids;
     }
     
+    public function edit ($banner)
+    {
+        $this->bannerID = $banner;
+        $this->show('showEdit', $this->bannerID);
+    }
+    
     public function render()
     {
         $banners = Banner::all();

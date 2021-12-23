@@ -30,7 +30,7 @@ class PositionEdit extends Component
     public function mount($position)
     {
         $this->positionID = $position;
-        $this->position = Position::find($position);
+        $this->position = Position::find($this->positionID);
         $this->facilityID = $this->position->facility_id;
         $this->edit_description = $this->position->description;
         $this->edit_title = $this->position->name;
@@ -48,7 +48,7 @@ class PositionEdit extends Component
             'edit_title'       => 'required',
             'edit_description' => 'required',
             'edit_url'         => 'required',
-            'edit_date'        => 'required',
+            'edit_date'        => 'required|date',
             'image'            => 'required'
         ]);
 

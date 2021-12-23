@@ -3,7 +3,7 @@
 
         <nav class="navbar navbar-light p-0">
             <div class="container-fluid">
-                <a class="navbar-brand text-success p-0">Facilities &nbsp; / &nbsp; All Facilities</a>
+                <a class="navbar-brand text-success p-0">{{ ucfirst($company->name) }} &nbsp; / &nbsp; All Facilities</a>
             </div>
         </nav>
 
@@ -32,116 +32,78 @@
                             <label for="Search">Find facility by name</label>
                         </div>  
                         <div class="d-flex justify-content-center">               
-                            <div class="d-flex align-items-baseline col-3 justify-content-center">
+                            <div class="d-flex align-items-baseline col-2 justify-content-center">
                                 <input type="text" wire:model="searchTerm" class="form-control">
                             </div>
                         </div>
 
-                        @if($showDetails == true)
-
-                            <div class="d-flex justify-content-center mt-5">
-                                <h4> {{ $facilityDetails->name }}</h4>
-                            </div>
-
-                            <div class="d-flex justify-content-center">
-                                @if ( $facilityDetails->profile->media->url )
-                                    <img src={{ asset('storage/'. $facilityDetails->Profile->media->url)}} class="imgs" alt="image">
-                                @endif
-                            </div>
-
-                            <div class="mt-2 mb-2">                                                                               
-
-                                <div class="d-flex justify-content-center">
-                                    ID :    {{ $facilityDetails->id }}
-                                </div>
-
-                                <div class="d-flex justify-content-center">
-                                    State :    {{ $facilityDetails->Profile->state->name }}
-                                </div>
-
-                                <div class="d-flex justify-content-center">
-                                    City :     {{ $facilityDetails->Profile->city }}             
-                                </div> 
-
-                                <div class="d-flex justify-content-center">
-                                    Address :  {{ $facilityDetails->Profile->address }}
-                                </div>
-                            
-                                <div class="d-flex justify-content-center">
-                                    Phone :    {{ $facilityDetails->Profile->phone }}            
-                                </div>               
-                                
-                            </div> 
-                        @endif
-
-                        <div class="table table-responsive pt-3">
+                        <div class="table-responsive pt-5 pb-5">
                             <table class="table table-bordered">
                                 <thead>
-                                    <tr class="table-success">
-                                        {{-- <td class="text-center col-1"> ID        </td> --}}
-                                        <th class="text-center col-4">   Name      </th>
-                                        {{-- <td class="text-center col-2"> Address   </td> --}}
-                                        {{-- <td class="text-center col-1"> City      </td> --}}
-                                        {{-- <td class="text-center col-1"> State     </td> --}}
-                                        {{-- <td class="text-center col-1"> Phone No  </td> --}}
-                                        {{-- <td class="text-center col-1"> Color     </td> --}}
-                                        <th class="text-center col-8">   Action     </th>
+                                    <tr>
+                                        <th class="text-center"> ID        </th>
+                                        <th> &nbsp;&nbsp;&nbsp;  Name      </th>
+                                        <th> Address   </th>
+                                        <th> City      </th>
+                                        <th> State     </th>
+                                        <th> Phone No  </th>
+                                        <th> Color     </th>
+                                        <th class="text-center"> Action    </th>
                                     </tr>
                                 </thead>        
                             
                                 <tbody>
-                                    @foreach ( $facilities as $facility)
-                                        @if ( auth()->user()->can($facility->permissions->name) || auth()->user()->hasRole('Platform Admin||Regional Admin||Corporate Admin') )
-                                            <tr class="table-success">        
-                                                {{-- <td class="text-center col-1"> {{ $facility->id }}                            </td> --}}
-                                                <td class="text-center col-4 pt-1 pb-0">
-                                                    <a href="{{ route('livewire.setting', $facility->id) }}" class="btn btn-link">{{ $facility->name }} </a>  
-                                                </td>
-                                                {{-- <td class="text-center col-2"> {{ $facility->Profile->address }}              </td> --}}
-                                                {{-- <td class="text-center col-1"> {{ $facility->Profile->city }}                 </td> --}}
-                                                {{-- <td class="text-center col-1"> {{ $facility->Profile->state->name }}          </td> --}}
-                                                {{-- <td class="text-center col-1"> {{ $facility->Profile->phone }}                </td> --}}
+                                    @if($facilities->isEmpty())
+                                        <tr>
+                                            <td colspan="8" class="text-center text-success">
+                                                There are no facilities defined!
+                                            </td>
+                                        </tr>
+                                    @else
+                                        @foreach ( $facilities as $facility)
+                                            @if ( auth()->user()->can($facility->permissions->name) || auth()->user()->hasRole('Platform Admin|Corporate Admin') )
+                                                <tr>        
+                                                    <td class="text-center"> {{ $facility->id }}                            </td>
+                                                    <th class="pt-1 pb-0 px-0">
+                                                        <a href="{{ route('livewire.setting', $facility->id) }}" class="btn btn-link">{{ $facility->name }} </a>  
+                                                    </th>
+                                                    <td> {{ $facility->Profile->address }}              </td>
+                                                    <td> {{ $facility->Profile->city }}                 </td>
+                                                    <td> {{ $facility->Profile->state->name }}          </td>
+                                                    <td> {{ $facility->Profile->phone }}                </td>
 
-                                                {{-- <td class="text-center col-1">  
-                                                    <div class="progress ">
-                                                        <div class="progress-bar" role="progressbar" style="width: 100%;background-color: {!! $facility->profile->color !!}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </td> --}}
+                                                    <td class="text-center">  
+                                                        <div class="progress ">
+                                                            <div class="progress-bar" role="progressbar" style="width: 100%;background-color: {!! $facility->profile->color !!}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </td>
 
-                                                <td class="p-0 col-8 p-0">
-                                                    <div class="d-flex justify-content-between"> 
+                                                    <td class="p-0">
+                                                        <div class="d-flex justify-content-center"> 
 
-                                                        <div></div>
-                                                        
-                                                        <a class="btn btn-link  text-info" wire:click="details({{ $facility->id }})">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                                                            Details
-                                                        </a>
+                                                            @if(auth()->user()->hasRole('Facility Editor'))
+                                                                <button class="btn btn-link mx-5" disabled>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
+                                                                    Edit</button>
+                                                                <button class="btn btn-link mx-5 text-danger" disabled >
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                                                                    Delete</button>                                                       
+                                                            @else 
+                                                                <button wire:click="$emit('show', 'showEdit', {{ $facility->id }})" class="btn btn-link text-warning mx-4 ">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
+                                                                    Edit</button>                                                                                       
+                                                                <button wire:click="destroy({{ $facility->id }})" class="btn btn-link text-danger mx-4" onclick="return confirm('Are you sure?')">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                                    Delete</button>
+                                                            @endif
+
+                                                        </div>
+                                                    </td>
                                                     
-                                                        @if(auth()->user()->hasRole('Facility Editor'))
-                                                            <button class="btn btn-link mx-5 p-0" disabled>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
-                                                                Edit</button>
-                                                            <button class="btn btn-link mx-5 p-0 text-danger" disabled >
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
-                                                                Delete</button>                                                       
-                                                        @else 
-                                                            <button wire:click="$emit('show', 'showEdit', {{ $facility->id }})" class="btn btn-link p-0 mx-5">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
-                                                                Edit</button>                                                                                       
-                                                            <button wire:click="destroy({{ $facility->id }})" class="btn btn-link text-danger p-0 mx-4" onclick="return confirm('Are you sure?')">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
-                                                                Delete</button>
-                                                        @endif
-
-                                                        <div></div>
-
-                                                    </div>
-                                                </td>
-                                                
-                                            </tr>
-                                        @endif
-                                    @endforeach
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

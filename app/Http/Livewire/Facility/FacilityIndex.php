@@ -13,10 +13,8 @@ class FacilityIndex extends Component
     protected $listeners = ['show'];
 
     public $company;
-    public $facilityID;
 
     public $searchTerm;
-    public $showDetails;
     public $facilityDetails;
 
     public $ids;
@@ -36,13 +34,8 @@ class FacilityIndex extends Component
 
     public function mount ($company)
     {   
+        $this->company = Company::findOrFail($company);
         $this->ids = $company;
-    }
-
-    public function details ($ids)
-    {
-        $this->showDetails = true;
-        $this->facilityDetails = Facility::find($ids);
     }
 
     public function render()
@@ -69,6 +62,7 @@ class FacilityIndex extends Component
                         $user->save();
                 }
             }
+            
         $facility->delete();
     }
 }

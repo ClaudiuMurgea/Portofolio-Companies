@@ -1,6 +1,6 @@
-<div class="position-absolute start-0 w-100">
-    
-    @if ($active == true)
+@if ($active == true)
+    <div class="position-absolute start-0 w-100">
+        
         <nav class="navbar navbar-light  p-0">
             <div class="container-fluid">
                 <a class="navbar-brand text-success  p-0">Companies &nbsp; / &nbsp; Edit Company</a>
