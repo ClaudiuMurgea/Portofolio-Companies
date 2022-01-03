@@ -27,7 +27,7 @@ class CompanyEdit extends Component
         'edit_city'    => 'required|max:100',
         'edit_zip'     => 'required|numeric',
         'edit_state'   => 'required',
-        'edit_logo'    => 'nullable|mimes:jpg,jpeg,png|max:40960',
+        'edit_logo'    => 'required|mimes:jpg,jpeg,png|max:40960',
         'edit_phone'   => 'required|numeric',
         'edit_color'   => 'required|max:20'     
     ];
