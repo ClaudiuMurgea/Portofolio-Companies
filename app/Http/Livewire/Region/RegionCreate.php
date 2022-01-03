@@ -10,7 +10,7 @@ class RegionCreate extends Component
 {
     protected $rules = [
         'name'        => 'required|unique:permissions,name',
-        'description' => 'required'
+        'description' => 'required|max:255'
     ];
 
     public $name;

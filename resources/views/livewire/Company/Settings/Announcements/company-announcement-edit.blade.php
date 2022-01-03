@@ -62,27 +62,28 @@
                                     <input wire:model="datepicker2" class="mx-4" type="date"  id="datepicker2">
                                 </div> --}}
 
-                                <div wire:ignore class="mx-2">
+                                <div wire:ignore class="mx-5">
                                     <form wire:submit.prevent="edit({{ $announcementID }})">
-                                        <input wire:model.lazy="first_date" class="form-control" type="text" id="first_date">
+                                        <input wire:model.lazy="start_date" class="form-control" type="text" id="start_date">
                                     </form>
                                 </div>
 
-                                <div wire:ignore class="mx-2">
+                                <div wire:ignore class="mx-5">
                                     <form wire:submit.prevent="edit({{ $announcementID }})">
-                                        <input wire:model.lazy="second_date" class="form-control" type="text" id="second_date">
+                                        <input wire:model.lazy="end_date" class="form-control" type="text" id="end_date">
                                     </form>
                                 </div>
+                                
                             </div>
                         </div>
 
                         <div class="d-flex justify-content-center">
-                            @error('first_date')
+                            @error('start_date')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="d-flex justify-content-center">
-                            @error('second_date')
+                            @error('end_date')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -90,7 +91,9 @@
                         <div class="row mb-3 mt-2">                       
                             <div class="d-flex justify-content-center">
                                 <div class="col-2">
-                                    <button wire:click="edit({{ $announcementID }})" class="form-control mt-2 btn btn-success" type="submit">Edit Announcement</button>
+                                    <button wire:click="edit({{ $announcementID }})" class="form-control mt-2 btn btn-success" type="submit">
+                                        Edit Announcement
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -108,45 +111,48 @@
 
     @if($return == true)
         <div>
-            <livewire:facility.settings.announcements.announcements-index :facility="$facilityID" />      
+            <livewire:company.settings.announcements.company-announcements-index :company="$companyID" />      
         </div>
     @endif
+
+    <script>
+        new Pikaday({ field: document.getElementById('start_date') });
+    </script>
+
 </div>
 
-<script src="../pikaday.js"></script>
 <script>
     //Calendar input 1
-new Pikaday({ field: document.getElementById('first_date') })
 
-    picker = new Pikaday({
-    field: document.getElementById('first_date'),
-    firstDay: 0,
-    setDefaultDate: true,
-    minDate: new Date(2021, 11, 14),
-    maxDate: new Date(2030, 12, 14),
-    yearRange: [2021,2030],
+    new Pikaday({ field: document.getElementById('end_date') })
 
-    disableDayFn: function(theDate) {
-       return false;
-    }
-});
+        picker = new Pikaday({
+        field: document.getElementById('end_date'),
+        firstDay: 0,
+        setDefaultDate: true,
+        minDate: new Date(2021, 11, 14),
+        maxDate: new Date(2030, 12, 14),
+        yearRange: [2021,2030],
+
+        disableDayFn: function(theDate) {
+        return false;
+        }
+    });
+
    //Calendar input 2
-new Pikaday({ field: document.getElementById('second_date') })
-    
-    picker = new Pikaday({
-    field: document.getElementById('second_date'),
-    firstDay: 0,
-    setDefaultDate: true,
-    minDate: new Date(2021, 11, 14),
-    maxDate: new Date(2030, 12, 14),
-    yearRange: [2021,2030],
 
-    disableDayFn: function(theDate) {
-       return false;
-    }
-});
+    // new Pikaday({ field: document.getElementById('second_date') })
+        
+    //     picker = new Pikaday({
+    //     field: document.getElementById('second_date'),
+    //     firstDay: 0,
+    //     setDefaultDate: true,
+    //     minDate: new Date(2021, 11, 14),
+    //     maxDate: new Date(2030, 12, 14),
+    //     yearRange: [2021,2030],
+
+    //     disableDayFn: function(theDate) {
+    //     return false;
+    //     }
+    // });
 </script>
-
-<script>
-
-</script> 

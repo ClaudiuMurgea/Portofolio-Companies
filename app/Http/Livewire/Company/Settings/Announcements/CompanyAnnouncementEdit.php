@@ -9,15 +9,15 @@ class CompanyAnnouncementEdit extends Component
 {
     public $edit_title;
     public $edit_text;
-    public $first_date;
-    public $second_date;
+    public $start_date;
+    public $end_date;
 
     public $announcement;
     public $announcementID;
 
     public $return = false;
     public $active = true;
-    public $facilityID;
+    public $companyID;
 
     public function back ()
     {
@@ -29,11 +29,11 @@ class CompanyAnnouncementEdit extends Component
     {   
         $this->announcement = Announcement::find($announcement);
             $this->announcementID = $announcement;
-            $this->facilityID  = $this->announcement->facility_id;
+            $this->companyID   = $this->announcement->company_id;
             $this->edit_title  = $this->announcement->title;
             $this->edit_text   = $this->announcement->announcement;
-            $this->first_date  = $this->announcement->start_at;
-            $this->second_date = $this->announcement->end_date;
+            $this->start_date  = $this->announcement->start_at;
+            $this->end_date    = $this->announcement->end_date;
     }
 
     public function render()
@@ -44,17 +44,17 @@ class CompanyAnnouncementEdit extends Component
     public function edit ($id)
     {
         $this->validate([
-            'edit_title'  => 'required',
-            'edit_text'   => 'required',
-            'first_date'  => 'required',
-            'second_date' => 'required'
+            'edit_title'  => 'required|max:255',
+            'edit_text'   => 'required|max:255',
+            'start_date'  => 'required|date',
+            'end_date'    => 'required|date'
         ]);
 
         $announcement = Announcement::find($id);
             $announcement->title        = $this->edit_title;
             $announcement->announcement = $this->edit_text;
-            $announcement->start_at     = $this->first_date;
-            $announcement->end_at       = $this->second_date;
+            $announcement->start_at     = $this->start_date;
+            $announcement->end_at       = $this->end_date;
             $announcement->save();
         
         $this->back();

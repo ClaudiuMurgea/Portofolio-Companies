@@ -24,7 +24,7 @@ class FacilityCreate extends Component
         'state'   => 'required',
         'phone'   => 'required|numeric',
         'color'   => 'required|max:20',
-        'logo'    => 'required|mimes:jpg,jpeg,png|max:20480',
+        'logo'    => 'required|mimes:jpg,jpeg,png|max:40960',
         'region'  => 'required',
     ];
 

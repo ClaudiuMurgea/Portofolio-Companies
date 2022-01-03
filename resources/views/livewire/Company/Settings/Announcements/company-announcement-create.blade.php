@@ -57,13 +57,13 @@
 
                                 <div wire:ignore class="mx-5">
                                     <form wire:submit.prevent="create({{ $companyID }})">
-                                        <input wire:model.lazy="first_date" class="form-control" type="text" id="first_date" >
+                                        <input wire:model.lazy="start_date" class="form-control" type="text" id="start_date" >
                                     </form>
                                 </div>
 
                                 <div wire:ignore class="mx-5">
                                     <form wire:submit.prevent="create({{ $companyID }})">
-                                        <input wire:model.lazy="second_date" class="form-control" type="text" id="second_date">
+                                        <input wire:model.lazy="end_date" class="form-control" type="text" id="end_date">
                                     </form>
                                 </div>
 
@@ -71,12 +71,12 @@
                         </div>
 
                         <div class="d-flex justify-content-center">
-                            @error('first_date')
+                            @error('start_date')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="d-flex justify-content-center">
-                            @error('second_date')
+                            @error('end_date')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -84,7 +84,9 @@
                         <div class="row mb-3 mt-2">                       
                             <div class="d-flex justify-content-center">
                                 <div class="col-2">
-                                    <button wire:click="create({{ $companyID }})" class="form-control mt-2 btn btn-success" type="submit">Create Announcement</button>
+                                    <button wire:click="create({{ $companyID }})" class="form-control mt-2 btn btn-success" type="submit">
+                                        Create Announcement
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -105,12 +107,19 @@
             <livewire:company.settings.announcements.company-announcements-index :company="$companyID" />      
         </div>
     @endif
+ 
+<script>
+    new Pikaday({ field: document.getElementById('start_date') })
+</script>
 
-    <script>
+</div>
+
+
+<script>
     //Calendar input 1
-    new Pikaday({ field: document.getElementById('first_date') })
+    new Pikaday({ field: document.getElementById('end_date') })
         picker = new Pikaday({
-        field: document.getElementById('first_date'),
+        field: document.getElementById('end_date'),
         firstDay: 0,
         setDefaultDate: true,
         minDate: new Date(2021, 11, 14),
@@ -122,22 +131,22 @@
         }
     });
     //Calendar input 2
-    new Pikaday({ field: document.getElementById('second_date') })
-        picker = new Pikaday({
-        field: document.getElementById('second_date'),
-        firstDay: 0,
-        setDefaultDate: true,
-        minDate: new Date(2021, 11, 14),
-        maxDate: new Date(2030, 12, 14),
-        yearRange: [2021,2030],
 
-        disableDayFn: function(theDate) {
-        return false;
-        }
-    });
-    </script>
+    // new Pikaday({ field: document.getElementById('end_date') })
+    //     picker = new Pikaday({
+    //     field: document.getElementById('end_date'),
+    //     firstDay: 0,
+    //     setDefaultDate: true,
+    //     minDate: new Date(2021, 11, 14),
+    //     maxDate: new Date(2030, 12, 14),
+    //     yearRange: [2021,2030],
 
-</div>
+    //     disableDayFn: function(theDate) {
+    //     return false;
+    //     }
+    // });
+</script>
+
 
 
 

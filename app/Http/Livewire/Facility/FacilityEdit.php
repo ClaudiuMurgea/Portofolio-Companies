@@ -68,7 +68,7 @@ class FacilityEdit extends Component
             'edit_state'   => 'required',
             'edit_phone'   => 'required|numeric',
             'edit_color'   => 'required|max:20',
-            'edit_logo'    => 'required|mimes:jpg,jpeg,png|max:20480',
+            'edit_logo'    => 'required|mimes:jpg,jpeg,png|max:40960',
             'edit_region'  => 'required',   
         ]);     
         

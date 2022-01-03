@@ -15,11 +15,9 @@
                         </div>
 
                         @if($positions->isEmpty())
-                            <tr>
-                                <td colspan="8" class="text-center text-success">
-                                    There are no companies defined!
-                                </td>
-                            </tr>
+                            <p class="text-center text-success">
+                                There are no positions available!
+                            </p>
                         @else
                             @foreach ($positions as $position)
                                 <div class="row">

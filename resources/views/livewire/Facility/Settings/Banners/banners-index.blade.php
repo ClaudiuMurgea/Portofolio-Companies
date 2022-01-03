@@ -15,11 +15,9 @@
                         </div>
 
                         @if($banners->isEmpty())
-                            <tr>
-                                <td colspan="8" class="text-center text-success">
-                                    There are no banners defined!
-                                </td>
-                            </tr>
+                            <p class="text-center text-success">
+                                There are no banners defined!
+                            </p>
                         @else
                             <div class="row offset-1">
                                 @foreach ($banners as $banner)

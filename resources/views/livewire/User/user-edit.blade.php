@@ -79,25 +79,25 @@
                                         
                                         @if(auth()->user()->hasRole('Platform Admin'))
                                             @foreach ($roles as $role)
-                                                <option value="{{ $role->id }}">{{ $role->name }}</option> 
+                                                <option value="{{ $role->name }}">{{ $role->name }}</option> 
                                             @endforeach
                                         @endif
 
                                         @if(auth()->user()->hasRole('Regional Admin'))
                                             @foreach($regionalCanMakeRoles as $regionalRole)
-                                                <option value="{{ $regionalRole->id }}">{{ $regionalRole->name }}</option>
+                                                <option value="{{ $regionalRole->name }}">{{ $regionalRole->name }}</option>
                                             @endforeach
                                         @endif
 
                                         @if(auth()->user()->hasRole('Corporate Admin'))
                                             @foreach($corporateCanMakeRoles as $corporateRole)
-                                                <option value="{{ $corporateRole->id }}">{{ $corporateRole->name }}</option>
+                                                <option value="{{ $corporateRole->name }}">{{ $corporateRole->name }}</option>
                                             @endforeach
                                         @endif
 
                                         @if(auth()->user()->hasRole('Facility Admin'))
                                             @foreach($facilityCanMakeRoles as $facilityRole)
-                                                <option value="{{ $facilityRole->id }}">{{ $facilityRole->name }}</option>
+                                                <option value="{{ $facilityRole->name }}">{{ $facilityRole->name }}</option>
                                             @endforeach
                                         @endif
 
@@ -116,7 +116,7 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="form-group col-md-4 mt-2">
 
-                                        <label for="role">Region</label>
+                                        <label for="region">Region</label>
                                         <select class="form-control text-success" wire:model.defer="region" multiple>
 
                                             @foreach ($regions as $region)
@@ -124,8 +124,13 @@
                                                     <option value="{{ $region->id }}">{{ $region->name }}</option>
                                                 @endif
                                             @endforeach
+
                                         </select>
                                         <p class="text-muted pt-1 text-center">Press CTRL to select multiple values. </p>
+
+                                        @error('region')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
 
                                     </div>
                                 </div>
@@ -141,11 +146,15 @@
                                         <select class="form-control text-success" wire:model.defer="company" size=3>
 
                                             @foreach ($companies as $company)
-                                                    <option value="{{ $company->id}}" >{{ $company->name }}</option>
+                                                <option value="{{ $company->id}}" >{{ $company->name }}</option>
                                             @endforeach
 
                                         </select>
                                         <p class="text-muted pt-1 text-center">Select one company. </p>
+
+                                        @error('company')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
 
                                     </div>
                                 </div>
@@ -163,9 +172,14 @@
                                         @foreach ($facilities as $facility)
                                             <option value="{{ $facility->id }}">{{ $facility->name }}</option>
                                         @endforeach
+
                                     </select>
                                     <p class="text-muted pt-1 text-center">Press CTRL to select multiple values. </p>
                                     
+                                    @error('facility')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+
                                 </div>
                             </div>
                         </div>

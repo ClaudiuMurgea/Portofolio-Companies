@@ -44,8 +44,8 @@ class AnnouncementEdit extends Component
     public function edit ($id)
     {
         $this->validate([
-            'edit_title'  => 'required',
-            'edit_text'   => 'required',
+            'edit_title'  => 'required|max:255',
+            'edit_text'   => 'required|max:255',
             'first_date'  => 'required',
             'second_date' => 'required'
         ]);

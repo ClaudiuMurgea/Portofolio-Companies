@@ -9,8 +9,8 @@ use App\Models\Announcement;
 class AnnouncementCreate extends Component
 {
     protected $rules = [
-        'title'       => 'required',
-        'text'        => 'required',
+        'title'       => 'required|max:255',
+        'text'        => 'required|max:255',
         'first_date'  => 'required|date',
         'second_date' => 'required|date'
         ];

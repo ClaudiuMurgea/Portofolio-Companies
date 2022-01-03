@@ -14,11 +14,9 @@
                             </a>
                         </div>
                         @if($displays->isEmpty())
-                            <tr>
-                                <td colspan="8" class="text-center text-success">
-                                    There are no displays defined!
-                                </td>
-                            </tr>
+                            <p class="text-center text-success">
+                                There are no displays defined!
+                            </p>
                         @endif
                     </div>
 

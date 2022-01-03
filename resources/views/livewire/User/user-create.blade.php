@@ -113,12 +113,13 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="form-group col-md-4 mt-2">
 
-                                        <label for="role">Region</label>
+                                        <label for="region">Region</label>
                                         <select class="form-control text-center text-success" wire:model.defer="region" multiple>
 
                                             @foreach ($regions as $region)
                                                 <option value="{{ $region->id }}">{{ $region->name }}</option>
                                             @endforeach
+                                            
                                         </select>
                                         <p class="text-muted pt-1 text-center">Press CTRL to select multiple values. </p>
                                         
@@ -146,6 +147,10 @@
                                         </select>
                                         <p class="text-muted pt-1 text-center">Select one company. </p>
                                         
+                                        @error('company')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+
                                     </div>
                                 </div>
                             </div>
@@ -168,13 +173,12 @@
                                         @endforeach
 
                                     </select>
+                                    <p class="text-muted pt-1 text-center">Press CTRL to select multiple values. </p>
 
                                     @error('facility')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                    
-                                    <p class="text-muted pt-1 text-center">Press CTRL to select multiple values. </p>
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -184,7 +188,6 @@
                             <div class="d-flex justify-content-center">
                                 <div class="form-group col-md-4 mt-2">
                                     <button wire:click="create" class="btn btn-success form-control mb-3">Add User</button>
-                                        
                                 </div>
                             </div>
                         </div>

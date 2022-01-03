@@ -38,7 +38,7 @@ class RegionEdit extends Component
     {
         $this->validate([
             'edit_name' => 'required|unique:permissions,name,' . $id,
-            'edit_description' => 'required'
+            'edit_description' => 'required|max:255'
         ]);
 
         $region = Region::findOrFail($id);

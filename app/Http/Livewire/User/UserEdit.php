@@ -17,14 +17,6 @@ use Hash;
 
 class UserEdit extends Component
 {   
-    protected $rules = [
-        'password'       => '',
-        'role'           => 'required|numeric|exists:roles,id',
-        'region'         => '',
-        'company'        => '',
-        'facility'       => ''
-    ];
-
     public $ids;
     public $user;
     public $edit_name;
@@ -136,13 +128,13 @@ class UserEdit extends Component
     public function render()
     {   
         $roles = Role::all();
-            $selectedRoles = $this->role;
+            // $selectedRoles = $this->role;
 
-        foreach($roles as $role)
+        foreach($roles as $DBrole)
         {
-            if( $this->role == $role->id )
+            if( $this->role == $DBrole->name )
             {   
-                $roleName = str_replace(' ', '_', $role->name);
+                $roleName = str_replace(' ', '_', $DBrole->name);
                 $this->Only ($roleName);
             }
         }
@@ -153,8 +145,13 @@ class UserEdit extends Component
     public function update ($id)
     {
         $this->validate([
-            'edit_name'      => 'required|unique:users,name,' . $id,
-            'edit_email'     => 'required|unique:users,email,' . $id
+            'edit_name'      => 'required|max:50|unique:users,name,' . $id,
+            'edit_email'     => 'required|max:100|unique:users,email,' . $id,
+            'password'       => '',
+            'role'           => 'required',
+            'region'         => 'required_if:role,Regional Admin',
+            'company'        => 'required_if:role,Corporate Admin',
+            'facility'       => 'required_if:role,Facility Admin,Facility Editor'
         ]);
        
         $user = User::findOrFail($id);
@@ -165,7 +162,7 @@ class UserEdit extends Component
             $user->name  = $this->edit_name;
             $user->email = $this->edit_email;
             $user->save();
-        
+
         if( $this->region == true)                                                      //add region to the regional admin
         {
             foreach($this->region as $regionID)
@@ -175,13 +172,12 @@ class UserEdit extends Component
                 $wasFacilityUser = FacilityUser::where('user_id', $user->id)->delete(); //if platform admin promotes facility user to regional admin
             }
         } 
-        
         elseif ( ($this->Facility_Admin == true || $this->Facility_Editor == true) && auth()->user()->hasAnyRole('Platform Admin|Corporate Admin') )    //add region to facility users                  
         {   
             foreach( $this->facility as $facilityID )
             {   
                 $facility = Facility::find($facilityID);
-                
+
                 $user->givePermissionTo( $facility->Permissions->name );
             }
         }
@@ -192,8 +188,8 @@ class UserEdit extends Component
                 $user->givePermissionTo( auth()->user()->permissions->first()->name );
             }
         }
-
-        if( $this->company )
+        
+        if( $this->company && ($this->Corporate_Admin == true) )
         {   
             $wasFacilityAdmin  = FacilityAdmin::where('user_id', $user->id) ->delete();
             $wasFacilityEditor = FacilityEditor::where('user_id', $user->id)->delete();
@@ -203,10 +199,12 @@ class UserEdit extends Component
                 $companyAdmin->user_id = $user->id;
                 $companyAdmin->company_id = $this->company;
                 $companyAdmin->save();
+               
         }
         
         if ( $this->facility && ($this->Facility_Admin == true) ) 
         {  
+         
             $wasCompanyAdmin   = CompanyAdmin::where('user_id', $user->id)->delete();
             $wasFacilityEditor = FacilityEditor::where('user_id', $user->id)->delete();
 
@@ -245,14 +243,14 @@ class UserEdit extends Component
                     $facilityUsers->save();
             }
         }
-       
+   
         $roles = Role::all();
-        foreach($roles as $role)
+        foreach($roles as $DBrole)
         {
-            if($role->id == $this->role)
-            {
+            if($DBrole->name == $this->role)
+            {   
                 $user->removeRole($user->roles->first());
-                $user->assignRole([ $role->name ]);
+                $user->assignRole([ $DBrole->name ]);
             }
         }
         $this->back();

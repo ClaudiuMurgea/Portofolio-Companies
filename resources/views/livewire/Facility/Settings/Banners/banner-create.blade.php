@@ -105,7 +105,7 @@
                                 <div class="d-flex justify-content-center">
                                     <div wire:ignore class="mx-2 form-group col-md-3 mt-5">
                                         <form wire:submit.prevent="create({{ $facilityID }})">
-                                            <input wire:model.lazy="end_at" class="form-control" type="text" id="end_at" placeholder="End date ...(optional)">
+                                            <input wire:model.lazy="end_at" class="form-control" type="text" id="end_at" placeholder="End date ... ( optional )">
                                         </form>
                                     </div>
                                 </div>

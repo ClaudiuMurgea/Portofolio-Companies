@@ -8,10 +8,6 @@ use App\Models\Announcement;
 
 class CompanyAnnouncementCreate extends Component
 {
-    // protected $rules = [
-
-    //     ];
-
     public $return = false;
     public $active = true;
 
@@ -19,8 +15,8 @@ class CompanyAnnouncementCreate extends Component
     
     public $title;
     public $text;
-    public $first_date;
-    public $second_date;
+    public $start_date;
+    public $end_date;
     
     public function back ()
     {
@@ -41,18 +37,18 @@ class CompanyAnnouncementCreate extends Component
     public function create ($id)
     {
         $this->validate([
-            'title'       => 'required',
-            'text'        => 'required',
-            'first_date'  => 'required|date',
-            'second_date' => 'required|date'
+            'title'       => 'required|max:255',
+            'text'        => 'required|max:255',
+            'start_date'  => 'required|date',
+            'end_date'    => 'required|date'
         ]);
         
         $announcement = new Announcement();
             $announcement->company_id   = $this->companyID;
             $announcement->title        = $this->title;
             $announcement->announcement = $this->text;
-            $announcement->start_at     = $this->first_date;
-            $announcement->end_at       = $this->second_date;
+            $announcement->start_at     = $this->start_date;
+            $announcement->end_at       = $this->end_date;
             $announcement->save();
         
         $this->back();

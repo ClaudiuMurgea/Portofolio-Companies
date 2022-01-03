@@ -133,8 +133,8 @@ class UserCreate extends Component
     public function create ()
     {  
         $this->validate([
-            'name'      => 'required',
-            'email'     => 'required|email|unique:users,email',
+            'name'      => 'required|max:50',
+            'email'     => 'required|email|max:100|unique:users,email',
             'password'  => 'required|min:4',
             'role'      => 'required',
             'region'    => 'required_if:role,Regional Admin',
