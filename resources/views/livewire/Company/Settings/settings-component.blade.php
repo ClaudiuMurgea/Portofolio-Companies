@@ -18,15 +18,15 @@
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="mb-1">Company Settings</h6>
-                            <p class="mb-5">&emsp;&emsp;&emsp;0 MEANS ∞</p>
+                            <h6 class="mb-1 text-center">Company Settings</h6>
+                            <p class="mb-5 text-center">&emsp;0 MEANS ∞</p>
                             <div class="row">
                                 <div class="d-flex justify-content-center">
-                                    <div class="form-group col-md-2 mt-2">
+                                    <div class="form-group col-md-4 mt-2">
 
                                         <label for="facilities">Set facilities limit</label>
                                     
-                                        <input wire:model.defer="facilities" class="form-control" type="number"  min="0" step="1" required>
+                                        <input wire:model.defer="facilities" class="form-control" type="number" min="0" step="1" id="facilities" required>
                                         
                                         @error('facilities')
                                             <span class="text-danger">{{ $message }}</span>
@@ -38,10 +38,10 @@
 
                             <div class="row">
                                 <div class="d-flex justify-content-center">
-                                    <div class="form-group col-md-2 mt-2">
+                                    <div class="form-group col-md-4 mt-2">
 
                                         <label for="monitors">Set monitors limit</label>
-                                        <input wire:model.defer="monitors" class="form-control" type="number"  min="0" step="1" required>
+                                        <input wire:model.defer="monitors" class="form-control" type="number" min="0" step="1"  id="monitors" required>
                                         
                                         @error('monitors')
                                             <span class="text-danger">{{ $message }}</span>
@@ -79,7 +79,7 @@
 
                             <div class="row">
                                 <div class="d-flex justify-content-center">
-                                    <div class="form-group col-md-2 mt-2">
+                                    <div class="form-group col-md-4 mt-2">
                                         <label for="displayTypes">Display types</label>
                                         <select wire:model.defer="displayTypes" class="form-control text-success" multiple>
 
@@ -99,7 +99,7 @@
 
                             <div class="row">
                                 <div class="d-flex justify-content-center">
-                                    <div class="form-group col-md-2 mt-2">
+                                    <div class="form-group col-md-4 mt-2">
                                         <button wire:click="save" class="btn btn-success form-control mb-3">Save Settings</button>
                                     </div>
                                 </div>

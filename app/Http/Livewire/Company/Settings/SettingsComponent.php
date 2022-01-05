@@ -55,8 +55,8 @@ class SettingsComponent extends Component
     public function save ()
     {
         $this->validate([
-            'facilities'   => '',
-            'monitors'     => '',
+            'facilities'   => 'numeric|min:0|max:300',
+            'monitors'     => 'numeric|min:0|max:300',
             'displayTypes' => ''
         ]);
 
@@ -78,12 +78,15 @@ class SettingsComponent extends Component
 
         $oldDisplays = CompanyDisplay::where( 'company_id', $this->company->id )->delete();
 
-        foreach($this->displayTypes as $type)
+        if($this->displayTypes)
         {
-            $newDisplay = new CompanyDisplay();
-                $newDisplay->company_id   = $this->company->id;
-                $newDisplay->display_type = $type;
-                $newDisplay->save();
+            foreach($this->displayTypes as $type)
+            {
+                $newDisplay = new CompanyDisplay();
+                    $newDisplay->company_id   = $this->company->id;
+                    $newDisplay->display_type = $type;
+                    $newDisplay->save();
+            }
         }
 
         $this->back();
