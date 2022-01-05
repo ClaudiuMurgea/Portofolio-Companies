@@ -4,7 +4,7 @@
 
         <nav class="navbar navbar-light p-0">
             <div class="container-fluid">
-              <a class="p-0">
+              <a class="p-0 mb-3">
                 <span class="text-success">Users</span>
                     &nbsp; / &nbsp; 
                 <span class="text-dark">All Users</span>

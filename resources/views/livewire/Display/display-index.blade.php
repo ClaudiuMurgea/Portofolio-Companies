@@ -3,7 +3,7 @@
 
     <nav class="navbar navbar-light p-0">
       <div class="container-fluid">
-          <a class="p-0">
+          <a class="p-0 mb-3">
               <span class="text-success">Display Types</span> 
                 &nbsp; / &nbsp; 
               <span class="text-dark">All Display Types</span>

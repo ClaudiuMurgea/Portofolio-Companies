@@ -4,9 +4,11 @@
         <nav class="navbar navbar-light p-0">
             <div class="container-fluid">
                 <a class="p-0">
-                    <span class="text-success">{{ ucfirst($company->name) }}</span>
-                        &nbsp; / &nbsp; 
-                    <span class="text-dark">All Facilities</span>
+                    <p>
+                        <span class="text-success">{{ ucfirst($company->name) }}</span>
+                            &nbsp; / &nbsp; 
+                        <span class="text-dark">All Facilities</span>
+                    </p>
                 </a>
             </div>
         </nav>
