@@ -19,9 +19,9 @@ class FacilityCreate extends Component
     use WithFileUploads;
 
     protected $rules = [
-        'name'    => 'required|unique:facilities,name|max:100',
+        'name'    => 'required|unique:facilities,name|max:40',
         'address' => 'required|max:100',
-        'city'    => 'required|max:100',
+        'city'    => 'required|max:30',
         'zip'     => 'required|numeric',
         'state'   => 'required',
         'phone'   => 'required|numeric',

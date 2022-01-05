@@ -18,6 +18,8 @@ class FacilityIndex extends Component
 
     public $searchTerm;
     public $facilityDetails;
+    public $address;
+    public $nr;
 
     public $ids;
     public $showIndex  = true;
@@ -32,6 +34,18 @@ class FacilityIndex extends Component
 
         $this->$type      = true;
         $this->ids        = $ids;
+    }
+
+    public function address ()
+    {
+        $this->nr++;
+        if($this->nr % 2 == 0 )
+        {
+            $this->address = false;
+        } else 
+        {
+            $this->address = true;
+        }
     }
 
     public function mount ($company)

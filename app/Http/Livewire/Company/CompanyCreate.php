@@ -20,9 +20,9 @@ class CompanyCreate extends Component
     protected $listeners = ['create'];
 
     protected $rules = [
-        'name'    => 'required|unique:companies,name|max:100',
+        'name'    => 'required|unique:companies,name|max:40',
         'address' => 'required|max:100',
-        'city'    => 'required|max:100',
+        'city'    => 'required|max:30',
         'zip'     => 'required|numeric',
         'state'   => 'required',
         'phone'   => 'required|numeric',

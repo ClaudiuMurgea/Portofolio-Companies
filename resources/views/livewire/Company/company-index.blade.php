@@ -54,10 +54,14 @@
                                         <th class="text-center">  ID       </th>
                                         <th>                      Name     </th>
                                         <th>                      Address  </th>
-                                        <th>                      City     </th>
-                                        <th>                      State    </th>
-                                        <th>                      Phone No </th>
-                                        <th>                      Color    </th>
+
+                                        @if ( $address == false)
+                                            <th>                      City     </th>
+                                            <th>                      State    </th>
+                                            <th>                      Phone No </th>
+                                            <th>                      Color    </th>
+                                        @endif
+                                        
                                         <th>&emsp;                Actions  </th>
                                     </tr>
                                 </thead>
@@ -76,16 +80,38 @@
                                                     <th>                      {{ $company->name }}      </th>
 
                                                     @if ( $company->profile()->exists() )
-                                                        <td>  {{ $company->Profile->address }}          </td>
-                                                        <td>  {{ $company->Profile->city }}             </td>
-                                                        <td>  {{ $company->Profile->state->short_name }}</td>
-                                                        <td>  {{ $company->Profile->phone }}            </td>
+                                                        @if ( $address == false)
+                                                            <td>
+                                                                {{ ucfirst(substr($company->Profile->address, 0, 10)) }}      
+                                                                @if( (strlen($company->Profile->address)) > 10)
+                                                                    <span>...
+                                                                        <button wire:click="address" class="btn btn-link p-0"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
+                                                                        </button>
+                                                                    </span>
+                                                                @endif
+                                                            </td>
+                                                        @else  
+                                                            <td>
+                                                                {{ $company->Profile->address }}
+                                                                @if( (strlen($company->Profile->address)) > 10)
+                                                                    <button wire:click="address" class="btn btn-link p-0">
+                                                                        &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                                                    </button>
+                                                                @endif
+                                                            </td>
+                                                        @endif
+                                                        
+                                                        @if ( $address == false)
+                                                            <td>  {{ $company->Profile->city }}             </td>
+                                                            <td>  {{ $company->Profile->state->short_name }}</td>
+                                                            <td>  {{ $company->Profile->phone }}            </td>
 
-                                                        <td>
-                                                            <div class="progress">
-                                                            <div class="progress-bar " role="progressbar" style="width: 100%;background-color: {!! $company->profile->color !!}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                                            </div>
-                                                        </td>
+                                                            <td>
+                                                                <div class="progress">
+                                                                <div class="progress-bar " role="progressbar" style="width: 100%;background-color: {!! $company->profile->color !!}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </td>
+                                                        @endif
                                                     @endif
 
                                                     <td class="no-gutters p-0">
@@ -109,7 +135,7 @@
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity text-primary"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                                                             </button>
 
-                                                            @if ($settings == true)
+                                                            @if ( $settings == true )
                                                                 <br/>
                                                                 <div>
                                                                     <button wire:click="show('createSettings', {{ $company->id }})" class="btn btn-link p-0 text-primary mx-3">
@@ -132,10 +158,13 @@
                                                             @endif
 
                                                         @else
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
+                                                            @if ( $address == false)
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            @endif
+
                                                             <td>
                                                                 <div>
                                                                     <button wire:click="restore({{ $company->id }})" class="btn btn-link text-warning p-0 mx-3" onclick="return confirm('Are you sure?')">
@@ -165,7 +194,15 @@
                                                     <td>                      {{ $company->name }}      </td>
 
                                                     @if ( $company->profile()->exists() )
-                                                        <td>  {{ $company->Profile->address }}          </td>
+                                                        <td>
+                                                            {{ ucfirst(substr($company->Profile->address, 0, 10)) }}      
+                                                            @if( (strlen($company->Profile->address)) > 10)
+                                                                <span>...
+                                                                    <button class="btn btn-link p-0"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
+                                                                    </button>
+                                                                </span>
+                                                            @endif
+                                                        </td>
                                                         <td>  {{ $company->Profile->city }}             </td>
                                                         <td>  {{ $company->Profile->state->short_name }}</td>
                                                         <td>  {{ $company->Profile->phone }}            </td>

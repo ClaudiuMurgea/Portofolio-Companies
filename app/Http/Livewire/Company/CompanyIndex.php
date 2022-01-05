@@ -35,6 +35,8 @@ class CompanyIndex extends Component
 
     public $trashed;
     public $settings;
+    public $address;
+
     public $nr = 0;
 
     public function show ( $type, $ids = null )
@@ -61,6 +63,18 @@ class CompanyIndex extends Component
         } else 
         {
             $this->settings = true;
+        }
+    }
+
+    public function address ()
+    {
+        $this->nr++;
+        if($this->nr % 2 == 0 )
+        {
+            $this->address = false;
+        } else 
+        {
+            $this->address = true;
         }
     }
 

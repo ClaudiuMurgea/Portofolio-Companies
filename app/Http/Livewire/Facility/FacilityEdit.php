@@ -61,9 +61,9 @@ class FacilityEdit extends Component
     public function update($facilityID)
     {
         $this->validate([
-            'edit_name'    => 'required|unique:facilities,name,' .$facilityID,
+            'edit_name'    => 'max:40|required|unique:facilities,name,' .$facilityID,
             'edit_address' => 'required|max:100',
-            'edit_city'    => 'required|max:100',
+            'edit_city'    => 'required|max:30',
             'edit_zip'     => 'required|numeric',
             'edit_state'   => 'required',
             'edit_phone'   => 'required|numeric',

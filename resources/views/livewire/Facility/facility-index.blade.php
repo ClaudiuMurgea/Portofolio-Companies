@@ -48,11 +48,16 @@
                                         <th class="text-center"> ID       </th>
                                         <th> &nbsp;&nbsp;&nbsp;  Name     </th>
                                         <th>                     Address  </th>
-                                        <th>                     City     </th>
-                                        <th>                     State    </th>
-                                        <th>                     Phone No </th>
-                                        <th>                     Color    </th>
+
+                                        @if ( $address == false)
+                                            <th>                     City     </th>
+                                            <th>                     State    </th>
+                                            <th>                     Phone No </th>
+                                            <th>                     Color    </th>
+                                        @endif
+
                                         <th>&emsp;&nbsp;         Action   </th>
+                                        
                                     </tr>
                                 </thead>        
                             
@@ -66,7 +71,7 @@
                                     @else
                                         @foreach ( $facilities as $facility)
                                             @if ( auth()->user()->can($facility->permissions->name) || auth()->user()->hasRole('Platform Admin|Corporate Admin') )
-                                                @if (in_array($facility->id, $facilityIDS))
+                                                @if (in_array($facility->id, $facilityIDS) || auth()->user()->hasRole('Platform Admin|Corporate Admin') )
 
                                                     <tr>    
                                                         <td class="text-center"> {{ $facility->id }}                            </td>
@@ -74,16 +79,39 @@
                                                             <a href="{{ route('livewire.setting', $facility->id) }}" class="btn btn-link">{{ $facility->name }} </a>  
                                                         </th>
                                                         @if ( $facility->profile()->exists() )
-                                                            <td> {{ $facility->Profile->address }}              </td>
-                                                            <td> {{ $facility->Profile->city }}                 </td>
-                                                            <td> {{ $facility->Profile->state->name }}          </td>
-                                                            <td> {{ $facility->Profile->phone }}                </td>
 
-                                                            <td class="text-center">  
-                                                                <div class="progress ">
-                                                                    <div class="progress-bar" role="progressbar" style="width: 100%;background-color: {!! $facility->profile->color !!}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                </div>
-                                                            </td>
+                                                            @if ( $address == false)
+                                                                <td>
+                                                                    {{ ucfirst(substr($facility->Profile->address, 0, 10)) }}      
+                                                                    @if( (strlen($facility->Profile->address)) > 10)
+                                                                        <span>...
+                                                                            <button wire:click="address" class="btn btn-link p-0"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
+                                                                            </button>
+                                                                        </span>
+                                                                    @endif
+                                                                </td>
+                                                            @else 
+                                                                <td>
+                                                                    {{ $facility->Profile->address }}
+                                                                    @if( (strlen($facility->Profile->address)) > 10)
+                                                                        <button  wire:click="address" class="btn btn-link p-0">
+                                                                            &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                                                        </button>
+                                                                    @endif
+                                                                </td>
+                                                            @endif
+                                                            
+                                                            @if ( $address == false)
+                                                                <td> {{ $facility->Profile->city }}                 </td>
+                                                                <td> {{ $facility->Profile->state->name }}          </td>
+                                                                <td> {{ $facility->Profile->phone }}                </td>
+
+                                                                <td class="text-center">  
+                                                                    <div class="progress ">
+                                                                        <div class="progress-bar" role="progressbar" style="width: 100%;background-color: {!! $facility->profile->color !!}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </td>
+                                                            @endif
                                                         @endif
 
                                                         <td class="no-gutters p-0">
@@ -109,10 +137,13 @@
 
                                                                 </div>
                                                             @else
+
+                                                            @if ( $address == false)
                                                                 <td></td>
                                                                 <td></td>
                                                                 <td></td>
                                                                 <td></td>
+                                                            @endif
                                                                 <td>
                                                                     <div>
                                                                         <button wire:click="restore({{ $facility->id }})" class="btn btn-link text-warning p-0 mx-3" onclick="return confirm('Are you sure?')">
