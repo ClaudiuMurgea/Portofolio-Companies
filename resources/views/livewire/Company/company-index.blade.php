@@ -1,11 +1,15 @@
 @if($showIndex == true)
     @section( 'title', 'HC Dash' )
-    
+
     <div class="position-absolute start-0 w-100">
 
         <nav class="navbar navbar-light p-0">
             <div class="container-fluid">
-              <a class="navbar-brand text-success p-0">Companies &nbsp; / &nbsp; All Companies</a>
+                <a class="p-0">
+                    <span class="text-success">Companies</span>
+                        &nbsp; / &nbsp; 
+                    <span class="text-dark">All Companies</span>
+                </a>
             </div>
         </nav>
 
@@ -17,26 +21,26 @@
                         <div class="d-flex justify-content-between">
 
                             <h6 class="card-title mb-5 pl-2">Companies</h6>
-                            
+
                             @if( auth()->user()->hasAnyRole('Corporate Admin|Facility Admin|Facility Editor') )
                                 <a class="btn btn-success mb-5 p-0 d-flex justify-content-center" onclick="return confirm('You cannot add companies!')">&emsp;
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                     &nbsp;Add Company&emsp;
-                                </a>   
-                            @else  
+                                </a>
+                            @else
                                 <a wire:click="show('showCreate')" class="btn btn-success mb-5 p-0 d-flex justify-content-center">&emsp;
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                     &nbsp;Add Company&emsp;
                                 </a>
-                            @endif 
-                            
-                        </div> 
+                            @endif
+
+                        </div>
 
                         @if(auth()->user()->hasAnyRole('Platform Admin|Regional Admin'))
                             <div class="d-flex justify-content-center">
                                 <label for="Search">Find company by name</label>
-                            </div>  
-                            <div class="d-flex justify-content-center">               
+                            </div>
+                            <div class="d-flex justify-content-center">
                                 <div class="d-flex align-items-baseline col-2 justify-content-center">
                                     <input type="text" wire:model="searchTerm" class="form-control">
                                 </div>
@@ -47,16 +51,16 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="text-center">  ID       </th>
-                                        <th scope="col">                      Name     </th>
-                                        <th scope="col">                      Address  </th>
-                                        <th scope="col">                      City     </th>
-                                        <th scope="col">                      State    </th>
-                                        <th scope="col">                      Phone No </th>
-                                        <th scope="col">                      Color    </th>
-                                        <th scope="col">&emsp;                Actions  </th>
+                                        <th class="text-center">  ID       </th>
+                                        <th>                      Name     </th>
+                                        <th>                      Address  </th>
+                                        <th>                      City     </th>
+                                        <th>                      State    </th>
+                                        <th>                      Phone No </th>
+                                        <th>                      Color    </th>
+                                        <th>&emsp;                Actions  </th>
                                     </tr>
-                                </thead>        
+                                </thead>
                                 <tbody>
                                     @if( auth()->user()->hasAnyRole('Platform Admin|Regional Admin') )
                                         @if($companies->isEmpty())
@@ -66,25 +70,25 @@
                                                 </td>
                                             </tr>
                                         @else
-                                            @foreach ( $companies as $company)                 
-                                                <tr>        
+                                            @foreach ( $companies as $company)
+                                                <tr>
                                                     <td class="text-center">  {{ $company->id }}        </td>
                                                     <th>                      {{ $company->name }}      </th>
-                                                    
+
                                                     @if ( $company->profile()->exists() )
                                                         <td>  {{ $company->Profile->address }}          </td>
                                                         <td>  {{ $company->Profile->city }}             </td>
                                                         <td>  {{ $company->Profile->state->short_name }}</td>
                                                         <td>  {{ $company->Profile->phone }}            </td>
-                                                        
-                                                        <td>  
+
+                                                        <td>
                                                             <div class="progress">
-                                                            <div class="progress-bar " role="progressbar" style="width: 100%;background-color: {!! $company->profile->color !!}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>    
+                                                            <div class="progress-bar " role="progressbar" style="width: 100%;background-color: {!! $company->profile->color !!}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                                             </div>
                                                         </td>
                                                     @endif
-                                                
-                                                    <td class="no-gutters p-0">                 
+
+                                                    <td class="no-gutters p-0">
                                                         @if ($company->deleted_at == null)
                                                             <button wire:click="show('showFacilities', {{ $company->id }})" class="btn btn-link text-success">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
@@ -106,7 +110,7 @@
                                                             </button>
 
                                                             @if ($settings == true)
-                                                            <br/>
+                                                                <br/>
                                                                 <div>
                                                                     <button wire:click="show('createSettings', {{ $company->id }})" class="btn btn-link p-0 text-primary mx-3">
                                                                         &nbsp;&nbsp;
@@ -126,8 +130,8 @@
                                                                     </button>
                                                                 </div>
                                                             @endif
-                                                    
-                                                        @else 
+
+                                                        @else
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
@@ -146,17 +150,17 @@
                                             @endforeach
                                         @endif
                                     @endif
-                                    
-                                    @if( auth()->user()->hasAnyRole('Corporate Admin|Facility Admin|Facility Editor') ) 
-                                        @if($userCompany->isEmpty())
+
+                                    @if( auth()->user()->hasAnyRole('Corporate Admin|Facility Admin|Facility Editor') )
+                                        @if( !isset($userCompany) )
                                             <tr>
                                                 <td colspan="8" class="text-center text-success">
                                                     There are no companies defined!
                                                 </td>
                                             </tr>
-                                        @else 
+                                        @else
                                             @foreach ($userCompany as $company)
-                                                <tr>   
+                                                <tr>
                                                     <td class="text-center">  {{ $company->id }}        </td>
                                                     <td>                      {{ $company->name }}      </td>
 
@@ -165,15 +169,15 @@
                                                         <td>  {{ $company->Profile->city }}             </td>
                                                         <td>  {{ $company->Profile->state->short_name }}</td>
                                                         <td>  {{ $company->Profile->phone }}            </td>
-                                                        
-                                                        <td>  
+
+                                                        <td>
                                                             <div class="progress">
-                                                            <div class="progress-bar " role="progressbar" style="width: 100%;background-color: {!! $company->profile->color !!}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>    
+                                                            <div class="progress-bar " role="progressbar" style="width: 100%;background-color: {!! $company->profile->color !!}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                                             </div>
                                                         </td>
                                                     @endif
-                                                
-                                                    <td class="no-gutters p-0">                 
+
+                                                    <td class="no-gutters p-0">
                                                         @if ($company->deleted_at == null)
                                                             <button wire:click="show('showFacilities', {{ $company->id }})" class="btn btn-link text-success" >
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
@@ -190,12 +194,12 @@
                                                                 Announcements
                                                             </button>
 
-                                                            @if( auth()->user()->hasAnyRole('Facility Admin|Facility Editor') )  
+                                                            @if( auth()->user()->hasAnyRole('Facility Admin|Facility Editor') )
                                                                 <button class="btn btn-link p-0 text-warning mx-4" disabled>
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
                                                                     Edit
                                                                 </button>
-                                                            @else  
+                                                            @else
                                                                 <button wire:click="show('showEdit', {{ $company->id }})" class="btn btn-link p-0 text-warning mx-4">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
                                                                     Edit
@@ -214,19 +218,19 @@
                                             @endforeach
                                         @endif
                                     @endif
-                                                    
+
                                 </tbody>
 
                             </table>
-                            
+
                             @if( auth()->user()->hasAnyRole('Platform Admin|Regional Admin') )
                                 {{ $companies->links('layouts.pagination') }}
                             @endif
                         </div>
-                        
+
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
     </div>
 
@@ -234,7 +238,7 @@
 
 @if($showCreate == true)
     <div>
-        <livewire:company.company-create/>      
+        <livewire:company.company-create/>
     </div>
 @endif
 

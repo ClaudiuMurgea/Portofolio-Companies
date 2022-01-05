@@ -25,12 +25,6 @@ class FacilityEdit extends Component
 
     public $return = false;
     public $active = true;
-    
-    public function back ()
-    {
-        $this->active = false;
-        $this->return = true;
-    }
 
     public function mount($facilityID)
     {    
@@ -51,6 +45,12 @@ class FacilityEdit extends Component
             $this->ids = $facilityID;
             $this->facility  = $facility;    
             $this->companyID = $facility->company_id; 
+    }
+
+    public function back ()
+    {
+        $this->active = false;
+        $this->return = true;
     }
 
     public function render()
@@ -100,7 +100,8 @@ class FacilityEdit extends Component
             $facilityProfile->color      = $this->edit_color;
             $facilityProfile->logo       = $media->id;
             $facilityProfile->save();
-
+        
+        $this->ids = $facility->company_id;
         $this->back();
     }
 }

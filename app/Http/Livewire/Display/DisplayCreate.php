@@ -32,7 +32,7 @@ class DisplayCreate extends Component
         $this->validate();
         
         $displayType = new DisplayType();
-            $displayType->name = $this->name;
+            $displayType->name = ucfirst($this->name);
             $displayType->save();
 
         $this->back();

@@ -6,14 +6,16 @@ use Livewire\Component;
 use App\Models\Company;
 use App\Models\DisplayType;
 use App\Models\CompanySettings;
+use App\Models\CompanyDisplay;
 
 class SettingsComponent extends Component
 {   
     public $company;
     public $display_types;
-    public $facilities;
-    public $monitors;
-    public $displayTypes = [];
+    public $facilities = 0;
+    public $monitors = 0;
+    public $displayTypes;
+    public $display_type;
     public $oldSettings;
 
     public $return = false;
@@ -36,6 +38,14 @@ class SettingsComponent extends Component
         }
 
         $this->display_types = DisplayType::all();
+
+        if( $this->company->displays() )
+        {
+            foreach($this->company->displays as $displayType)
+            { 
+                $this->displayTypes[] = $displayType->display_type; 
+            }
+        }
     }
     public function render ()
     {
@@ -45,27 +55,37 @@ class SettingsComponent extends Component
     public function save ()
     {
         $this->validate([
-            'facilities' => '',
-            'monitors' => '',
+            'facilities'   => '',
+            'monitors'     => '',
             'displayTypes' => ''
         ]);
 
-        if($this->company->settings()->exists())
+        if( $this->company->settings()->exists() )
         {
-            $settings = CompanySettings::where('company_id', $this->company->id)->first();
+            $settings = CompanySettings::where( 'company_id', $this->company->id )->first();
                 $settings->max_facility = $this->facilities;
                 $settings->max_monitors = $this->monitors;
                 $settings->save();
-            $this->back();
         } 
         else 
         {
             $settings = new CompanySettings();
-                $settings->company_id = $this->company->id;
+                $settings->company_id   = $this->company->id;
                 $settings->max_facility = $this->facilities;
                 $settings->max_monitors = $this->monitors;
                 $settings->save();
-            $this->back();
         }
+
+        $oldDisplays = CompanyDisplay::where( 'company_id', $this->company->id )->delete();
+
+        foreach($this->displayTypes as $type)
+        {
+            $newDisplay = new CompanyDisplay();
+                $newDisplay->company_id   = $this->company->id;
+                $newDisplay->display_type = $type;
+                $newDisplay->save();
+        }
+
+        $this->back();
     }
 }

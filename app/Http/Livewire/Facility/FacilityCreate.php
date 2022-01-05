@@ -7,6 +7,8 @@ use App\Models\Media;
 use App\Models\State;
 use App\Models\Facility;
 use App\Models\FacilityProfile;
+use App\Models\FacilityUser;
+use App\Models\FacilityAdmin;
 use App\Models\Region;
 use Livewire\WithFileUploads;
 use Intervention\Image\ImageManager;
@@ -93,6 +95,20 @@ class FacilityCreate extends Component
             $facilityProfile->color       = $this->color;
             $facilityProfile->logo        = $media->id;
             $facilityProfile->save();
+            
+        if( auth()->user()->hasRole('Facility Admin') )
+        {
+            $facilityUser = new FacilityUser();
+                $facilityUser->facility_id = $facility->id;
+                $facilityUser->company_id = $facility->company_id;
+                $facilityUser->user_id = auth()->user()->id;
+                $facilityUser->save();
+
+            $facilityAdmin = new FacilityAdmin ();
+                $facilityAdmin->user_id     = auth()->user()->id;
+                $facilityAdmin->facility_id = $facility->id;
+                $facilityAdmin->save();
+        }
 
         $this->back();
     }

@@ -3,9 +3,13 @@
 
     <nav class="navbar navbar-light p-0">
       <div class="container-fluid">
-          <a class="navbar-brand text-success  p-0">Display Types &nbsp; / &nbsp; All Display Types</a>
+          <a class="p-0">
+              <span class="text-success">Display Types</span> 
+                &nbsp; / &nbsp; 
+              <span class="text-dark">All Display Types</span>
+          </a>
       </div>
-  </nav>
+    </nav>
 
     <div class="row">
       <div class="col-md-12 grid-margin stretch-card">
@@ -29,7 +33,7 @@
             </div>
 
             <div class="table-responsive pt-3 pb-5">
-              <table class="table table-stripped">
+              <table class="table table-bordered">
                 <thead>
                   <tr>
                     <th class="text-center"> ID   </th>

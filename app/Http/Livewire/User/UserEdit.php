@@ -78,33 +78,27 @@ class UserEdit extends Component
             $this->user       = $user;
             $this->role       = $user->roles->first()->id;
             
-            if($user->permissions == true)
+            if($user->permissions)
              {  
-                $i = 0;
                 foreach($user->Permissions as $permission)
                 {   
                     $this->region[] = $permission->id; 
-                    $i++;
                 }
              }
              
             if($user->FacilityUsers)
             {
-                $i = 0;
                 foreach($user->FacilityUsers as $facility)
                 {   
                     $this->facility[] = $facility->facility_id; 
-                    $i++;
                 }
             }
 
             if($user->CompanyAdmin)
             {
-                $i = 0;
                 foreach($user->CompanyAdmin as $company)
                 {   
                     $this->company[] = $company->company_id; 
-                    $i++;
                 }
             }
        
@@ -128,7 +122,6 @@ class UserEdit extends Component
     public function render()
     {   
         $roles = Role::all();
-            // $selectedRoles = $this->role;
 
         foreach($roles as $DBrole)
         {
@@ -211,9 +204,9 @@ class UserEdit extends Component
             foreach($this->facility as $facility)
             {
                 $facilityAdmin = new FacilityAdmin ();
-                $facilityAdmin->user_id = $user->id;
-                $facilityAdmin->facility_id = $facility;
-                $facilityAdmin->save();
+                    $facilityAdmin->user_id = $user->id;
+                    $facilityAdmin->facility_id = $facility;
+                    $facilityAdmin->save();
 
                 $facilityUsers = new FacilityUser ();
                     $facilityUsers->user_id     = $user->id;

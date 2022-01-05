@@ -11,7 +11,7 @@
                 </div>
             </div>
 
-            <div class=" profile-page tx-13 mb-5">
+            <div class="profile-page tx-13 mb-5">
                 <div class="row">
                     <div class="col-12 grid-margin">
                         <div class="profile-header">
@@ -39,7 +39,6 @@
                                             Positions
                                         </a>
                                     </li>
-
 
                                     <li wire:click="show('showAnnouncements')" class="header-link-item ml-3 pl-3 border-left d-flex align-items-center">
                                         <a class="nav-link" id="announcement-line-tab" data-toggle="tab" href="" role="tab" >

@@ -51,26 +51,49 @@
                                 </div>
                             </div>
                             
-                            <div class="d-flex justify-content-center">
+                            {{-- <div class="d-flex justify-content-center">
                                 <label for="displayTypes">Display types</label>
-                            </div>
+                            </div> --}}
 
                             {{-- {!! in_array($display_type->id,$allowedDisplay) ? 'checked' : '' !!} value="{!! $display_type->id !!}" --}}
 
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="d-flex justify-content-center">
                                     @foreach($display_types as $display_type)
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
-                                                <input wire:model.defer="displayTypes" type="checkbox" class="form-check-input" value="{{ $display_type->id }}">
+                                                <input wire:model.defer="displayTypes" type="checkbox" class="form-check-input" value="{{ $display_type->id }}" checked>
                                                 {!! $display_type->name !!}
-                                                <i class="input-frame"></i>
-                                                {{-- <select name="" id="" multiple>
-                                                    <option value="{{  }}">{{ $display_type->name }}</option>
-                                                </select> --}}
+
+                                                <select name="" id="" multiple>
+                                                    <option wire:model.defer="displayTypes" value="{{ $display_type->id }}">{{ $display_type->name }}</option>
+                                                </select>
+
+                                              
                                             </label>
                                         </div>
-                                    @endforeach
+                                    @endforeach --}}
+
+                                      {{-- <input type="checkbox" class="form-checkbox" name="tags" value="{{ $tag->tag_id }}" id="exampleFormControlInput3" wire:model="tags.{{ $tag->tag_id }}" {{ (App\Models\PostTag::where('post_id', $post_id)->where('tag_id', $tag->tag_id)->exists()) ? 'checked' : '' }}>
+                                                <span class="ml-2">{{ $tag->tag_name }}</span> --}}
+
+                            <div class="row">
+                                <div class="d-flex justify-content-center">
+                                    <div class="form-group col-md-2 mt-2">
+                                        <label for="displayTypes">Display types</label>
+                                        <select wire:model.defer="displayTypes" class="form-control text-success" multiple>
+
+                                            @foreach($display_types as $display_type)
+                                                <option value="{{ $display_type->id }}">{{ $display_type->name }}</option>
+                                            @endforeach
+                                            
+                                        </select>
+                                        <p class="text-muted pt-1 text-center">Press CTRL to select multiple values. </p>
+
+                                        @error('displayTypes')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
 

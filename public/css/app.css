@@ -13,6 +13,10 @@
   max-height: 50px;
 }
 
+body {
+  position: relative;
+}
+
 :root {
   --blue: #3490dc;
   --indigo: #6574cd;

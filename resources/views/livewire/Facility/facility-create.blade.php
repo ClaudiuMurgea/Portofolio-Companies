@@ -3,8 +3,12 @@
     @if($active == true)
         <nav class="navbar navbar-light p-0">
             <div class="container-fluid">
-                <a class="navbar-brand text-success p-0">Facilities &nbsp; / &nbsp; Create Facility</a>
-                <a wire:click="back" class="navbar-brand btn btn-success text-white p-0 col-md-1 d-flex justify-content-center" href="{{ route('livewire.facility', $ids) }}">
+                <a class="p-0">
+                    <span class="text-success">Facilities</span> 
+                        &nbsp; / &nbsp; 
+                    <span class="text-dark">Create Facility</span>
+                </a>
+                <a wire:click="back" class="btn btn-success text-white p-0 col-md-1 d-flex justify-content-center" href="{{ route('livewire.facility', $ids) }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg>
                     &nbsp;Back &nbsp;
                 </a>
@@ -189,23 +193,3 @@
     @endif
 
 </div>
-
-<script>
-    document.getElementById("myButton3").addEventListener("click", () => {
-
-    
-var x = document.getElementById("myButton3").value;
-
-//Check if register button
-if (x.includes("Submit")) {
-
-  //assign value to favColor    
-  var favColor = document.getElementById("favcolor").value;
-    
-}
-
-var message3 = `the color you selected is: ${favColor}<br>`;
-
-document.getElementById("par3").innerHTML = message3.fontcolor("&(favColor)");  
-});
-</script>

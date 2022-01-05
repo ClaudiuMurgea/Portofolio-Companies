@@ -62,7 +62,6 @@ class FacilitySetting extends Component
             foreach(auth()->user()->facilityUsers as $facilityUser)
             {
                 $this->facilityIDS[] = $facilityUser->facility_id;
-                
             }
             // dd($this->facilityIDS);
         }

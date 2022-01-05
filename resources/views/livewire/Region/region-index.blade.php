@@ -5,7 +5,11 @@
 
         <nav class="navbar navbar-light p-0">
             <div class="container-fluid">
-                <a class="navbar-brand text-success p-0">Regions &nbsp; / &nbsp; All Regions</a>
+                <a class="p-0">
+                    <span class="text-success">Regions</span>
+                        &nbsp; / &nbsp; 
+                    <span class="text-dark">All Regions</span>
+                </a>
             </div>
         </nav>
         
@@ -31,7 +35,7 @@
                         </div>
 
                         <div class="table-responsive pt-3 pb-5">
-                            <table class="table table-stripped">
+                            <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th class="text-center"> ID                 </th>

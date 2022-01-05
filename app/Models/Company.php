@@ -35,4 +35,9 @@ class Company extends Model
     {
         return $this->hasOne(CompanySettings::class, 'company_id', 'id');
     }
+
+    public function Displays ()
+    {
+        return $this->hasMany(CompanyDisplay::class, 'company_id', 'id');
+    }
 }

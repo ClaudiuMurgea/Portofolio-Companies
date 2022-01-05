@@ -99,12 +99,13 @@ class CompanyIndex extends Component
     }     
 
     public function destroy ($id)
-    {
-        $companyProfile = CompanyProfile::withTrashed()->where('company_id', $id)->delete();
-            // $companyProfile->Media->delete();
-        
-        $facilities = Facility::withTrashed()->where('company_id', $id)->get();
-            foreach ($facilities as $facility)
+    {   
+        $company = Company::findOrFail($id);
+        // $company->Profile->Media->delete();
+
+        if ( $company->Facilities == true)
+        {
+            foreach ($company->facilities as $facility)
             {   
                 if ( $facility->FacilityUsers == true )
                 {
@@ -119,29 +120,27 @@ class CompanyIndex extends Component
                 $facility->Profile->delete();
                 $facility->delete();
             }
+        }
+      
+        foreach($company->companyAdmins as $admin)
+        {
+            $userAdmin = User::find($admin->user_id);
 
-        $company = Company::withTrashed()->findOrFail($id);
-            foreach($company->companyAdmins as $admin)
-            {
-                $userAdmin = User::find($admin->user_id);
-
-                if($userAdmin->roles->first()->name == 'Corporate Admin')
-                {   
-                    $userAdmin->active = 0;
-                    $userAdmin->save();
-                }
+            if($userAdmin->roles->first()->name == 'Corporate Admin')
+            {   
+                $userAdmin->active = 0;
+                $userAdmin->save();
             }
+        }
+        $company->Profile->delete();
         $company->delete();
-        
-        $this->show('showIndex');
     }
 
     public function restore ($id)
     {
         $companyProfile = CompanyProfile::withTrashed()->where('company_id', $id)->restore();
-        // $companyProfile->Media->delete();
-    
-    $facilities = Facility::withTrashed()->where('company_id', $id)->get();
+       
+        $facilities = Facility::withTrashed()->where('company_id', $id)->get();
         foreach ($facilities as $facility)
         {   
             if ( $facility->FacilityUsers == true )
@@ -159,7 +158,7 @@ class CompanyIndex extends Component
             $facilityProfile->restore();
         }
 
-    $company = Company::withTrashed()->where('id', $id)->first();
+        $company = Company::withTrashed()->where('id', $id)->first();
         foreach($company->companyAdmins as $admin)
         {
             $userAdmin = User::find($admin->user_id);
@@ -172,7 +171,5 @@ class CompanyIndex extends Component
         }
 
         $company->restore();
-    
-    $this->show('showIndex');
     }
 }

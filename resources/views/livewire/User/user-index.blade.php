@@ -4,7 +4,11 @@
 
         <nav class="navbar navbar-light p-0">
             <div class="container-fluid">
-              <a class="navbar-brand text-success p-0">Users &nbsp; / &nbsp; All Users</a>
+              <a class="p-0">
+                <span class="text-success">Users</span>
+                    &nbsp; / &nbsp; 
+                <span class="text-dark">All Users</span>
+                </a>
             </div>
         </nav>
 
