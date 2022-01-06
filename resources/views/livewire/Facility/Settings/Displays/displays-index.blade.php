@@ -59,6 +59,7 @@
                                         {{-- <label class="switch pr-5 switch-primary mr-3"><span></span>
                                             <input class="status" data-monitorid="1" type="checkbox"><span class="slider"></span>
                                         </label> --}}
+                                        
                                         <label class="switch">Toggle Fails
                                             <input type="checkbox">
                                             <span class="slider round"></span>

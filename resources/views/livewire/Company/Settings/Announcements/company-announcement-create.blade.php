@@ -1,20 +1,20 @@
 <div>
     @if ($active == true)
 
+        <nav class="navbar navbar-light p-0">
+            <div class="container-fluid">
+                <a class="text-success p-0 mb-3">{{ ucfirst($company->name) }} &nbsp; / &nbsp;&nbsp;Add Announcement &nbsp; </a>
+                <a wire:click="back" class="btn btn-success text-white p-0 mb-3 col-md-1 d-flex justify-content-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg>
+                    &nbsp;Back &nbsp;
+                </a>
+            </div>
+        </nav>
+
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        
-                        <nav class="navbar navbar-light p-0">
-                            <div class="container-fluid">
-                                <a class="navbar-brand text-success  p-0">Add Announcement</a>
-                                <a wire:click="back" class="navbar-brand btn btn-success text-white  p-0 col-md-1 d-flex justify-content-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg>
-                                    &nbsp;Back &nbsp;
-                                </a>
-                            </div>
-                        </nav>
     
                         <div class="row">
                             <div class="d-flex justify-content-center">

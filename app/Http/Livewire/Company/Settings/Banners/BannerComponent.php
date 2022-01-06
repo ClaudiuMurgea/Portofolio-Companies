@@ -18,6 +18,7 @@ class BannerComponent extends Component
 
     public $ids;
     public $name;
+    public $media;
     public $media_id;
     public $file;
     public $company;
@@ -55,7 +56,8 @@ class BannerComponent extends Component
     public function mount($company)
     {   
         $this->ids = $company;
-        $this->company = Company::find($this->ids);
+        $this->company = Company::findOrFail($this->ids);
+        $this->media = Media::all();
     }
 
     public function render()

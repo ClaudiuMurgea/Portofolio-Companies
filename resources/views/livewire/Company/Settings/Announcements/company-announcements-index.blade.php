@@ -3,7 +3,7 @@
 
     <nav class="navbar navbar-light p-0">
         <div class="container-fluid">
-          <a class="navbar-brand text-success p-0">{{ ucfirst($company->name) }} &nbsp; / &nbsp; Company Wide Announcements</a>
+          <a class="text-success p-0 mb-3">{{ ucfirst($company->name) }} &nbsp; / &nbsp; Company Wide Announcements</a>
         </div>
     </nav>
 

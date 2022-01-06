@@ -25,19 +25,19 @@ class BannerDropzone extends Component
         $image = $request->file('file');
 
         $fileName = $image->store('photos', 'public');
-        $manager = new ImageManager();
-        $image = $manager->make('storage/'.$fileName)->resize(523.2, 255.66);
-        $image->save('storage/'.$fileName);
 
+        $banner = new Banner();
+            $banner->company_id = $id;
+            $banner->name = $fileName;
         $media = new Media();
         $media->url = $fileName;
         $media->save();
+            $banner->media_id = $media->id;
+            $banner->save();
 
-        $banner = new Banner();
-        $banner->company_id = $id;
-        $banner->media_id = $media->id;
-        $banner->name = $fileName;
-        $banner->save();
+        $manager = new ImageManager();
+        $image = $manager->make('storage/'.$fileName)->resize(523.2, 255.66);
+        $image->save('storage/'.$fileName);
 
         return response()->json(['success' => $imageName]);
     }

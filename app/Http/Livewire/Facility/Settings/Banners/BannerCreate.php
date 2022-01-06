@@ -57,7 +57,7 @@ class BannerCreate extends Component
     {
         $this->validate([
             'title'        => 'required',
-            'banner'       => 'required',
+            'banner'       => 'required|mimes:jpg,jpeg,png|max:40960',
             'start_at'     => 'required',
             'hour'         => '',
             'minute'       => '',

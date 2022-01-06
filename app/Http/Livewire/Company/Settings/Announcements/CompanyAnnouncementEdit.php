@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Company\Settings\Announcements;
 
 use Livewire\Component;
 use App\Models\Announcement;
+use App\Models\Company;
 
 class CompanyAnnouncementEdit extends Component
 {
@@ -18,6 +19,7 @@ class CompanyAnnouncementEdit extends Component
     public $return = false;
     public $active = true;
     public $companyID;
+    public $company;
 
     public function back ()
     {
@@ -30,6 +32,7 @@ class CompanyAnnouncementEdit extends Component
         $this->announcement = Announcement::find($announcement);
             $this->announcementID = $announcement;
             $this->companyID   = $this->announcement->company_id;
+            $this->company     = Company::findOrFail($this->companyID);
             $this->edit_title  = $this->announcement->title;
             $this->edit_text   = $this->announcement->announcement;
             $this->start_date  = $this->announcement->start_at;

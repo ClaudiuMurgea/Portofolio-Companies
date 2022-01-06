@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\User;
 use App\Models\State;
 use App\Models\Media;
+use App\Models\Banner;
 use App\Models\Company;
 use App\Models\CompanyProfile;
 use App\Models\CompanyAdmin;
@@ -86,9 +87,14 @@ class CompanyCreate extends Component
             $filename = $this->logo->store('photos', 'public');
             $media->url = $filename;
             $media->save();
-                $manager = new ImageManager();
-                $image = $manager->make('storage/'.$filename)->resize(523.2, 255.66);
-                $image->save('storage/'.$filename);
+                $banner = new Banner();
+                    $banner->company_id = $company->id;
+                    $banner->media_id = $media->id;
+                    $banner->name = $filename;
+                    $banner->save();
+                        $manager = new ImageManager();
+                        $image = $manager->make('storage/'.$filename)->resize(523.2, 255.66);
+                        $image->save('storage/'.$filename);
 
         $companyProfile = new CompanyProfile();
             $companyProfile->company_id = $company->id;

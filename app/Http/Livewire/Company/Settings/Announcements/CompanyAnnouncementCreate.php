@@ -12,6 +12,7 @@ class CompanyAnnouncementCreate extends Component
     public $active = true;
 
     public $companyID;
+    public $company;
     
     public $title;
     public $text;
@@ -27,6 +28,7 @@ class CompanyAnnouncementCreate extends Component
     public function mount($company)
     {
         $this->companyID = $company;
+        $this->company   = Company::findOrFail($company);
     }
 
     public function render()

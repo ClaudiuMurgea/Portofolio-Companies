@@ -259,7 +259,7 @@
                                 </tbody>
 
                             </table>
-
+                     
                             @if( auth()->user()->hasAnyRole('Platform Admin|Regional Admin') )
                                 {{ $companies->links('layouts.pagination') }}
                             @endif

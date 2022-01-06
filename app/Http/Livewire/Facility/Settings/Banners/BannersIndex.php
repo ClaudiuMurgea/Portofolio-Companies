@@ -31,15 +31,16 @@ class BannersIndex extends Component
         $this->bannerID = $banner;
         $this->show('showEdit', $this->bannerID);
     }
-    
-    public function render()
-    {
-        $banners = Banner::all();
-        return view('livewire.facility.settings.banners.banners-index', ['banners' => $banners])->layout('layouts.admin.master');
-    }
 
     public function mount ($facility)
     {
         $this->facilityID = $facility;
     }
+    
+    public function render()
+    {
+        $banners = Banner::where('facility_id', $this->facilityID)->get();
+        return view('livewire.facility.settings.banners.banners-index', ['banners' => $banners])->layout('layouts.admin.master');
+    }
+
 }
