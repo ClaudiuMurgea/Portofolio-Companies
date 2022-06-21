@@ -6,18 +6,6 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
- 
- .imgs {
-  min-width: 50px;
-  max-width: 50px;
-  min-height: 50px;
-  max-height: 50px;
-}
-
-body {
-  position: relative;
-}
-
 :root {
   --blue: #3490dc;
   --indigo: #6574cd;
